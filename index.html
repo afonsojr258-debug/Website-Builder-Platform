@@ -26,9 +26,7 @@
         .logo-img { height: 45px; width: auto; border-radius: 10px; }
         .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Menu de navegação removido da landing page - escondido */
         .main-nav { display: none; }
-        
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
         .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; z-index: 999; }
         .mobile-nav.open { display: flex; }
@@ -49,6 +47,7 @@
         .btn-icon:hover { background: #e2e8f0; transform: translateY(-2px); }
         .btn-pro { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; }
         .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(245,158,11,0.3); }
+        .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
         
         /* Hero Section */
         .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
@@ -145,6 +144,9 @@
         .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
         .color-input-group { display: flex; gap: 12px; align-items: center; }
         .color-input-group input[type="color"] { width: 60px; height: 50px; padding: 4px; cursor: pointer; border-radius: 12px; }
+        .pro-locked { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 16px; padding: 16px; margin-bottom: 20px; text-align: center; }
+        .pro-locked i { font-size: 24px; color: #f59e0b; margin-bottom: 8px; display: block; }
+        .pro-locked p { color: #92400e; font-size: 14px; margin-bottom: 12px; }
         
         /* Lista de Itens */
         .items-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
@@ -193,6 +195,13 @@
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
         
+        /* Botão Flutuante */
+        .float-button { position: fixed; bottom: 30px; z-index: 1000; display: flex; align-items: center; gap: 12px; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; animation: fadeInUp 0.5s ease; }
+        .float-button:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .float-button i { font-size: 24px; }
+        .float-left { left: 30px; }
+        .float-right { right: 30px; }
+        
         .loading { text-align: center; padding: 60px; font-size: 18px; color: #64748b; }
         .loading i { font-size: 40px; margin-bottom: 16px; color: #6366f1; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -223,6 +232,9 @@
             .dashboard-header { flex-direction: column; align-items: flex-start; }
             .sites-grid { grid-template-columns: 1fr; }
             .icon-selector-grid { grid-template-columns: repeat(5, 1fr); }
+            .float-left, .float-right { bottom: 20px; padding: 10px 18px; font-size: 14px; }
+            .float-left { left: 20px; }
+            .float-right { right: 20px; }
         }
     </style>
 </head>
@@ -269,7 +281,15 @@
             { icon: 'fa-shopping-cart', name: 'Loja' }, { icon: 'fa-truck', name: 'Entrega' }, { icon: 'fa-headset', name: 'Suporte' },
             { icon: 'fa-shield-alt', name: 'Segurança' }, { icon: 'fa-cloud', name: 'Cloud' }, { icon: 'fa-database', name: 'Dados' },
             { icon: 'fa-rocket', name: 'Lançamento' }, { icon: 'fa-palette', name: 'Arte' }, { icon: 'fa-star', name: 'Destaque' },
-            { icon: 'fa-heart', name: 'Favorito' }, { icon: 'fa-crown', name: 'Premium' }, { icon: 'fa-gem', name: 'Luxo' }
+            { icon: 'fa-heart', name: 'Favorito' }, { icon: 'fa-crown', name: 'Premium' }, { icon: 'fa-gem', name: 'Luxo' },
+            { icon: 'fa-whatsapp', name: 'WhatsApp' }, { icon: 'fa-comment', name: 'Chat' }, { icon: 'fa-envelope', name: 'Email' },
+            { icon: 'fa-phone', name: 'Telefone' }, { icon: 'fa-message', name: 'Mensagem' }
+        ];
+        
+        const floatIconOptions = [
+            { icon: 'fa-whatsapp', name: 'WhatsApp' }, { icon: 'fa-comment-dots', name: 'Chat' }, { icon: 'fa-headset', name: 'Suporte' },
+            { icon: 'fa-envelope', name: 'Email' }, { icon: 'fa-phone-alt', name: 'Ligar' }, { icon: 'fa-telegram', name: 'Telegram' },
+            { icon: 'fa-message', name: 'Mensagem' }, { icon: 'fa-facebook-messenger', name: 'Messenger' }
         ];
         
         const templates = {
@@ -285,7 +305,8 @@
                     services: [
                         { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush' },
                         { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
-                    ]
+                    ],
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
                 }
             },
             corporate: {
@@ -300,7 +321,8 @@
                     services: [
                         { name: 'Consultoria', description: 'Estratégia empresarial', icon: 'fa-chart-simple' },
                         { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' }
-                    ]
+                    ],
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
                 }
             },
             personal: {
@@ -311,7 +333,8 @@
                     aboutText: 'Especialista em criar experiências digitais memoráveis.',
                     showWhatsapp: true, whatsappNumber: '5511999999999', whatsappMessage: 'Olá! Gostei do seu trabalho',
                     showEmail: true, emailAddress: 'ana@studio.com',
-                    buttons: [], services: []
+                    buttons: [], services: [],
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
                 }
             }
         };
@@ -324,7 +347,6 @@
                 if (userDoc.exists()) {
                     currentUserPlan = userDoc.data();
                 } else {
-                    // Criar documento do usuário se não existir
                     await setDoc(userDocRef, { isPro: false, createdAt: new Date().toISOString(), email: currentUser.email, name: currentUser.displayName || '' });
                     currentUserPlan = { isPro: false };
                 }
@@ -359,7 +381,7 @@
                     </div>
                 </div>
                 <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button></div></div></div>
-                <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com clientes</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
+                <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>Botão Flutuante PRO</h3><p>Exclusivo para assinantes Pro</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
                 <div class="main-footer"><div class="footer-content"><p>© ${currentYear} WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
             `;
@@ -376,14 +398,17 @@
                 <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
-                <!-- Modal para editar Botão -->
+                <!-- Modal para editar Botão normal -->
                 <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-services">Após os Cards de Serviços</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para editar Card/Serviço -->
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
                 
+                <!-- Modal para editar Botão Flutuante (Apenas PRO) -->
+                <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..." value=""></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco" value="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon" style="width:100%; padding:12px; border-radius:12px; border:2px solid #e2e8f0;">${floatIconOptions.map(opt => `<option value="${opt.icon}"><i class="fas ${opt.icon}"></i> ${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366" placeholder="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
+                
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -406,7 +431,6 @@
                 try { 
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
                     await updateProfile(userCredential.user, { displayName: name });
-                    // Criar documento do usuário no Firestore
                     await setDoc(doc(db, 'users', userCredential.user.uid), { 
                         isPro: false, 
                         createdAt: new Date().toISOString(),
@@ -439,10 +463,40 @@
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
         }
         
-        function openPlansModal() { document.getElementById('plansModal').classList.add('active'); }
+        function openPlansModal() { 
+            const modal = document.getElementById('plansModal');
+            if (modal) modal.classList.add('active');
+            // Atualizar o botão do modal baseado no status atual
+            const payBtn = document.getElementById('payWhatsappBtn');
+            if (payBtn && currentUserPlan.isPro) {
+                payBtn.outerHTML = `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>`;
+            }
+        }
         function closePlansModal() { document.getElementById('plansModal').classList.remove('active'); }
         
-        // Funções globais para os modais
+        // Funções para o botão flutuante
+        window.openFloatModal = () => {
+            if (!currentUserPlan.isPro) {
+                showToast('⚠️ Botão Flutuante é exclusivo para planos PRO! Adquira o Plano Pro para usar esta função.', 'error');
+                openPlansModal();
+                return;
+            }
+            const floatBtn = currentEditingSite.content.floatButton || { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
+            document.getElementById('floatEnabled').checked = floatBtn.enabled || false;
+            document.getElementById('floatLink').value = floatBtn.link || '';
+            document.getElementById('floatText').value = floatBtn.text || 'Fale Conosco';
+            document.getElementById('floatIcon').value = floatBtn.icon || 'fa-whatsapp';
+            document.getElementById('floatColor').value = floatBtn.color || '#25D366';
+            document.getElementById('floatColorText').value = floatBtn.color || '#25D366';
+            document.getElementById('floatPosition').value = floatBtn.position || 'right';
+            document.getElementById('editFloatModal').classList.add('active');
+        };
+        
+        window.closeFloatModal = () => {
+            document.getElementById('editFloatModal').classList.remove('active');
+        };
+        
+        // Funções para os modais de botão normal
         window.openButtonModal = (index) => {
             currentEditingButtonIndex = index;
             const btn = currentEditingSite.content.buttons[index];
@@ -558,7 +612,11 @@
                 const docRef = doc(db, 'sites', siteId); 
                 const docSnap = await getDoc(docRef); 
                 if (docSnap.exists()) { 
-                    currentEditingSite = { id: docSnap.id, ...docSnap.data() }; 
+                    currentEditingSite = { id: docSnap.id, ...docSnap.data() };
+                    // Garantir que floatButton existe
+                    if (!currentEditingSite.content.floatButton) {
+                        currentEditingSite.content.floatButton = { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
+                    }
                     showEditor(); 
                 } else { 
                     showToast('Site não encontrado', 'error'); 
@@ -578,10 +636,11 @@
         
         function showEditor() {
             showPage('editorPage');
-            const editorTitle = document.getElementById('editorTitle');
-            if (editorTitle) editorTitle.innerHTML = `<i class="fas fa-edit"></i> Editando: ${currentEditingSite.title}`;
             
             const content = currentEditingSite.content;
+            
+            // Verificar se é PRO para liberar o float button
+            const isPro = currentUserPlan.isPro;
             
             let html = `
                 <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
@@ -617,6 +676,39 @@
                 </div>
             `;
             
+            // Seção do Botão Flutuante (apenas para PRO)
+            if (isPro) {
+                const floatBtn = content.floatButton || { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
+                html += `
+                    <div class="editor-section"><h4><i class="fas fa fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
+                        <div id="floatButtonInfo" class="item-preview" style="cursor:pointer;" onclick="window.openFloatModal()">
+                            <div class="item-info">
+                                <div class="item-icon"><i class="fas ${floatBtn.icon || 'fa-whatsapp'}"></i></div>
+                                <div class="item-details">
+                                    <div class="item-name">${floatBtn.enabled ? 'Ativado' : 'Desativado'} - ${escapeHtml(floatBtn.text || 'Fale Conosco')}</div>
+                                    <div class="item-desc">Posição: ${floatBtn.position === 'right' ? 'Direita' : 'Esquerda'} | Link: ${floatBtn.link ? floatBtn.link.substring(0, 30) : 'Não configurado'}</div>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick="event.stopPropagation(); window.openFloatModal()"><i class="fas fa-edit"></i> Editar</button>
+                            </div>
+                        </div>
+                        <p style="font-size:12px; color:#64748b; margin-top:8px;">Botão flutuante fixo que aparece em todas as páginas do seu site</p>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="editor-section"><h4><i class="fas fa fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
+                        <div class="pro-locked">
+                            <i class="fas fa-lock"></i>
+                            <p><strong>Recurso exclusivo para assinantes PRO</strong></p>
+                            <p>Adquira o Plano Pro para ter um botão flutuante personalizável no seu site!</p>
+                            <button class="btn-pro" onclick="window.openPlansModal()" style="margin-top:8px;"><i class="fas fa-crown"></i> Tornar-se PRO</button>
+                        </div>
+                    </div>
+                `;
+            }
+            
             const editorFields = document.getElementById('editorFields');
             if (editorFields) editorFields.innerHTML = html;
             
@@ -635,7 +727,7 @@
                                     <div class="item-icon"><i class="fas fa-link"></i></div>
                                     <div class="item-details">
                                         <div class="item-name">${escapeHtml(btn.text || 'Botão')}</div>
-                                        <div class="item-desc">${escapeHtml(btn.url || '#')} | ${btn.position || 'hero'} | ${btn.shape || 'rounded'}</div>
+                                        <div class="item-desc">${escapeHtml(btn.url || '#')} | ${btn.position || 'hero'} | ${btn.shape || 'rounded'} | Alinhamento: ${btn.align || 'center'}</div>
                                     </div>
                                 </div>
                                 <div class="item-actions">
@@ -725,6 +817,43 @@
                 }
             });
             
+            document.getElementById('saveFloatChangesBtn')?.addEventListener('click', () => {
+                if (!currentUserPlan.isPro) {
+                    showToast('⚠️ Botão Flutuante é exclusivo para PRO!', 'error');
+                    closeFloatModal();
+                    openPlansModal();
+                    return;
+                }
+                const floatBtn = {
+                    enabled: document.getElementById('floatEnabled').checked,
+                    link: document.getElementById('floatLink').value,
+                    text: document.getElementById('floatText').value,
+                    icon: document.getElementById('floatIcon').value,
+                    color: document.getElementById('floatColor').value,
+                    position: document.getElementById('floatPosition').value
+                };
+                currentEditingSite.content.floatButton = floatBtn;
+                updateSiteContent();
+                closeFloatModal();
+                // Atualizar a visualização do botão flutuante no editor
+                const floatInfoDiv = document.getElementById('floatButtonInfo');
+                if (floatInfoDiv) {
+                    floatInfoDiv.innerHTML = `
+                        <div class="item-info">
+                            <div class="item-icon"><i class="fas ${floatBtn.icon || 'fa-whatsapp'}"></i></div>
+                            <div class="item-details">
+                                <div class="item-name">${floatBtn.enabled ? 'Ativado' : 'Desativado'} - ${escapeHtml(floatBtn.text || 'Fale Conosco')}</div>
+                                <div class="item-desc">Posição: ${floatBtn.position === 'right' ? 'Direita' : 'Esquerda'} | Link: ${floatBtn.link ? floatBtn.link.substring(0, 30) : 'Não configurado'}</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-icon" onclick="event.stopPropagation(); window.openFloatModal()"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    `;
+                }
+                showToast('Botão flutuante atualizado!', 'success');
+            });
+            
             const fields = ['heroTitle', 'heroSubtitle', 'primaryColor', 'secondaryColor', 'fontFamily', 'whatsappNumber', 'whatsappMessage', 'emailAddress', 'aboutText'];
             fields.forEach(field => { const el = document.getElementById(field); if (el) el.addEventListener('change', () => updateSiteContent()); });
             const showWhatsapp = document.getElementById('showWhatsapp');
@@ -734,6 +863,14 @@
             
             const colorTexts = ['primaryColorText', 'secondaryColorText'];
             colorTexts.forEach(ct => { const el = document.getElementById(ct); if (el) { el.addEventListener('change', (e) => { const colorField = ct.replace('Text', ''); const colorEl = document.getElementById(colorField); if (colorEl) colorEl.value = e.target.value; updateSiteContent(); }); } });
+            
+            // Atualizar cores do float button
+            const floatColor = document.getElementById('floatColor');
+            const floatColorText = document.getElementById('floatColorText');
+            if (floatColor && floatColorText) {
+                floatColor.addEventListener('change', (e) => { floatColorText.value = e.target.value; });
+                floatColorText.addEventListener('change', (e) => { floatColor.value = e.target.value; });
+            }
             
             updateSiteContent = async () => {
                 if (!currentEditingSite) return;
@@ -790,7 +927,47 @@
                 if (btn.shape === 'square') return '12px';
                 return '50px';
             };
-            return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div><h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}</div></div></div>`;
+            const getAlign = (align) => {
+                if (align === 'center') return 'center';
+                if (align === 'left') return 'flex-start';
+                return 'flex-end';
+            };
+            
+            // Renderizar botão flutuante se estiver ativado e for PRO
+            let floatButtonHtml = '';
+            if (currentUserPlan.isPro && c.floatButton && c.floatButton.enabled && c.floatButton.link) {
+                const floatPos = c.floatButton.position === 'right' ? 'float-right' : 'float-left';
+                floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
+            }
+            
+            return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
+                ${floatButtonHtml}
+                <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
+                    <div>
+                        <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
+                        <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                            ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                            ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                            ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
+                    ${c.services && c.services.length > 0 ? `
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">
+                            ${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}
+                        </div>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">
+                            ${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                        </div>
+                    ` : ''}
+                    ${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
+                    <div style="display:flex; gap:16px; justify-content:${afterAboutButtons.length > 0 ? 'center' : 'flex-start'}; flex-wrap:wrap;">
+                        ${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                    </div>
+                </div>
+            </div>`;
         }
         
         async function saveSite() { 
@@ -803,7 +980,6 @@
         function closeEditor() { currentEditingSite = null; showPage('dashboardPage'); loadDashboard(); }
         
         function openCreateModal() { 
-            // Verificar limite de sites para usuários Free
             const checkSites = async () => {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
@@ -839,7 +1015,6 @@
             const templateId = document.getElementById('selectedTemplate')?.value || 'modern'; 
             if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } 
             
-            // Verificar limite novamente antes de criar
             const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
             const snapshot = await getDocs(q);
             if (!currentUserPlan.isPro && snapshot.size >= 2) {
@@ -869,16 +1044,75 @@
                     return; 
                 } 
                 const site = snapshot.docs[0].data(); 
-                document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); 
+                // Para visualização pública, precisamos verificar se o dono do site é PRO para mostrar o float button
+                const siteOwnerId = snapshot.docs[0].data().userId;
+                let isOwnerPro = false;
+                if (siteOwnerId) {
+                    const userDoc = await getDoc(doc(db, 'users', siteOwnerId));
+                    if (userDoc.exists()) isOwnerPro = userDoc.data().isPro || false;
+                }
+                document.getElementById('app').innerHTML = renderPublicSite(site, isOwnerPro);
                 const currentYear = new Date().getFullYear();
                 document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro - © ${currentYear}</footer>`; 
             } catch (error) { document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`; }
         }
         
+        function renderPublicSite(site, isOwnerPro) {
+            const c = site.content;
+            let fontFamily = 'Inter, sans-serif';
+            if (c.fontFamily === 'Playfair Display') fontFamily = "'Playfair Display', serif";
+            else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
+            const primary = c.primaryColor || '#6366f1';
+            const secondary = c.secondaryColor || '#8b5cf6';
+            const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
+            const afterServicesButtons = (c.buttons || []).filter(b => b.position === 'after-services');
+            const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
+            const getStyle = (btn) => { 
+                if (btn.shape === 'pill') return '40px';
+                if (btn.shape === 'square') return '12px';
+                return '50px';
+            };
+            
+            let floatButtonHtml = '';
+            if (isOwnerPro && c.floatButton && c.floatButton.enabled && c.floatButton.link) {
+                const floatPos = c.floatButton.position === 'right' ? 'float-right' : 'float-left';
+                floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
+            }
+            
+            return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
+                ${floatButtonHtml}
+                <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
+                    <div>
+                        <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
+                        <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                            ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                            ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                            ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
+                    ${c.services && c.services.length > 0 ? `
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">
+                            ${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}
+                        </div>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">
+                            ${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                        </div>
+                    ` : ''}
+                    ${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                        ${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                    </div>
+                </div>
+            </div>`;
+        }
+        
         renderApp();
         const slug = window.location.pathname.substring(1);
         if (slug && slug !== '') { viewPublicSite(slug); } 
-        else { onAuthStateChanged(auth, (user) => { currentUser = user; if (user) { showPage('dashboardPage'); loadDashboard(); } else { showPage('landingPage'); } }); }
+        else { onAuthStateChanged(auth, (user) => { currentUser = user; if (user) { loadUserPlan().then(() => { showPage('dashboardPage'); loadDashboard(); }); } else { showPage('landingPage'); } }); }
     </script>
 </body>
 </html>
