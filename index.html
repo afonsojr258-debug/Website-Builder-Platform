@@ -63,29 +63,6 @@
         .feature-card h3 { font-size: 22px; margin-bottom: 12px; }
         .feature-card p { color: #64748b; line-height: 1.6; }
         
-        /* Pricing Cards - Landing de Venda */
-        .pricing-section { padding: 100px 48px; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
-        .pricing-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-        .pricing-card { background: white; border-radius: 32px; padding: 40px 32px; text-align: center; transition: all 0.3s; border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
-        .pricing-card:hover { transform: translateY(-12px); box-shadow: 0 30px 40px -20px rgba(0,0,0,0.2); }
-        .pricing-card.popular { border: 2px solid #f59e0b; box-shadow: 0 20px 35px -15px rgba(245,158,11,0.2); }
-        .popular-badge { position: absolute; top: 20px; right: -30px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 8px 40px; font-size: 12px; font-weight: 600; transform: rotate(45deg); }
-        .pricing-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #eef2ff, #e0e7ff); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
-        .pricing-icon i { font-size: 40px; color: #6366f1; }
-        .pricing-card.popular .pricing-icon i { color: #f59e0b; }
-        .pricing-card h3 { font-size: 28px; margin-bottom: 16px; color: #0f172a; }
-        .pricing-price { font-size: 48px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
-        .pricing-price small { font-size: 16px; font-weight: 400; color: #64748b; }
-        .pricing-description { color: #64748b; margin-bottom: 24px; font-size: 14px; }
-        .pricing-features { list-style: none; margin: 24px 0; text-align: left; }
-        .pricing-features li { padding: 12px 0; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f1f5f9; }
-        .pricing-features li i { width: 24px; font-size: 18px; }
-        .pricing-features li i.fa-check-circle { color: #10b981; }
-        .pricing-features li i.fa-times-circle { color: #ef4444; }
-        .pricing-features li i.fa-star { color: #f59e0b; }
-        .pricing-features li span { color: #334155; font-size: 15px; }
-        .pricing-card .btn-primary, .pricing-card .btn-pro { margin-top: 24px; width: 100%; padding: 14px; font-size: 16px; }
-        
         /* Templates Showcase */
         .templates-section { padding: 100px 48px; background: white; }
         .templates-showcase { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
@@ -96,11 +73,6 @@
         .template-info { padding: 28px; }
         .template-info h3 { font-size: 20px; margin-bottom: 8px; }
         .template-info p { color: #64748b; }
-        
-        /* CTA Section */
-        .cta-section { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 80px 48px; text-align: center; }
-        .cta-section h2 { font-size: 36px; margin-bottom: 16px; }
-        .cta-section p { font-size: 18px; margin-bottom: 32px; opacity: 0.9; }
         
         /* Footer */
         .main-footer { background: #0f172a; color: #94a3b8; padding: 48px; text-align: center; border-top: 1px solid #1e293b; }
@@ -245,11 +217,11 @@
         .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         
         /* Plano Pro Modal */
-        .pricing-card-modal { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 20px; }
-        .pricing-price-modal { font-size: 48px; font-weight: 800; color: #d97706; }
-        .pricing-features-modal { list-style: none; margin: 20px 0; text-align: left; }
-        .pricing-features-modal li { padding: 8px 0; display: flex; align-items: center; gap: 8px; }
-        .pricing-features-modal i { color: #10b981; }
+        .pricing-card { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .pricing-price { font-size: 48px; font-weight: 800; color: #d97706; }
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 8px 0; display: flex; align-items: center; gap: 8px; }
+        .pricing-features i { color: #10b981; }
         
         /* Política de Privacidade */
         .legal-content { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
@@ -262,7 +234,7 @@
         
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
-            .hero-section, .features-section, .templates-section, .pricing-section, .cta-section { padding: 60px 20px; }
+            .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
             .hero-content p { font-size: 16px; }
             .sidebar { transform: translateX(-100%); position: fixed; z-index: 1000; }
@@ -278,7 +250,6 @@
             .float-left { left: 20px; }
             .float-right { right: 20px; }
             .footer-links { flex-direction: column; gap: 12px; align-items: center; }
-            .pricing-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -536,9 +507,6 @@
         
         function renderLandingPage() {
             const currentYear = new Date().getFullYear();
-            const isLoggedIn = !!currentUser;
-            const isPro = currentUserPlan?.isPro || false;
-            
             return `
                 <div class="main-header">
                     <div class="header-container">
@@ -547,63 +515,14 @@
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
                         <div class="nav-buttons">
-                            ${isLoggedIn ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
+                            <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                         </div>
                     </div>
                 </div>
-                <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.scrollToPricing()">Ver Planos</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;" onclick="window.showPrivacyPolicy()">Política</button></div></div></div>
-                
-                <!-- SEÇÃO DE PREÇOS - LANDING DE VENDA -->
-                <div class="pricing-section" id="pricingSection">
-                    <h2 class="section-title">Escolha o plano ideal para você</h2>
-                    <div class="pricing-grid">
-                        <!-- Plano Basic (Grátis) -->
-                        <div class="pricing-card">
-                            <div class="pricing-icon"><i class="fas fa-user"></i></div>
-                            <h3>Basic</h3>
-                            <div class="pricing-price">Grátis</div>
-                            <div class="pricing-description">Perfeito para começar</div>
-                            <ul class="pricing-features">
-                                <li><i class="fas fa-check-circle"></i> <span>Até 2 sites</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>3 templates profissionais</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Editor completo</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Botões personalizáveis</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Cards de serviços</span></li>
-                                <li><i class="fas fa-times-circle"></i> <span style="color:#94a3b8;">Botão flutuante</span></li>
-                                <li><i class="fas fa-times-circle"></i> <span style="color:#94a3b8;">Sites ilimitados</span></li>
-                            </ul>
-                            ${!isLoggedIn ? `<button class="btn-primary" onclick="window.showRegisterPage()"><i class="fas fa-rocket"></i> Começar Grátis</button>` : `<button class="btn-outline" disabled style="opacity:0.6; cursor:default;">Plano Atual</button>`}
-                        </div>
-                        
-                        <!-- Plano Pro (Pago) - Só pode ser adquirido por quem já é Pro ou quem quer se tornar Pro -->
-                        <div class="pricing-card popular">
-                            <div class="popular-badge">MAIS POPULAR</div>
-                            <div class="pricing-icon"><i class="fas fa-crown"></i></div>
-                            <h3>Pro</h3>
-                            <div class="pricing-price">250 MT</div>
-                            <div class="pricing-description">Pagamento único - Vitalício</div>
-                            <ul class="pricing-features">
-                                <li><i class="fas fa-check-circle"></i> <span>Sites Ilimitados</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Todos os templates</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Botão Flutuante personalizável</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Suporte prioritário</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Sem anúncios</span></li>
-                                <li><i class="fas fa-check-circle"></i> <span>Domínio personalizado</span></li>
-                                <li><i class="fas fa-star"></i> <span style="color:#f59e0b;">Funcionalidades exclusivas PRO</span></li>
-                            </ul>
-                            ${isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;" disabled><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : 
-                              `<button class="btn-pro" onclick="window.openPlansModal()"><i class="fab fa-whatsapp"></i> Adquirir Pro</button>`}
-                        </div>
-                    </div>
-                </div>
-                
+                <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;" onclick="window.showPrivacyPolicy()">Política</button></div></div></div>
                 <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>Botão Flutuante PRO</h3><p>Exclusivo para assinantes Pro</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
-                
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
-                
-                <div class="cta-section"><h2>Pronto para criar seu site?</h2><p>Junte-se a milhares de usuários que já construíram seus sites conosco</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Agora</button></div></div>
-                
                 <div class="main-footer">
                     <div class="footer-links">
                         <a onclick="window.showPrivacyPolicy()">Política de Privacidade</a>
@@ -617,13 +536,6 @@
                 </div>
             `;
         }
-        
-        window.scrollToPricing = () => {
-            const pricingSection = document.getElementById('pricingSection');
-            if (pricingSection) {
-                pricingSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        };
         
         function renderApp() {
             const appDiv = document.getElementById('app');
@@ -650,7 +562,7 @@
                 <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..."></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon">${floatIconOptions.map(opt => `<option value="${opt.icon}">${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card-modal"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price-modal">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features-modal"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><div id="plansButtonContainer"></div><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><div id="plansButtonContainer"></div><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -707,6 +619,7 @@
             
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
             
+            // Mostrar/esconder select de card para botão
             const btnPositionSelect = document.getElementById('editBtnPosition');
             const btnCardSelectGroup = document.getElementById('btnCardSelectGroup');
             if (btnPositionSelect && btnCardSelectGroup) {
@@ -715,6 +628,7 @@
                 });
             }
             
+            // Mostrar/esconder select de card para imagem
             const imgPositionSelect = document.getElementById('imagePosition');
             const imgCardSelectGroup = document.getElementById('imageCardSelectGroup');
             if (imgPositionSelect && imgCardSelectGroup) {
@@ -749,6 +663,7 @@
             const modal = document.getElementById('plansModal');
             if (modal) {
                 modal.classList.add('active');
+                // Atualizar o botão baseado no status do plano
                 const container = document.getElementById('plansButtonContainer');
                 if (container) {
                     if (currentUserPlan.isPro) {
@@ -790,6 +705,7 @@
             const images = currentEditingSite.content.customImages || [];
             const image = images[index] || { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero', cardIndex: null };
             
+            // Atualizar select de cards
             const services = currentEditingSite.content.services || [];
             const cardSelect = document.getElementById('imageCardIndex');
             if (cardSelect) {
@@ -842,6 +758,7 @@
             const btn = currentEditingSite.content.buttons[index];
             const services = currentEditingSite.content.services || [];
             
+            // Atualizar select de cards
             const cardSelect = document.getElementById('editBtnCardIndex');
             if (cardSelect) {
                 let options = '<option value="">Selecione um card</option>';
@@ -902,6 +819,7 @@
         window.removeService = (idx) => {
             currentEditingSite.content.services.splice(idx, 1);
             renderServicesList();
+            // Atualizar referências de imagens e botões que usam cards
             if (currentEditingSite.content.customImages) {
                 currentEditingSite.content.customImages.forEach(img => {
                     if (img.cardIndex > idx) img.cardIndex--;
@@ -919,9 +837,12 @@
         };
         
         window.showLandingPage = () => {
-            const landingPage = document.getElementById('landingPage');
-            landingPage.innerHTML = renderLandingPage();
-            showPage('landingPage');
+            if (currentUser) {
+                showPage('dashboardPage');
+                loadDashboard();
+            } else {
+                showPage('landingPage');
+            }
         };
         window.showLoginPage = () => showPage('loginPage');
         window.showRegisterPage = () => showPage('registerPage');
@@ -932,10 +853,6 @@
             if (targetPage) targetPage.classList.add('active');
             if (pageId === 'dashboardPage' && currentUser) { 
                 loadUserPlan().then(() => loadDashboard()); 
-            }
-            if (pageId === 'landingPage' && currentUser) {
-                const landingPage = document.getElementById('landingPage');
-                landingPage.innerHTML = renderLandingPage();
             }
         }
         
@@ -1667,23 +1584,27 @@
         }
         
         renderApp();
-        const slug = window.location.pathname.substring(1);
-        if (slug && slug !== '') { 
-            viewPublicSite(slug); 
-        } 
-        else { 
-            onAuthStateChanged(auth, async (user) => { 
-                currentUser = user; 
-                if (user) { 
-                    await loadUserPlan();
-                    showPage('dashboardPage'); 
-                    loadDashboard(); 
-                } else { 
-                    currentUserPlan = { isPro: false };
-                    showPage('landingPage'); 
-                } 
-            }); 
+        // ROTEAMENTO CORRIGIDO
+const slug = window.location.pathname.substring(1);
+console.log('📍 Slug detectado:', slug);
+
+if (slug && slug !== '') {
+    // Se tem slug, mostra o site público (ignora autenticação)
+    console.log('🎯 Modo público - carregando site:', slug);
+    viewPublicSite(slug);
+} else {
+    // Se não tem slug, mostra landing/dashboard baseado no login
+    console.log('🏠 Modo normal - verificando autenticação');
+    onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        if (user) {
+            showPage('dashboardPage');
+            loadDashboard();
+        } else {
+            showPage('landingPage');
         }
+    });
+}
     </script>
 </body>
 </html>
