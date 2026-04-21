@@ -109,7 +109,7 @@
         .sidebar-menu li { margin-bottom: 8px; }
         .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #475569; text-decoration: none; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
         .sidebar-menu a:hover, .sidebar-menu a.active { background: #eef2ff; color: #6366f1; }
-        .sidebar-footer { padding-top: 40px; border-top: 1px solid #e2e8f0; margin-top: auto; }
+        .sidebar-footer { padding-top: 40px; padding-bottom: 40px; border-top: 1px solid #e2e8f0; margin-top: auto; }
         .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 16px; }
         .user-info i { font-size: 32px; color: #6366f1; }
         .user-name { font-weight: 600; color: #0f172a; }
@@ -383,7 +383,7 @@
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">🚀 Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -429,7 +429,7 @@
             document.getElementById('plansLink')?.addEventListener('click', () => openPlansModal());
             document.getElementById('closePlansBtn')?.addEventListener('click', () => closePlansModal());
             document.getElementById('payWhatsappBtn')?.addEventListener('click', () => {
-                window.open('https://wa.me/25884216749?text=Olá! Gostaria de adquirir o plano PRO do WebCraft Pro. Meu email é: ' + encodeURIComponent(currentUser?.email || ''), '_blank');
+                window.open('https://wa.me/258842167459?text=Olá! Gostaria de adquirir o plano PRO do WebCraft Pro. Meu email é: ' + encodeURIComponent(currentUser?.email || ''), '_blank');
             });
             
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
