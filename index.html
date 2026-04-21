@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebCraft | Crie websites profissionais</title>
+    <title>WebCraft | Websites Profissionais</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         * {
@@ -345,12 +348,20 @@
             color: #4a5568;
         }
         
-        .editor-field input, .editor-field textarea {
+        .editor-field input, .editor-field textarea, .editor-field select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
             font-size: 14px;
+        }
+        
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: 2px solid #e2e8f0;
         }
         
         /* Toast */
@@ -401,6 +412,7 @@
         .template-card:hover, .template-card.selected {
             border-color: #667eea;
             background: #f7fafc;
+            transform: translateX(4px);
         }
         
         @media (max-width: 768px) {
@@ -424,10 +436,7 @@
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- App content will be rendered here -->
-        <div class="loading">Carregando...</div>
-    </div>
+    <div id="app"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -451,50 +460,98 @@
         let currentUser = null;
         let currentEditingSite = null;
         
+        // Templates profissionais
         const templates = {
-            portfolio: {
-                name: 'Portfólio Criativo',
-                icon: 'fa-palette',
+            modern: {
+                id: 'modern',
+                name: 'Modern Studio',
+                icon: 'fa-star',
+                description: 'Design minimalista e elegante para profissionais criativos',
+                preview: 'bg-gradient-to-r from-purple-600 to-pink-600',
                 structure: {
-                    heroTitle: 'Meu Portfólio',
-                    heroSubtitle: 'Criativo & Inovador',
-                    heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200',
-                    aboutText: 'Sou um profissional apaixonado por criar experiências digitais únicas.',
-                    projects: [{ name: 'Projeto 1', description: 'Descrição do projeto' }]
+                    heroTitle: 'Creative Studio',
+                    heroSubtitle: 'Transformando ideias em realidade',
+                    heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600',
+                    primaryColor: '#667eea',
+                    secondaryColor: '#764ba2',
+                    aboutTitle: 'Sobre Nós',
+                    aboutText: 'Somos uma agência criativa focada em entregar soluções inovadoras que conectam marcas às pessoas.',
+                    services: [
+                        { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush' },
+                        { name: 'Desenvolvimento', description: 'Sites e apps modernos', icon: 'fa-code' },
+                        { name: 'Marketing', description: 'Estratégias digitais', icon: 'fa-chart-line' }
+                    ],
+                    contactEmail: 'contato@estudio.com',
+                    social: { instagram: '#', linkedin: '#', behance: '#' }
                 }
             },
-            business: {
-                name: 'Empresa Moderna',
+            corporate: {
+                id: 'corporate',
+                name: 'Corporate Elite',
                 icon: 'fa-building',
+                description: 'Sofisticado para empresas e negócios',
+                preview: 'bg-gradient-to-r from-blue-600 to-cyan-600',
                 structure: {
-                    companyName: 'Minha Empresa',
-                    tagline: 'Inovação que Transforma',
-                    description: 'Oferecemos soluções integradas para seu negócio.',
-                    services: ['Consultoria', 'Desenvolvimento', 'Marketing'],
+                    companyName: 'Elite Corp',
+                    tagline: 'Excelência em resultados',
+                    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600',
+                    primaryColor: '#2563eb',
+                    secondaryColor: '#06b6d4',
+                    description: 'Lideramos o mercado com soluções inovadoras e atendimento personalizado.',
+                    services: [
+                        { name: 'Consultoria', description: 'Estratégia empresarial', icon: 'fa-chart-simple' },
+                        { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' },
+                        { name: 'Suporte', description: 'Atendimento 24/7', icon: 'fa-headset' }
+                    ],
                     whatsapp: '5511999999999',
-                    email: 'contato@empresa.com'
+                    email: 'contato@elitecorp.com'
+                }
+            },
+            personal: {
+                id: 'personal',
+                name: 'Personal Brand',
+                icon: 'fa-user-astronaut',
+                description: 'Portfólio pessoal impactante',
+                preview: 'bg-gradient-to-r from-orange-500 to-red-500',
+                structure: {
+                    name: 'Ana Silva',
+                    title: 'Designer & Diretora Criativa',
+                    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+                    bio: 'Especialista em criar experiências digitais memoráveis com mais de 8 anos de experiência.',
+                    primaryColor: '#ea580c',
+                    secondaryColor: '#dc2626',
+                    projects: [
+                        { name: 'Brand Revolution', description: 'Rebranding completo', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600' },
+                        { name: 'Digital Experience', description: 'Plataforma interativa', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600' }
+                    ],
+                    social: { instagram: '#', linkedin: '#', dribbble: '#' }
                 }
             },
             linkhub: {
-                name: 'Link Hub',
+                id: 'linkhub',
+                name: 'LinkHub Pro',
                 icon: 'fa-link',
+                description: 'Central profissional de links',
+                preview: 'bg-gradient-to-r from-green-500 to-emerald-500',
                 structure: {
-                    name: 'Meus Links',
-                    bio: 'Conecte-se comigo',
-                    avatar: 'https://ui-avatars.com/api/?background=667eea&color=fff&size=200',
+                    name: 'João Santos',
+                    bio: 'Criador de conteúdo | Palestrante',
+                    avatar: 'https://ui-avatars.com/api/?background=10b981&color=fff&size=200&bold=true',
+                    primaryColor: '#10b981',
+                    secondaryColor: '#059669',
                     links: [
-                        { title: 'Instagram', url: '#' },
-                        { title: 'LinkedIn', url: '#' }
+                        { title: 'Portfólio', url: '#', icon: 'fa-briefcase' },
+                        { title: 'Instagram', url: '#', icon: 'fa-instagram' },
+                        { title: 'LinkedIn', url: '#', icon: 'fa-linkedin' },
+                        { title: 'YouTube', url: '#', icon: 'fa-youtube' }
                     ]
                 }
             }
         };
         
-        // Render functions
         function renderApp() {
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
-                <!-- Login Page -->
                 <div id="loginPage" class="page">
                     <div class="auth-page">
                         <div class="auth-container">
@@ -514,14 +571,11 @@
                                 </div>
                                 <button type="submit" class="btn-primary">Entrar</button>
                             </form>
-                            <p class="auth-switch">
-                                Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a>
-                            </p>
+                            <p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a></p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Register Page -->
                 <div id="registerPage" class="page">
                     <div class="auth-page">
                         <div class="auth-container">
@@ -545,14 +599,11 @@
                                 </div>
                                 <button type="submit" class="btn-primary">Criar Conta</button>
                             </form>
-                            <p class="auth-switch">
-                                Já tem conta? <a id="showLoginBtn">Fazer login</a>
-                            </p>
+                            <p class="auth-switch">Já tem conta? <a id="showLoginBtn">Fazer login</a></p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Dashboard -->
                 <div id="dashboardPage" class="page">
                     <div class="dashboard-layout">
                         <aside class="sidebar">
@@ -562,10 +613,7 @@
                                 <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
                             </ul>
                             <div class="sidebar-footer">
-                                <div class="user-info">
-                                    <i class="fas fa-user-circle"></i>
-                                    <span id="userName"></span>
-                                </div>
+                                <div class="user-info"><i class="fas fa-user-circle"></i> <span id="userName"></span></div>
                                 <button id="logoutBtn" class="btn-outline" style="width:100%; margin-top:16px;">Sair</button>
                             </div>
                         </aside>
@@ -579,61 +627,54 @@
                     </div>
                 </div>
                 
-                <!-- Editor -->
                 <div id="editorPage" class="page">
                     <div class="editor-layout">
                         <div class="editor-sidebar">
                             <h3 id="editorTitle"></h3>
                             <div id="editorFields"></div>
-                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar</button>
-                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button>
+                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">💾 Salvar Alterações</button>
+                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">← Voltar</button>
                         </div>
                         <div class="editor-preview">
-                            <h3>Pré-visualização</h3>
+                            <h3 style="margin-bottom:20px;">📱 Pré-visualização ao vivo</h3>
                             <div id="livePreview"></div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Create Modal -->
                 <div id="createModal" class="modal">
                     <div class="modal-content">
-                        <h2>Criar novo site</h2>
+                        <h2 style="margin-bottom:24px;">✨ Criar novo site</h2>
                         <div class="input-group">
                             <label>Nome do site</label>
-                            <input type="text" id="siteTitle" placeholder="Meu Site">
+                            <input type="text" id="siteTitle" placeholder="Ex: Meu Portfólio">
                         </div>
                         <div class="input-group">
                             <label>Endereço (slug)</label>
                             <input type="text" id="siteSlug" placeholder="meusite">
-                            <small>Seu site estará em: /<span id="slugPreview">meusite</span></small>
+                            <small>🔗 Seu site estará em: /<span id="slugPreview">meusite</span></small>
                         </div>
                         <div class="input-group">
-                            <label>Template</label>
-                            <input type="hidden" id="selectedTemplate" value="portfolio">
-                            <div class="template-card" data-template="portfolio">
-                                <h3>🎨 Portfólio Criativo</h3>
-                            </div>
-                            <div class="template-card" data-template="business">
-                                <h3>🏢 Empresa Moderna</h3>
-                            </div>
-                            <div class="template-card" data-template="linkhub">
-                                <h3>🔗 Link Hub</h3>
-                            </div>
+                            <label>🎨 Escolha um template</label>
+                            <input type="hidden" id="selectedTemplate" value="modern">
+                            ${Object.entries(templates).map(([id, t]) => `
+                                <div class="template-card" data-template="${id}">
+                                    <h3><i class="fas ${t.icon}"></i> ${t.name}</h3>
+                                    <p style="color:#718096; font-size:14px;">${t.description}</p>
+                                </div>
+                            `).join('')}
                         </div>
-                        <button id="confirmCreateBtn" class="btn-primary">Criar</button>
+                        <button id="confirmCreateBtn" class="btn-primary">🚀 Criar Site</button>
                         <button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button>
                     </div>
                 </div>
                 
                 <div id="toast" class="toast"></div>
             `;
-            
             attachEvents();
         }
         
         function attachEvents() {
-            // Login
             document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
@@ -646,7 +687,6 @@
                 }
             });
             
-            // Register
             document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('registerName').value;
@@ -661,7 +701,6 @@
                 }
             });
             
-            // Navigation
             document.getElementById('showRegisterBtn')?.addEventListener('click', () => showPage('registerPage'));
             document.getElementById('showLoginBtn')?.addEventListener('click', () => showPage('loginPage'));
             document.getElementById('createSiteBtn')?.addEventListener('click', () => openCreateModal());
@@ -675,7 +714,6 @@
                 showToast('Logout realizado', 'success');
             });
             
-            // Template selection
             document.querySelectorAll('.template-card').forEach(card => {
                 card.addEventListener('click', () => {
                     document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
@@ -684,7 +722,6 @@
                 });
             });
             
-            // Slug preview
             document.getElementById('siteSlug')?.addEventListener('input', (e) => {
                 const preview = document.getElementById('slugPreview');
                 if (preview) preview.textContent = e.target.value || 'meusite';
@@ -707,7 +744,7 @@
             if (!currentUser) return;
             
             const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
+            sitesGrid.innerHTML = '<div class="loading">📂 Carregando seus sites...</div>';
             
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
@@ -718,9 +755,10 @@
                 if (snapshot.empty) {
                     sitesGrid.innerHTML = `
                         <div class="empty-state">
-                            <i class="fas fa-globe"></i>
-                            <h3>Nenhum site ainda</h3>
-                            <button class="btn-primary" id="emptyCreateBtn">Criar primeiro site</button>
+                            <i class="fas fa-rocket"></i>
+                            <h3>✨ Crie seu primeiro site</h3>
+                            <p>Escolha um template profissional e comece agora</p>
+                            <button class="btn-primary" id="emptyCreateBtn">🚀 Criar meu primeiro site</button>
                         </div>
                     `;
                     document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal());
@@ -736,13 +774,13 @@
                                 <div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div>
                                 <div class="site-info">
                                     <h3>${escapeHtml(site.title)}</h3>
-                                    <p>/${site.slug}</p>
+                                    <p>🔗 /${site.slug}</p>
                                 </div>
                             </div>
                             <div class="site-card-actions">
-                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button>
-                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button>
-                                <button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button>
+                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')">✏️ Editar</button>
+                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">👁️ Ver</button>
+                                <button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">🗑️ Excluir</button>
                             </div>
                         </div>
                     `;
@@ -764,7 +802,7 @@
         };
         
         window.deleteSiteById = async (siteId) => {
-            if (!confirm('Tem certeza?')) return;
+            if (!confirm('⚠️ Tem certeza? Esta ação é irreversível.')) return;
             await deleteDoc(doc(db, 'sites', siteId));
             showToast('Site excluído', 'success');
             loadDashboard();
@@ -772,17 +810,27 @@
         
         function showEditor() {
             showPage('editorPage');
-            document.getElementById('editorTitle').textContent = `Editando: ${currentEditingSite.title}`;
+            document.getElementById('editorTitle').innerHTML = `<i class="fas fa-edit"></i> Editando: ${currentEditingSite.title}`;
             
             let html = '';
             for (let [key, value] of Object.entries(currentEditingSite.content)) {
                 if (typeof value === 'string') {
-                    html += `
-                        <div class="editor-field">
-                            <label>${key}</label>
-                            <input type="text" id="field_${key}" value="${escapeHtml(value)}">
-                        </div>
-                    `;
+                    if (key.includes('Color')) {
+                        html += `
+                            <div class="editor-field">
+                                <label>🎨 ${key}</label>
+                                <input type="color" id="field_${key}" value="${value}">
+                                <div class="color-preview" style="background:${value}"></div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="editor-field">
+                                <label>📝 ${key}</label>
+                                <input type="text" id="field_${key}" value="${escapeHtml(value)}">
+                            </div>
+                        `;
+                    }
                 }
             }
             
@@ -809,30 +857,96 @@
         }
         
         function renderSitePreview(site) {
-            const content = site.content;
-            const template = site.template;
+            const c = site.content;
+            const t = site.template;
             
-            if (template === 'portfolio') {
+            if (t === 'modern') {
                 return `
-                    <div style="padding:20px;">
-                        <h1>${content.heroTitle || 'Título'}</h1>
-                        <p>${content.heroSubtitle || 'Subtítulo'}</p>
-                        <p>${content.aboutText || 'Sobre...'}</p>
+                    <div style="font-family:'Inter',sans-serif;">
+                        <div style="height:60vh; background:linear-gradient(135deg, ${c.primaryColor || '#667eea'}, ${c.secondaryColor || '#764ba2'}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; position:relative; overflow:hidden;">
+                            <div style="position:relative; z-index:2;">
+                                <h1 style="font-size:64px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Creative Studio'}</h1>
+                                <p style="font-size:24px; opacity:0.9;">${c.heroSubtitle || 'Transformando ideias em realidade'}</p>
+                                <button style="margin-top:30px; padding:12px 32px; background:white; border:none; border-radius:50px; font-weight:600; color:${c.primaryColor || '#667eea'}; cursor:pointer;">Saiba mais</button>
+                            </div>
+                        </div>
+                        <div style="max-width:1200px; margin:0 auto; padding:80px 20px;">
+                            <div style="text-align:center; margin-bottom:60px;">
+                                <h2 style="font-size:36px; margin-bottom:20px;">${c.aboutTitle || 'Sobre Nós'}</h2>
+                                <p style="font-size:18px; color:#4a5568; max-width:800px; margin:0 auto;">${c.aboutText || 'Somos uma agência criativa focada em entregar soluções inovadoras.'}</p>
+                            </div>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:30px;">
+                                ${c.services?.map(s => `
+                                    <div style="text-align:center; padding:30px; background:#f7fafc; border-radius:20px; transition:transform 0.3s;">
+                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${c.primaryColor || '#667eea'}; margin-bottom:20px;"></i>
+                                        <h3 style="margin-bottom:10px;">${s.name}</h3>
+                                        <p style="color:#718096;">${s.description || ''}</p>
+                                    </div>
+                                `).join('') || ''}
+                            </div>
+                        </div>
                     </div>
                 `;
-            } else if (template === 'business') {
+            } else if (t === 'corporate') {
                 return `
-                    <div style="padding:20px;">
-                        <h1>${content.companyName || 'Empresa'}</h1>
-                        <p>${content.tagline || 'Slogan'}</p>
-                        <p>${content.description || 'Descrição'}</p>
+                    <div style="font-family:'Inter',sans-serif;">
+                        <div style="height:50vh; background:linear-gradient(135deg, ${c.primaryColor || '#2563eb'}, ${c.secondaryColor || '#06b6d4'}); display:flex; align-items:center; justify-content:center; color:white; text-align:center;">
+                            <div>
+                                <h1 style="font-size:56px; margin-bottom:16px;">${c.companyName || 'Elite Corp'}</h1>
+                                <p style="font-size:20px;">${c.tagline || 'Excelência em resultados'}</p>
+                            </div>
+                        </div>
+                        <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
+                            <p style="font-size:18px; text-align:center; margin-bottom:60px; color:#4a5568;">${c.description || 'Lideramos o mercado com soluções inovadoras.'}</p>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:30px;">
+                                ${c.services?.map(s => `
+                                    <div style="padding:30px; border:1px solid #e2e8f0; border-radius:16px; text-align:center;">
+                                        <i class="fas ${s.icon || 'fa-chart-line'}" style="font-size:40px; color:${c.primaryColor || '#2563eb'}; margin-bottom:16px;"></i>
+                                        <h3>${s.name}</h3>
+                                        <p style="color:#718096;">${s.description || ''}</p>
+                                    </div>
+                                `).join('') || ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (t === 'personal') {
+                return `
+                    <div style="font-family:'Inter',sans-serif;">
+                        <div style="background:linear-gradient(135deg, ${c.primaryColor || '#ea580c'}, ${c.secondaryColor || '#dc2626'}); padding:60px 20px; text-align:center; color:white;">
+                            <img src="${c.avatar || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200'}" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:20px; border:4px solid white;">
+                            <h1 style="font-size:48px;">${c.name || 'Ana Silva'}</h1>
+                            <p style="font-size:20px;">${c.title || 'Designer & Diretora Criativa'}</p>
+                        </div>
+                        <div style="max-width:1000px; margin:0 auto; padding:60px 20px;">
+                            <p style="font-size:18px; text-align:center; margin-bottom:60px;">${c.bio || 'Especialista em criar experiências digitais memoráveis.'}</p>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:30px;">
+                                ${c.projects?.map(p => `
+                                    <div style="border-radius:16px; overflow:hidden; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+                                        <img src="${p.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600'}" style="width:100%; height:200px; object-fit:cover;">
+                                        <div style="padding:20px;">
+                                            <h3>${p.name}</h3>
+                                            <p style="color:#718096;">${p.description || ''}</p>
+                                        </div>
+                                    </div>
+                                `).join('') || ''}
+                            </div>
+                        </div>
                     </div>
                 `;
             } else {
                 return `
-                    <div style="padding:20px; text-align:center;">
-                        <h1>${content.name || 'Nome'}</h1>
-                        <p>${content.bio || 'Bio'}</p>
+                    <div style="min-height:100vh; background:linear-gradient(135deg, ${c.primaryColor || '#10b981'}, ${c.secondaryColor || '#059669'}); display:flex; align-items:center; justify-content:center; padding:20px;">
+                        <div style="background:white; border-radius:40px; padding:50px; text-align:center; max-width:500px; width:100%;">
+                            <img src="${c.avatar || 'https://ui-avatars.com/api/?background=10b981&color=fff&size=200'}" style="width:120px; height:120px; border-radius:60px; margin-bottom:20px;">
+                            <h1 style="margin-bottom:10px;">${c.name || 'João Santos'}</h1>
+                            <p style="color:#718096; margin-bottom:30px;">${c.bio || 'Criador de conteúdo'}</p>
+                            <div style="display:flex; flex-direction:column; gap:15px;">
+                                ${c.links?.map(l => `
+                                    <a href="${l.url}" style="display:block; padding:15px; background:#f7fafc; border-radius:12px; text-decoration:none; color:#2d3748; font-weight:500;">${l.title}</a>
+                                `).join('') || ''}
+                            </div>
+                        </div>
                     </div>
                 `;
             }
@@ -841,7 +955,7 @@
         async function saveSite() {
             if (currentEditingSite) {
                 await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-                showToast('Site salvo!', 'success');
+                showToast('✅ Site salvo com sucesso!', 'success');
                 closeEditor();
                 loadDashboard();
             }
@@ -855,6 +969,7 @@
         
         function openCreateModal() {
             document.getElementById('createModal').classList.add('active');
+            document.querySelector('.template-card')?.classList.add('selected');
         }
         
         function closeCreateModal() {
@@ -878,14 +993,14 @@
                     title: title,
                     slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
                     template: templateId,
-                    content: templates[templateId].structure,
+                    content: JSON.parse(JSON.stringify(templates[templateId].structure)),
                     userId: currentUser.uid,
                     createdAt: new Date().toISOString(),
                     published: true
                 };
                 
                 await addDoc(collection(db, 'sites'), siteData);
-                showToast('Site criado!', 'success');
+                showToast('✨ Site criado com sucesso!', 'success');
                 closeCreateModal();
                 loadDashboard();
             } catch (error) {
@@ -903,7 +1018,6 @@
             });
         }
         
-        // Public site viewer
         async function viewPublicSite(slug) {
             try {
                 const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true));
@@ -911,62 +1025,25 @@
                 
                 if (snapshot.empty) {
                     document.getElementById('app').innerHTML = `
-                        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column;">
-                            <h2>Site não encontrado</h2>
-                            <a href="/">Voltar para WebCraft</a>
+                        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
+                            <i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i>
+                            <h2>🔍 Site não encontrado</h2>
+                            <a href="/" style="color:#667eea;">← Voltar para WebCraft</a>
                         </div>
                     `;
                     return;
                 }
                 
                 const site = snapshot.docs[0].data();
-                let html = '';
-                
-                if (site.template === 'portfolio') {
-                    html = `
-                        <div style="font-family:'Inter',sans-serif;">
-                            <div style="height:50vh; background:#667eea; display:flex; align-items:center; justify-content:center; color:white;">
-                                <h1>${site.content.heroTitle || site.title}</h1>
-                            </div>
-                            <div style="max-width:800px; margin:0 auto; padding:40px;">
-                                <p>${site.content.aboutText || ''}</p>
-                            </div>
-                        </div>
-                    `;
-                } else if (site.template === 'business') {
-                    html = `
-                        <div style="font-family:'Inter',sans-serif;">
-                            <div style="height:50vh; background:#764ba2; display:flex; align-items:center; justify-content:center; color:white;">
-                                <h1>${site.content.companyName || site.title}</h1>
-                            </div>
-                            <div style="max-width:800px; margin:0 auto; padding:40px;">
-                                <p>${site.content.description || ''}</p>
-                                ${site.content.whatsapp ? `<a href="https://wa.me/${site.content.whatsapp}">WhatsApp</a>` : ''}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    html = `
-                        <div style="min-height:100vh; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center;">
-                            <div style="background:white; border-radius:30px; padding:40px; text-align:center;">
-                                <h1>${site.content.name || site.title}</h1>
-                                <p>${site.content.bio || ''}</p>
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                html += `<footer style="text-align:center; padding:20px; background:#f7fafc;">Criado com WebCraft</footer>`;
-                document.getElementById('app').innerHTML = html;
+                document.getElementById('app').innerHTML = renderSitePreview(site);
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:20px; background:#f7fafc; color:#a0aec0;">✨ Criado com <i class="fas fa-heart" style="color:#fc8181;"></i> WebCraft</footer>`;
             } catch (error) {
-                document.getElementById('app').innerHTML = `<div>Erro: ${error.message}</div>`;
+                document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`;
             }
         }
         
-        // Initialize
         renderApp();
         
-        // Check route
         const slug = window.location.pathname.substring(1);
         if (slug && slug !== '') {
             viewPublicSite(slug);
