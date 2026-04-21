@@ -50,8 +50,6 @@
             width: 100%;
             max-width: 480px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-            position: relative;
-            z-index: 1;
         }
         
         .auth-header {
@@ -408,7 +406,7 @@
         
         .icon-selector {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 8px;
             margin-top: 8px;
         }
@@ -511,7 +509,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
@@ -888,19 +886,29 @@
         }
         
         window.editSiteById = async (siteId) => {
-            const docRef = doc(db, 'sites', siteId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                currentEditingSite = { id: docSnap.id, ...docSnap.data() };
-                showEditor();
+            try {
+                const docRef = doc(db, 'sites', siteId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    currentEditingSite = { id: docSnap.id, ...docSnap.data() };
+                    showEditor();
+                } else {
+                    showToast('Site not found', 'error');
+                }
+            } catch (error) {
+                showToast('Error loading site: ' + error.message, 'error');
             }
         };
         
         window.deleteSiteById = async (siteId) => {
             if (!confirm('Are you sure? This action cannot be undone.')) return;
-            await deleteDoc(doc(db, 'sites', siteId));
-            showToast('Site deleted successfully', 'success');
-            loadDashboard();
+            try {
+                await deleteDoc(doc(db, 'sites', siteId));
+                showToast('Site deleted successfully', 'success');
+                loadDashboard();
+            } catch (error) {
+                showToast('Error deleting site', 'error');
+            }
         };
         
         function showEditor() {
@@ -935,7 +943,7 @@
                             <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
                             <div class="color-input-group">
                                 <input type="color" id="field_${field}" value="${content[field]}">
-                                <input type="text" value="${content[field]}" style="flex:1;" onchange="document.getElementById('field_${field}').value = this.value; document.getElementById('field_${field}').dispatchEvent(new Event('change'))">
+                                <input type="text" value="${content[field]}" style="flex:1;" id="field_${field}_text" onchange="document.getElementById('field_${field}').value = this.value; document.getElementById('field_${field}').dispatchEvent(new Event('change'))">
                             </div>
                         </div>
                     `;
@@ -1025,6 +1033,13 @@
                             showToast('Saved!', 'success');
                             updatePreview();
                         });
+                    } else if (field.type === 'select-one') {
+                        field.addEventListener('change', async (e) => {
+                            content[key] = e.target.value;
+                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                            showToast('Saved!', 'success');
+                            updatePreview();
+                        });
                     } else {
                         field.addEventListener('change', async (e) => {
                             content[key] = e.target.value;
@@ -1033,6 +1048,21 @@
                             updatePreview();
                         });
                     }
+                }
+            }
+            
+            // Color text fields
+            for (let field of colorFields) {
+                const textField = document.getElementById(`field_${field}_text`);
+                if (textField) {
+                    textField.addEventListener('change', async (e) => {
+                        content[field] = e.target.value;
+                        const colorField = document.getElementById(`field_${field}`);
+                        if (colorField) colorField.value = e.target.value;
+                        await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                        showToast('Saved!', 'success');
+                        updatePreview();
+                    });
                 }
             }
             
@@ -1102,7 +1132,6 @@
         
         function renderSitePreview(site) {
             const c = site.content;
-            const t = site.template;
             
             let fontFamily = 'Inter, sans-serif';
             if (c.fontFamily === 'Playfair Display') fontFamily = "'Playfair Display', serif";
@@ -1115,14 +1144,14 @@
             
             return `
                 <div style="font-family:${fontFamily};">
-                    <div style="height:60vh; background:linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:20px;">
+                    <div style="min-height:60vh; background:linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:40px 20px;">
                         <div style="max-width:800px;">
-                            <h1 style="font-size:64px; margin-bottom:20px; font-weight:800;">${c.heroTitle || c.companyName || c.name || 'My Website'}</h1>
-                            <p style="font-size:24px; opacity:0.95;">${c.heroSubtitle || c.tagline || c.title || 'Welcome'}</p>
-                            <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Hello!')}" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primaryColor}; font-weight:600; transition:transform 0.2s;">WhatsApp</a>` : ''}
-                                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                                ${c.showPhone ? `<a href="tel:${c.phoneNumber}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Call Us</a>` : ''}
+                            <h1 style="font-size:48px; margin-bottom:16px; font-weight:800;">${c.heroTitle || c.companyName || c.name || 'My Website'}</h1>
+                            <p style="font-size:20px; opacity:0.95;">${c.heroSubtitle || c.tagline || c.title || 'Welcome'}</p>
+                            <div style="margin-top:32px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Hello!')}" target="_blank" style="padding:12px 28px; background:white; border-radius:50px; text-decoration:none; color:${primaryColor}; font-weight:600; transition:transform 0.2s;">WhatsApp</a>` : ''}
+                                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:12px 28px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                                ${c.showPhone ? `<a href="tel:${c.phoneNumber}" style="padding:12px 28px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Call Us</a>` : ''}
                             </div>
                         </div>
                     </div>
@@ -1144,10 +1173,10 @@
                             </div>
                         ` : ''}
                         ${c.services && c.services.length > 0 ? `
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:30px;">
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px;">
                                 ${c.services.map(s => `
-                                    <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.3s;">
-                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:56px; color:${primaryColor}; margin-bottom:20px;"></i>
+                                    <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;">
+                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primaryColor}; margin-bottom:20px;"></i>
                                         <h3 style="margin-bottom:10px; font-size:22px;">${s.name}</h3>
                                         <p style="color:#64748b;">${s.description || ''}</p>
                                     </div>
@@ -1161,11 +1190,15 @@
         
         async function saveSite() {
             if (currentEditingSite) {
-                await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
-                    content: currentEditingSite.content,
-                    updatedAt: new Date().toISOString()
-                });
-                showToast('Website saved successfully!', 'success');
+                try {
+                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
+                        content: currentEditingSite.content,
+                        updatedAt: new Date().toISOString()
+                    });
+                    showToast('Website saved successfully!', 'success');
+                } catch (error) {
+                    showToast('Error saving: ' + error.message, 'error');
+                }
             }
         }
         
@@ -1177,7 +1210,8 @@
         
         function openCreateModal() {
             document.getElementById('createModal').classList.add('active');
-            document.querySelector('.template-card')?.classList.add('selected');
+            const firstCard = document.querySelector('.template-card');
+            if (firstCard) firstCard.classList.add('selected');
         }
         
         function closeCreateModal() {
@@ -1243,15 +1277,12 @@
                 }
                 
                 const site = snapshot.docs[0].data();
-                document.getElementById('app').innerHTML = renderSitePreview({ content: site.content, template: site.template });
+                document.getElementById('app').innerHTML = renderSitePreview({ content: site.content });
                 document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Created with WebCraft Pro</footer>`;
             } catch (error) {
                 document.getElementById('app').innerHTML = `<div style="padding:40px;">Error: ${error.message}</div>`;
             }
         }
-        
-        // Helper function to get document
-        window.getDoc = getDoc;
         
         renderApp();
         
