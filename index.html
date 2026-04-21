@@ -25,9 +25,10 @@
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .logo-img { height: 45px; width: auto; border-radius: 10px; }
         .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .main-nav { display: flex; gap: 40px; align-items: center; }
-        .main-nav a { text-decoration: none; color: #475569; font-weight: 500; transition: all 0.2s; }
-        .main-nav a:hover { color: #6366f1; }
+        
+        /* Menu de navegação removido da landing page - escondido */
+        .main-nav { display: none; }
+        
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
         .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; z-index: 999; }
         .mobile-nav.open { display: flex; }
@@ -200,8 +201,6 @@
         
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
-            .main-nav { display: none; }
-            .mobile-menu-btn { display: block; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
             .hero-content p { font-size: 16px; }
@@ -314,9 +313,7 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav">
-                            <a href="#">Início</a><a href="#">Templates</a><a href="#">Recursos</a><a href="#">Preços</a>
-                        </div>
+                        <div class="main-nav"></div>
                         <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
@@ -324,7 +321,6 @@
                         </div>
                     </div>
                     <div class="mobile-nav" id="mobileNav">
-                        <a href="#">Início</a><a href="#">Templates</a><a href="#">Recursos</a><a href="#">Preços</a>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
