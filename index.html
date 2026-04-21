@@ -12,9 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ============================================
-           RESET E CONFIGURAÇÕES GLOBAIS
-        ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -28,9 +25,6 @@
             overflow-x: hidden;
         }
         
-        /* ============================================
-           ANIMAÇÕES
-        ============================================ */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -41,19 +35,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: translate(-25%, -25%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-25%, -25%) scale(1.1); opacity: 0.8; }
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        
-        /* ============================================
-           PÁGINAS
-        ============================================ */
         .page {
             display: none;
             animation: fadeIn 0.5s ease;
@@ -63,9 +44,7 @@
             display: block;
         }
         
-        /* ============================================
-           HEADER PRINCIPAL
-        ============================================ */
+        /* Header */
         .main-header {
             background: rgba(255,255,255,0.98);
             backdrop-filter: blur(10px);
@@ -74,7 +53,6 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         
         .header-container {
@@ -90,235 +68,828 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            transition: transform 0.2s;
         }
         
-        .logo-area:hover { transform: scale(1.02); }
-        .logo-img { height: 45px; width: auto; border-radius: 10px; }
-        .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-img {
+            height: 45px;
+            width: auto;
+            border-radius: 10px;
+        }
         
-        /* Menu Desktop */
-        .main-nav { display: flex; gap: 40px; align-items: center; }
-        .main-nav a { text-decoration: none; color: #475569; font-weight: 500; transition: all 0.2s; position: relative; }
-        .main-nav a:hover { color: #6366f1; }
-        .main-nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: linear-gradient(135deg, #6366f1, #8b5cf6); transition: width 0.3s; }
-        .main-nav a:hover::after { width: 100%; }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         
-        /* Menu Mobile */
-        .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
-        .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 999; }
-        .mobile-nav.open { display: flex; }
-        .mobile-nav a { text-decoration: none; color: #475569; font-weight: 500; padding: 12px; border-radius: 12px; transition: all 0.2s; }
-        .mobile-nav a:hover { background: #f1f5f9; color: #6366f1; }
-        .mobile-nav .nav-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
-        .nav-buttons { display: flex; gap: 16px; }
+        .main-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
         
-        /* ============================================
-           BOTÕES GLOBAIS
-        ============================================ */
-        .btn-nav { padding: 10px 28px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; font-size: 14px; }
-        .btn-nav-primary { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; box-shadow: 0 4px 14px rgba(99,102,241,0.3); }
-        .btn-nav-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99,102,241,0.4); }
-        .btn-nav-outline { background: transparent; border: 2px solid #e2e8f0; color: #475569; }
-        .btn-nav-outline:hover { border-color: #6366f1; color: #6366f1; transform: translateY(-2px); }
-        .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border: none; border-radius: 16px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99,102,241,0.3); }
-        .btn-outline { padding: 10px 20px; background: #f1f5f9; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
-        .btn-outline:hover { background: #e2e8f0; transform: translateY(-2px); }
-        .btn-danger { padding: 10px 20px; background: #fee2e2; border: 2px solid #fecaca; border-radius: 12px; cursor: pointer; font-weight: 500; color: #dc2626; transition: all 0.2s; }
-        .btn-danger:hover { background: #fecaca; transform: translateY(-2px); }
+        .main-nav a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
         
-        /* ============================================
-           HERO SECTION
-        ============================================ */
-        .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
-        .hero-section::before { content: ''; position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%); animation: pulse 10s ease-in-out infinite; }
-        .hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
-        .hero-content h1 { font-size: 64px; margin-bottom: 24px; font-weight: 800; line-height: 1.2; }
-        .hero-content p { font-size: 20px; opacity: 0.9; margin-bottom: 40px; line-height: 1.6; }
-        .hero-buttons { display: flex; gap: 20px; justify-content: center; }
+        .main-nav a:hover {
+            color: #6366f1;
+        }
         
-        /* ============================================
-           FEATURES SECTION
-        ============================================ */
-        .features-section { padding: 100px 48px; background: #f8fafc; }
-        .section-title { text-align: center; font-size: 42px; font-weight: 700; margin-bottom: 60px; background: linear-gradient(135deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .features-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
-        .feature-card { text-align: center; padding: 40px 30px; background: white; border-radius: 28px; transition: all 0.3s; border: 1px solid #e2e8f0; }
-        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1); }
-        .feature-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
-        .feature-icon i { font-size: 40px; color: #6366f1; }
-        .feature-card h3 { font-size: 22px; margin-bottom: 12px; }
-        .feature-card p { color: #64748b; line-height: 1.6; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #475569;
+            padding: 8px;
+        }
         
-        /* ============================================
-           TEMPLATES SHOWCASE
-        ============================================ */
-        .templates-section { padding: 100px 48px; background: white; }
-        .templates-showcase { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-        .template-showcase-card { background: #f8fafc; border-radius: 28px; overflow: hidden; transition: all 0.3s; border: 1px solid #e2e8f0; }
-        .template-showcase-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
-        .template-preview { height: 220px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden; }
-        .template-preview::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2) 0%, transparent 70%); }
-        .template-preview i { font-size: 64px; position: relative; z-index: 1; }
-        .template-info { padding: 28px; }
-        .template-info h3 { font-size: 20px; margin-bottom: 8px; }
-        .template-info p { color: #64748b; }
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 77px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            flex-direction: column;
+            gap: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 999;
+        }
         
-        /* ============================================
-           FOOTER
-        ============================================ */
-        .main-footer { background: #0f172a; color: #94a3b8; padding: 48px; text-align: center; border-top: 1px solid #1e293b; }
-        .footer-content { max-width: 1200px; margin: 0 auto; }
-        .footer-content p { margin: 8px 0; }
+        .mobile-nav.open {
+            display: flex;
+        }
         
-        /* ============================================
-           AUTH PAGES
-        ============================================ */
-        .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 20px; position: relative; }
-        .auth-container { background: rgba(255,255,255,0.98); border-radius: 32px; padding: 48px; width: 100%; max-width: 480px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: fadeInUp 0.5s ease; }
-        .auth-header { text-align: center; margin-bottom: 40px; }
-        .auth-header img { height: 60px; margin-bottom: 16px; }
-        .auth-header h1 { font-size: 32px; margin-bottom: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .auth-header p { color: #64748b; }
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+        }
         
-        /* ============================================
-           INPUTS
-        ============================================ */
-        .input-group { margin-bottom: 24px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #334155; }
-        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 16px; transition: all 0.3s; font-family: inherit; }
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
-        .auth-switch { text-align: center; margin-top: 24px; color: #64748b; }
-        .auth-switch a { color: #6366f1; text-decoration: none; font-weight: 600; cursor: pointer; }
+        /* Botões */
+        .btn-nav {
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 14px;
+        }
         
-        /* ============================================
-           DASHBOARD - SIDEBAR
-        ============================================ */
-        .dashboard-layout { display: flex; min-height: 100vh; background: #f8fafc; }
-        .sidebar { width: 280px; background: white; border-right: 1px solid #e2e8f0; padding: 32px 24px; position: fixed; height: 100vh; overflow-y: auto; transition: transform 0.3s ease; z-index: 100; }
-        .sidebar-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; cursor: pointer; transition: transform 0.2s; }
-        .sidebar-logo:hover { transform: scale(1.02); }
-        .sidebar-logo img { height: 40px; border-radius: 8px; }
-        .sidebar-logo span { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .sidebar-menu { list-style: none; }
-        .sidebar-menu li { margin-bottom: 8px; }
-        .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #475569; text-decoration: none; border-radius: 12px; transition: all 0.2s; cursor: pointer; font-weight: 500; }
-        .sidebar-menu a:hover, .sidebar-menu a.active { background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); color: #6366f1; }
-        .sidebar-footer { position: absolute; bottom: 32px; left: 24px; right: 24px; padding-top: 24px; border-top: 1px solid #e2e8f0; }
-        .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 16px; }
-        .user-info i { font-size: 32px; color: #6366f1; }
-        .user-name { font-weight: 600; color: #0f172a; }
-        .user-plan { font-size: 12px; color: #64748b; }
-        .mobile-sidebar-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 25px; color: white; font-size: 24px; cursor: pointer; z-index: 101; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .main-content { flex: 1; margin-left: 280px; padding: 32px 48px; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-        .dashboard-header h1 { font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-nav-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+        }
         
-        /* ============================================
-           SITES GRID
-        ============================================ */
-        .sites-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
-        .site-card { background: white; border-radius: 20px; padding: 24px; transition: all 0.3s; border: 1px solid #e2e8f0; cursor: pointer; }
-        .site-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); border-color: #cbd5e1; }
-        .site-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-        .site-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; }
-        .site-info h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-        .site-info p { color: #64748b; font-size: 13px; }
-        .badge { display: inline-block; padding: 4px 12px; background: #e0e7ff; color: #4f46e5; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 8px; }
-        .site-card-actions { display: flex; gap: 12px; margin-top: 16px; }
+        .btn-nav-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+        }
         
-        /* ============================================
-           EDITOR - CSS COMPLETO
-        ============================================ */
-        .editor-layout { display: flex; height: 100vh; background: #f8fafc; }
-        .editor-sidebar { width: 500px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
-        .editor-sidebar h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; color: #0f172a; display: flex; align-items: center; gap: 8px; }
-        .editor-preview { flex: 1; overflow-y: auto; padding: 32px; background: #f1f5f9; }
-        .editor-preview h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
-        .editor-section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e2e8f0; }
-        .editor-section:last-child { border-bottom: none; }
-        .editor-section h4 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
-        .editor-section h4 i { color: #6366f1; }
-        .editor-field { margin-bottom: 20px; }
-        .editor-field label { display: block; margin-bottom: 8px; font-weight: 500; color: #475569; font-size: 14px; }
-        .editor-field input, .editor-field textarea, .editor-field select { width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; transition: all 0.2s; font-family: inherit; }
-        .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
-        .color-input-group { display: flex; gap: 12px; align-items: center; }
-        .color-input-group input[type="color"] { width: 60px; height: 50px; padding: 4px; cursor: pointer; border-radius: 12px; }
+        .btn-nav-outline:hover, .btn-nav-primary:hover {
+            transform: translateY(-2px);
+        }
         
-        /* Cards de Serviços com seletor de ícones visual */
-        .service-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; transition: all 0.2s; }
-        .service-card:hover { background: #f1f5f9; border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .service-card input, .service-card textarea { width: 100%; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; font-family: inherit; }
-        .service-card input:focus, .service-card textarea:focus { outline: none; border-color: #6366f1; }
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         
-        /* Seletor de Ícones Visual - GRADE DE ÍCONES CLICÁVEIS */
-        .icon-picker-title { font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .icon-selector-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin: 12px 0; background: white; padding: 16px; border-radius: 16px; border: 1px solid #e2e8f0; }
-        .icon-option-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s; background: #f8fafc; border: 1px solid #e2e8f0; }
-        .icon-option-card:hover { background: #eef2ff; border-color: #6366f1; transform: scale(1.05); }
-        .icon-option-card.selected { background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border-color: #6366f1; box-shadow: 0 2px 8px rgba(99,102,241,0.2); }
-        .icon-option-card i { font-size: 24px; color: #6366f1; }
-        .icon-option-card span { font-size: 10px; color: #64748b; text-align: center; word-break: break-word; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99,102,241,0.3);
+        }
         
-        /* Cards de Botões */
-        .btn-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; transition: all 0.2s; }
-        .btn-card:hover { background: #f1f5f9; border-color: #cbd5e1; }
-        .btn-card input, .btn-card select { width: 100%; padding: 10px 12px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; }
-        .btn-card input:focus, .btn-card select:focus { outline: none; border-color: #6366f1; }
+        .btn-outline {
+            padding: 10px 20px;
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
         
-        .remove-btn { width: 100%; margin-top: 12px; padding: 10px; background: #fee2e2; border: none; border-radius: 12px; color: #dc2626; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .remove-btn:hover { background: #fecaca; transform: translateY(-2px); }
+        .btn-outline:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
         
-        /* ============================================
-           MODAL
-        ============================================ */
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 1000; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 32px; padding: 40px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; animation: fadeInUp 0.3s ease; }
-        .modal-content h2 { font-size: 28px; margin-bottom: 24px; color: #0f172a; }
-        .template-card { border: 2px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s; }
-        .template-card:hover { border-color: #6366f1; background: #eef2ff; transform: translateX(8px); }
-        .template-card.selected { border-color: #6366f1; background: #eef2ff; transform: translateX(8px); }
-        .template-card i { font-size: 24px; color: #6366f1; margin-right: 12px; }
-        .template-card strong { font-size: 18px; }
-        .template-card p { font-size: 13px; color: #64748b; margin-top: 8px; }
+        .btn-danger {
+            padding: 10px 20px;
+            background: #fee2e2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #dc2626;
+        }
         
-        /* ============================================
-           TOAST NOTIFICATION
-        ============================================ */
-        .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 28px; border-radius: 16px; color: white; transform: translateX(450px); transition: transform 0.3s; z-index: 2000; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .toast.show { transform: translateX(0); }
+        /* Hero */
+        .hero-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: white;
+            padding: 100px 48px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 64px;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        /* Features */
+        .features-section {
+            padding: 100px 48px;
+            background: #f8fafc;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 28px;
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        
+        .feature-icon i {
+            font-size: 40px;
+            color: #6366f1;
+        }
+        
+        /* Templates Showcase */
+        .templates-section {
+            padding: 100px 48px;
+            background: white;
+        }
+        
+        .templates-showcase {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+        
+        .template-showcase-card {
+            background: #f8fafc;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .template-showcase-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .template-preview {
+            height: 220px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .template-preview i {
+            font-size: 64px;
+        }
+        
+        .template-info {
+            padding: 28px;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 48px;
+            text-align: center;
+        }
+        
+        /* Auth */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 32px;
+            padding: 48px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .auth-header img {
+            height: 60px;
+            margin-bottom: 16px;
+        }
+        
+        .auth-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Inputs */
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 24px;
+            color: #64748b;
+        }
+        
+        .auth-switch a {
+            color: #6366f1;
+            cursor: pointer;
+        }
+        
+        /* Dashboard */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 32px 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 48px;
+            cursor: pointer;
+        }
+        
+        .sidebar-logo img {
+            height: 40px;
+            border-radius: 8px;
+        }
+        
+        .sidebar-logo span {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: #eef2ff;
+            color: #6366f1;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 32px;
+            left: 24px;
+            right: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 16px;
+        }
+        
+        .user-info i {
+            font-size: 32px;
+            color: #6366f1;
+        }
+        
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 101;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px 48px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .site-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
+        }
+        
+        .site-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .site-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .site-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .site-info p {
+            color: #64748b;
+            font-size: 13px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .site-card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        /* Editor */
+        .editor-layout {
+            display: flex;
+            height: 100vh;
+            background: #f8fafc;
+        }
+        
+        .editor-sidebar {
+            width: 500px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 32px;
+            overflow-y: auto;
+        }
+        
+        .editor-sidebar h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .editor-preview {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+            background: #f1f5f9;
+        }
+        
+        .editor-preview h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .editor-section {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .editor-section h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .editor-section h4 i {
+            color: #6366f1;
+        }
+        
+        .editor-field {
+            margin-bottom: 20px;
+        }
+        
+        .editor-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .editor-field input, .editor-field textarea, .editor-field select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .color-input-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .color-input-group input[type="color"] {
+            width: 60px;
+            height: 50px;
+        }
+        
+        /* Service Cards */
+        .service-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .service-card input, .service-card textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+        
+        /* Icon Selector Grid */
+        .icon-picker-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+        
+        .icon-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .icon-option-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 5px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .icon-option-card:hover {
+            background: #eef2ff;
+            border-color: #6366f1;
+            transform: scale(1.05);
+        }
+        
+        .icon-option-card.selected {
+            background: #eef2ff;
+            border-color: #6366f1;
+        }
+        
+        .icon-option-card i {
+            font-size: 24px;
+            color: #6366f1;
+        }
+        
+        .icon-option-card span {
+            font-size: 10px;
+            color: #64748b;
+            text-align: center;
+        }
+        
+        /* Button Cards */
+        .btn-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .btn-card input, .btn-card select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+        
+        .remove-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px;
+            background: #fee2e2;
+            border: none;
+            border-radius: 12px;
+            color: #dc2626;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .remove-btn:hover {
+            background: #fecaca;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .template-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .template-card:hover, .template-card.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+            transform: translateX(8px);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 28px;
+            border-radius: 16px;
+            color: white;
+            transform: translateX(450px);
+            transition: transform 0.3s;
+            z-index: 2000;
+            font-weight: 500;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
         
-        /* ============================================
-           LOADING E EMPTY STATES
-        ============================================ */
-        .loading { text-align: center; padding: 60px; font-size: 18px; color: #64748b; }
-        .loading i { font-size: 40px; margin-bottom: 16px; color: #6366f1; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .empty-state { text-align: center; padding: 80px 20px; }
-        .empty-state i { font-size: 80px; color: #cbd5e0; margin-bottom: 24px; }
-        .empty-state h3 { font-size: 24px; margin-bottom: 12px; color: #0f172a; }
-        .empty-state p { color: #64748b; margin-bottom: 24px; }
+        .loading {
+            text-align: center;
+            padding: 60px;
+        }
         
-        /* ============================================
-           PREVIEW DO SITE
-        ============================================ */
-        .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
         
-        /* ============================================
-           RESPONSIVIDADE
-        ============================================ */
+        .empty-state i {
+            font-size: 80px;
+            color: #cbd5e0;
+            margin-bottom: 24px;
+        }
+        
+        .live-preview-container {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
             .main-nav { display: none; }
             .mobile-menu-btn { display: block; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
-            .hero-content p { font-size: 16px; }
             .sidebar { transform: translateX(-100%); position: fixed; z-index: 1000; }
             .sidebar.open { transform: translateX(0); }
             .mobile-sidebar-toggle { display: flex; align-items: center; justify-content: center; }
@@ -326,7 +897,6 @@
             .editor-layout { flex-direction: column; }
             .editor-sidebar { width: 100%; max-height: 50vh; }
             .dashboard-header { flex-direction: column; gap: 16px; }
-            .sites-grid { grid-template-columns: 1fr; }
             .icon-selector-grid { grid-template-columns: repeat(5, 1fr); }
         }
     </style>
@@ -357,14 +927,12 @@
         let currentEditingSite = null;
         
         const fontOptions = [
-            { value: 'Inter', label: 'Inter', category: 'Modern Sans' },
-            { value: 'Poppins', label: 'Poppins', category: 'Geometric Sans' },
-            { value: 'Montserrat', label: 'Montserrat', category: 'Urban Sans' },
-            { value: 'Roboto', label: 'Roboto', category: 'Neutral Sans' },
-            { value: 'Playfair Display', label: 'Playfair Display', category: 'Elegant Serif' }
+            { value: 'Inter', label: 'Inter' },
+            { value: 'Poppins', label: 'Poppins' },
+            { value: 'Montserrat', label: 'Montserrat' },
+            { value: 'Playfair Display', label: 'Playfair Display' }
         ];
         
-        // Ícones disponíveis para os cards - VISUAIS E CLICÁVEIS
         const iconOptions = [
             { icon: 'fa-paintbrush', name: 'Design' },
             { icon: 'fa-code', name: 'Dev' },
@@ -386,16 +954,10 @@
             { icon: 'fa-database', name: 'Dados' },
             { icon: 'fa-rocket', name: 'Lançamento' },
             { icon: 'fa-palette', name: 'Arte' },
-            { icon: 'fa-bullhorn', name: 'Divulgação' },
-            { icon: 'fa-envelope', name: 'Email' },
-            { icon: 'fa-phone', name: 'Telefone' },
             { icon: 'fa-star', name: 'Destaque' },
             { icon: 'fa-heart', name: 'Favorito' },
             { icon: 'fa-crown', name: 'Premium' },
-            { icon: 'fa-gem', name: 'Luxo' },
-            { icon: 'fa-leaf', name: 'Natural' },
-            { icon: 'fa-coffee', name: 'Café' },
-            { icon: 'fa-utensils', name: 'Restaurante' }
+            { icon: 'fa-gem', name: 'Luxo' }
         ];
         
         const templates = {
@@ -403,14 +965,14 @@
                 id: 'modern',
                 name: 'Modern Studio',
                 icon: 'fa-star',
-                description: 'Design minimalista para criativos e agências',
+                description: 'Design minimalista para criativos',
                 structure: {
                     heroTitle: 'Creative Studio',
                     heroSubtitle: 'Transformando ideias em realidade',
                     primaryColor: '#6366f1',
                     secondaryColor: '#8b5cf6',
                     fontFamily: 'Inter',
-                    aboutText: 'We are a creative agency focused on delivering innovative solutions that connect brands to people.',
+                    aboutText: 'Somos uma agência criativa focada em soluções inovadoras.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
                     whatsappMessage: 'Olá! Vim pelo seu site',
@@ -419,8 +981,7 @@
                     buttons: [],
                     services: [
                         { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush' },
-                        { name: 'Desenvolvimento', description: 'Sites e apps modernos', icon: 'fa-code' },
-                        { name: 'Marketing', description: 'Estratégias digitais', icon: 'fa-chart-line' }
+                        { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
                     ]
                 }
             },
@@ -428,24 +989,23 @@
                 id: 'corporate',
                 name: 'Corporate Elite',
                 icon: 'fa-building',
-                description: 'Sofisticado para empresas e negócios',
+                description: 'Sofisticado para empresas',
                 structure: {
                     heroTitle: 'Elite Corp',
                     heroSubtitle: 'Excelência em resultados',
                     primaryColor: '#2563eb',
                     secondaryColor: '#06b6d4',
                     fontFamily: 'Poppins',
-                    aboutText: 'Lideramos o mercado com soluções inovadoras e atendimento personalizado.',
+                    aboutText: 'Lideramos o mercado com soluções inovadoras.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Tenho interesse nos serviços',
+                    whatsappMessage: 'Olá! Tenho interesse',
                     showEmail: true,
                     emailAddress: 'contato@elitecorp.com',
                     buttons: [],
                     services: [
                         { name: 'Consultoria', description: 'Estratégia empresarial', icon: 'fa-chart-simple' },
-                        { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' },
-                        { name: 'Suporte', description: 'Atendimento 24/7', icon: 'fa-headset' }
+                        { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' }
                     ]
                 }
             },
@@ -453,14 +1013,14 @@
                 id: 'personal',
                 name: 'Personal Brand',
                 icon: 'fa-user-astronaut',
-                description: 'Portfólio profissional impactante',
+                description: 'Portfólio profissional',
                 structure: {
                     heroTitle: 'Ana Silva',
-                    heroSubtitle: 'Designer & Diretora Criativa',
+                    heroSubtitle: 'Designer & Diretora',
                     primaryColor: '#ea580c',
                     secondaryColor: '#dc2626',
                     fontFamily: 'Playfair Display',
-                    aboutText: 'Especialista em criar experiências digitais memoráveis com mais de 8 anos de experiência.',
+                    aboutText: 'Especialista em criar experiências digitais memoráveis.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
                     whatsappMessage: 'Olá! Gostei do seu trabalho',
@@ -477,7 +1037,7 @@
                 <div class="main-header">
                     <div class="header-container">
                         <div class="logo-area" onclick="window.showLandingPage()">
-                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo" class="logo-img">
+                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
                         <div class="main-nav">
@@ -504,9 +1064,9 @@
                     </div>
                 </div>
                 <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button></div></div></div>
-                <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais para qualquer negócio</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos os dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com seus clientes</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos serviços quiser</p></div></div></div>
+                <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com clientes</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
-                <div class="main-footer"><div class="footer-content"><p>© 2024 WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
+                <div class="main-footer"><div class="footer-content"><p>© 2024 WebCraft Pro. Todos os direitos reservados.</p></div></div>
             `;
         }
         
@@ -514,11 +1074,11 @@
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
-                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
-                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
+                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
+                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
                 <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan">Plano Grátis</div></div></div><button id="logoutBtn" class="btn-outline" style="width:100%;">Sair</button></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
-                <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
-                <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary">Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
+                <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
+                <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small>Seu site estará em: <strong id="slugPreview">meuportfolio</strong></small></div><div class="input-group"><label>Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary">Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 <div id="toast" class="toast"></div>
             `;
             attachEvents();
@@ -548,7 +1108,7 @@
             document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
             document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveSite());
             document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
-            document.getElementById('logoutBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout realizado', 'success'); });
+            document.getElementById('logoutBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout', 'success'); });
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
             const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileNav = document.getElementById('mobileNav'); if (mobileMenuBtn && mobileNav) { mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open')); }
@@ -559,53 +1119,83 @@
         window.showLoginPage = () => showPage('loginPage');
         window.showRegisterPage = () => showPage('registerPage');
         
-        function showPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(pageId).classList.add('active'); if (pageId === 'dashboardPage' && currentUser) loadDashboard(); }
-        function showToast(message, type) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = `toast ${type} show`; setTimeout(() => toast.classList.remove('show'), 3000); }
+        function showPage(pageId) { 
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
+            document.getElementById(pageId).classList.add('active'); 
+            if (pageId === 'dashboardPage' && currentUser) loadDashboard(); 
+        }
+        
+        function showToast(message, type) { 
+            const toast = document.getElementById('toast'); 
+            toast.textContent = message; 
+            toast.className = `toast ${type} show`; 
+            setTimeout(() => toast.classList.remove('show'), 3000); 
+        }
         
         async function loadDashboard() {
             if (!currentUser) return;
             const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><br>Carregando seus sites...</div>';
+            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
                 document.getElementById('userName').innerHTML = currentUser.displayName || currentUser.email;
-                if (snapshot.empty) { sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><p>Escolha entre templates profissionais e comece agora</p><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`; document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal()); return; }
+                if (snapshot.empty) { sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`; document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal()); return; }
                 sitesGrid.innerHTML = '';
-                snapshot.forEach(doc => { const site = doc.data(); sitesGrid.innerHTML += `<div class="site-card"><div class="site-card-header"><div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div><div class="site-info"><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p><span class="badge">${templates[site.template]?.name || 'Template'}</span></div></div><div class="site-card-actions"><button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button><button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button><button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button></div></div>`; });
+                snapshot.forEach(doc => { const site = doc.data(); sitesGrid.innerHTML += `<div class="site-card"><div class="site-card-header"><div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div><div class="site-info"><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p><span class="badge">${templates[site.template]?.name}</span></div></div><div class="site-card-actions"><button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button><button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button><button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button></div></div>`; });
             } catch (error) { sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`; }
         }
         
-        window.editSiteById = async (siteId) => { try { const docRef = doc(db, 'sites', siteId); const docSnap = await getDoc(docRef); if (docSnap.exists()) { currentEditingSite = { id: docSnap.id, ...docSnap.data() }; showEditor(); } else { showToast('Site não encontrado', 'error'); } } catch (error) { showToast('Erro ao carregar site: ' + error.message, 'error'); } };
-        window.deleteSiteById = async (siteId) => { if (!confirm('Tem certeza? Esta ação não pode ser desfeita.')) return; try { await deleteDoc(doc(db, 'sites', siteId)); showToast('Site excluído com sucesso', 'success'); loadDashboard(); } catch (error) { showToast('Erro ao excluir site', 'error'); } };
+        window.editSiteById = async (siteId) => { 
+            try { 
+                const docRef = doc(db, 'sites', siteId); 
+                const docSnap = await getDoc(docRef); 
+                if (docSnap.exists()) { 
+                    currentEditingSite = { id: docSnap.id, ...docSnap.data() }; 
+                    showEditor(); 
+                } else { 
+                    showToast('Site não encontrado', 'error'); 
+                } 
+            } catch (error) { 
+                showToast('Erro: ' + error.message, 'error'); 
+            } 
+        };
+        
+        window.deleteSiteById = async (siteId) => { 
+            if (!confirm('Tem certeza?')) return; 
+            try { await deleteDoc(doc(db, 'sites', siteId)); showToast('Site excluído', 'success'); loadDashboard(); } 
+            catch (error) { showToast('Erro ao excluir', 'error'); } 
+        };
         
         function showEditor() {
             showPage('editorPage');
             document.getElementById('editorTitle').innerHTML = `<i class="fas fa-edit"></i> Editando: ${currentEditingSite.title}`;
             const content = currentEditingSite.content;
+            
             let html = `
                 <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
-                    <div class="editor-field"><label>Título Principal</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}" placeholder="Título do seu site"></div>
-                    <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}" placeholder="Subtítulo"></div>
+                    <div class="editor-field"><label>Título</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}"></div>
+                    <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}"></div>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
-                    <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1"></div></div>
-                    <div class="editor-field"><label>Cor Secundária</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}" placeholder="#8b5cf6"></div></div>
+                    <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}"></div></div>
+                    <div class="editor-field"><label>Cor Secundária</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}"></div></div>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-font"></i> Tipografia</h4>
-                    <div class="editor-field"><label>Fonte</label><select id="fontFamily">${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label} (${f.category})</option>`).join('')}</select></div>
+                    <div class="editor-field"><label>Fonte</label><select id="fontFamily">${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}</select></div>
                 </div>
-                <div class="editor-section"><h4><i class="fab fa-whatsapp"></i> Contato & WhatsApp</h4>
-                    <div class="editor-field"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar Botão WhatsApp</label></div>
-                    <div class="editor-field"><label>Número do WhatsApp</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}" placeholder="5511999999999"></div>
-                    <div class="editor-field"><label>Mensagem do WhatsApp</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}" placeholder="Olá! Vim pelo seu site"></div>
-                    <div class="editor-field"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Botão Email</label></div>
-                    <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}" placeholder="contato@email.com"></div>
+                <div class="editor-section"><h4><i class="fab fa-whatsapp"></i> WhatsApp & Contato</h4>
+                    <div class="editor-field"><label><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar WhatsApp</label></div>
+                    <div class="editor-field"><label>Número</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}"></div>
+                    <div class="editor-field"><label>Mensagem</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}"></div>
+                    <div class="editor-field"><label><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Email</label></div>
+                    <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}"></div>
                 </div>
-                <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4><div id="buttonsContainer"></div><button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:8px;">+ Adicionar Botão</button><p style="font-size:12px; color:#64748b; margin-top:8px;">Escolha onde o botão aparece, formato e alinhamento</p></div>
-                <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4><div id="servicesContainer"></div><button class="btn-outline" id="addServiceBtn" style="width:100%; margin-top:8px;">+ Adicionar Serviço</button><p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no ícone para escolher - Adicione quantos quiser</p></div>
-                <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre / Descrição</h4><div class="editor-field"><textarea id="aboutText" rows="4" placeholder="Sobre você ou sua empresa...">${escapeHtml(content.aboutText || '')}</textarea></div></div>
+                <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4><div id="buttonsContainer"></div><button class="btn-outline" id="addButtonBtn" style="width:100%;">+ Adicionar Botão</button></div>
+                <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4><div id="servicesContainer"></div><button class="btn-outline" id="addServiceBtn" style="width:100%;">+ Adicionar Serviço</button></div>
+                <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre</h4><div class="editor-field"><textarea id="aboutText" rows="4">${escapeHtml(content.aboutText || '')}</textarea></div></div>
             `;
+            
             document.getElementById('editorFields').innerHTML = html;
             
             const buttons = content.buttons || [];
@@ -616,13 +1206,13 @@
                 if (container) {
                     container.innerHTML = buttons.map((btn, idx) => `
                         <div class="btn-card">
-                            <input type="text" placeholder="Texto do Botão" value="${escapeHtml(btn.text || 'Novo Botão')}" data-btn-index="${idx}" data-btn-field="text">
-                            <input type="text" placeholder="URL do Botão" value="${escapeHtml(btn.url || '#')}" data-btn-index="${idx}" data-btn-field="url">
+                            <input type="text" placeholder="Texto" value="${escapeHtml(btn.text || 'Novo Botão')}" data-btn-index="${idx}" data-btn-field="text">
+                            <input type="text" placeholder="URL" value="${escapeHtml(btn.url || '#')}" data-btn-index="${idx}" data-btn-field="url">
                             <select data-btn-index="${idx}" data-btn-field="type"><option value="primary" ${btn.type === 'primary' ? 'selected' : ''}>Primário</option><option value="secondary" ${btn.type === 'secondary' ? 'selected' : ''}>Secundário</option></select>
-                            <select data-btn-index="${idx}" data-btn-field="position"><option value="hero" ${btn.position === 'hero' ? 'selected' : ''}>No Hero (Topo)</option><option value="after-services" ${btn.position === 'after-services' ? 'selected' : ''}>Após Serviços</option><option value="after-about" ${btn.position === 'after-about' ? 'selected' : ''}>Após Sobre</option></select>
+                            <select data-btn-index="${idx}" data-btn-field="position"><option value="hero" ${btn.position === 'hero' ? 'selected' : ''}>No Hero</option><option value="after-services" ${btn.position === 'after-services' ? 'selected' : ''}>Após Serviços</option><option value="after-about" ${btn.position === 'after-about' ? 'selected' : ''}>Após Sobre</option></select>
                             <select data-btn-index="${idx}" data-btn-field="shape"><option value="rounded" ${btn.shape === 'rounded' ? 'selected' : ''}>Arredondado</option><option value="pill" ${btn.shape === 'pill' ? 'selected' : ''}>Pílula</option><option value="square" ${btn.shape === 'square' ? 'selected' : ''}>Quadrado</option></select>
                             <select data-btn-index="${idx}" data-btn-field="align"><option value="center" ${btn.align === 'center' ? 'selected' : ''}>Centralizado</option><option value="left" ${btn.align === 'left' ? 'selected' : ''}>Esquerda</option><option value="right" ${btn.align === 'right' ? 'selected' : ''}>Direita</option></select>
-                            <button class="remove-btn" data-btn-index="${idx}">Remover Botão</button>
+                            <button class="remove-btn" data-btn-index="${idx}">Remover</button>
                         </div>
                     `).join('');
                     document.querySelectorAll('[data-btn-field]').forEach(input => { input.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.btnIndex); const field = e.target.dataset.btnField; buttons[idx][field] = e.target.value; updateSiteContent(); }); });
@@ -635,14 +1225,14 @@
                 if (container) {
                     container.innerHTML = services.map((srv, idx) => `
                         <div class="service-card">
-                            <input type="text" placeholder="Nome do Serviço" value="${escapeHtml(srv.name || 'Novo Serviço')}" data-service-index="${idx}" data-service-field="name">
-                            <textarea placeholder="Descrição do serviço" rows="2" data-service-index="${idx}" data-service-field="description">${escapeHtml(srv.description || '')}</textarea>
-                            <div class="icon-picker-title"><i class="fas fa-icons"></i> Escolha o ícone do serviço (clique no ícone desejado)</div>
+                            <input type="text" placeholder="Nome" value="${escapeHtml(srv.name || 'Novo Serviço')}" data-service-index="${idx}" data-service-field="name">
+                            <textarea placeholder="Descrição" rows="2" data-service-index="${idx}" data-service-field="description">${escapeHtml(srv.description || '')}</textarea>
+                            <div class="icon-picker-title"><i class="fas fa-icons"></i> Clique no ícone para escolher</div>
                             <div class="icon-selector-grid" id="icon_selector_${idx}">
                                 ${iconOptions.map(icon => `<div class="icon-option-card ${srv.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('')}
                             </div>
                             <input type="hidden" id="service_icon_${idx}" value="${srv.icon || 'fa-star'}">
-                            <button class="remove-btn" data-service-index="${idx}">Remover Serviço</button>
+                            <button class="remove-btn" data-service-index="${idx}">Remover</button>
                         </div>
                     `).join('');
                     
@@ -661,7 +1251,7 @@
                                     const iconField = document.getElementById(`service_icon_${idx}`);
                                     if (iconField) iconField.value = icon;
                                     updateSiteContent();
-                                    showToast(`Ícone ${icon.replace('fa-', '')} selecionado!`, 'success');
+                                    showToast('Ícone selecionado!', 'success');
                                 });
                             });
                         }
@@ -673,7 +1263,7 @@
             renderServices();
             
             document.getElementById('addButtonBtn')?.addEventListener('click', () => { buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', shape: 'rounded', align: 'center' }); renderButtons(); updateSiteContent(); showToast('Botão adicionado!', 'success'); });
-            document.getElementById('addServiceBtn')?.addEventListener('click', () => { services.push({ name: 'Novo Serviço', description: 'Descrição do serviço', icon: 'fa-star' }); renderServices(); updateSiteContent(); showToast('Serviço adicionado!', 'success'); });
+            document.getElementById('addServiceBtn')?.addEventListener('click', () => { services.push({ name: 'Novo Serviço', description: 'Descrição', icon: 'fa-star' }); renderServices(); updateSiteContent(); showToast('Serviço adicionado!', 'success'); });
             
             const fields = ['heroTitle', 'heroSubtitle', 'primaryColor', 'secondaryColor', 'fontFamily', 'whatsappNumber', 'whatsappMessage', 'emailAddress', 'aboutText'];
             fields.forEach(field => { const el = document.getElementById(field); if (el) el.addEventListener('change', () => updateSiteContent()); });
@@ -697,39 +1287,63 @@
                 currentEditingSite.content.aboutText = document.getElementById('aboutText')?.value || '';
                 currentEditingSite.content.buttons = buttons;
                 currentEditingSite.content.services = services;
-                try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content }); updatePreview(); } catch (error) { console.error('Erro ao salvar:', error); }
+                try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content }); updatePreview(); } catch (error) { console.error('Erro:', error); }
             }
             updatePreview();
         }
         
-        function updatePreview() { const preview = document.getElementById('livePreview'); if (preview && currentEditingSite) { preview.innerHTML = renderSitePreview(currentEditingSite); } }
+        function updatePreview() { 
+            const preview = document.getElementById('livePreview'); 
+            if (preview && currentEditingSite) { 
+                preview.innerHTML = renderSitePreview(currentEditingSite); 
+            } 
+        }
         
         function renderSitePreview(site) {
             const c = site.content;
             let fontFamily = 'Inter, sans-serif';
             if (c.fontFamily === 'Playfair Display') fontFamily = "'Playfair Display', serif";
             else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
-            else if (c.fontFamily === 'Montserrat') fontFamily = "'Montserrat', sans-serif";
-            const primaryColor = c.primaryColor || '#6366f1';
-            const secondaryColor = c.secondaryColor || '#8b5cf6';
+            const primary = c.primaryColor || '#6366f1';
+            const secondary = c.secondaryColor || '#8b5cf6';
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
             const afterServicesButtons = (c.buttons || []).filter(b => b.position === 'after-services');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
-            const getButtonStyle = (btn) => { let borderRadius = '50px'; if (btn.shape === 'pill') borderRadius = '40px'; if (btn.shape === 'square') borderRadius = '12px'; return { borderRadius }; };
-            return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div style="max-width:800px;"><h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? primaryColor : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primaryColor}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primaryColor}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primaryColor : 'transparent'}; border:2px solid ${primaryColor}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primaryColor}; font-weight:600;">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569;">${c.aboutText}</p></div>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primaryColor : 'transparent'}; border:2px solid ${primaryColor}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primaryColor}; font-weight:600;">${btn.text}</a>`).join('')}</div></div></div>`;
+            const getStyle = (btn) => { let br = '50px'; if (btn.shape === 'pill') br = '40px'; if (btn.shape === 'square') br = '12px'; return br; };
+            return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div><h1 style="font-size:56px; margin-bottom:20px;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px; background:white; border-radius:24px;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3>${s.name}</h3><p>${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<p style="text-align:center; font-size:18px;">${c.aboutText}</p>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div></div></div>`;
         }
         
-        async function saveSite() { if (currentEditingSite) { try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content, updatedAt: new Date().toISOString() }); showToast('Site salvo com sucesso!', 'success'); } catch (error) { showToast('Erro ao salvar: ' + error.message, 'error'); } } }
+        async function saveSite() { 
+            if (currentEditingSite) { 
+                try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content, updatedAt: new Date().toISOString() }); showToast('Site salvo!', 'success'); } 
+                catch (error) { showToast('Erro: ' + error.message, 'error'); } 
+            } 
+        }
+        
         function closeEditor() { currentEditingSite = null; showPage('dashboardPage'); loadDashboard(); }
         function openCreateModal() { document.getElementById('createModal').classList.add('active'); const firstCard = document.querySelector('.template-card'); if (firstCard) firstCard.classList.add('selected'); }
         function closeCreateModal() { document.getElementById('createModal').classList.remove('active'); document.getElementById('siteTitle').value = ''; document.getElementById('siteSlug').value = ''; }
-        async function createSite() { const title = document.getElementById('siteTitle').value; const slug = document.getElementById('siteSlug').value; const templateId = document.getElementById('selectedTemplate').value; if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } try { await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); showToast('Site criado com sucesso!', 'success'); closeCreateModal(); loadDashboard(); } catch (error) { showToast('Erro: ' + error.message, 'error'); } }
+        
+        async function createSite() { 
+            const title = document.getElementById('siteTitle').value; 
+            const slug = document.getElementById('siteSlug').value; 
+            const templateId = document.getElementById('selectedTemplate').value; 
+            if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } 
+            try { await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); showToast('Site criado!', 'success'); closeCreateModal(); loadDashboard(); } 
+            catch (error) { showToast('Erro: ' + error.message, 'error'); } 
+        }
+        
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
-        async function viewPublicSite(slug) { try { const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true)); const snapshot = await getDocs(q); if (snapshot.empty) { document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;"><i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i><h2>Site não encontrado</h2><a href="/" style="color:#6366f1;">← Voltar para WebCraft Pro</a></div>`; return; } const site = snapshot.docs[0].data(); document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro</footer>`; } catch (error) { document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`; } }
+        
+        async function viewPublicSite(slug) {
+            try { const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true)); const snapshot = await getDocs(q); if (snapshot.empty) { document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center;"><h2>Site não encontrado</h2><a href="/">Voltar</a></div>`; return; } const site = snapshot.docs[0].data(); document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px;">Criado com WebCraft Pro</footer>`; } 
+            catch (error) { document.getElementById('app').innerHTML = `<div>Erro: ${error.message}</div>`; }
+        }
         
         renderApp();
         const slug = window.location.pathname.substring(1);
-        if (slug && slug !== '') { viewPublicSite(slug); } else { onAuthStateChanged(auth, (user) => { currentUser = user; if (user) { showPage('dashboardPage'); loadDashboard(); } else { showPage('landingPage'); } }); }
+        if (slug && slug !== '') { viewPublicSite(slug); } 
+        else { onAuthStateChanged(auth, (user) => { currentUser = user; if (user) { showPage('dashboardPage'); loadDashboard(); } else { showPage('landingPage'); } }); }
     </script>
 </body>
 </html>
