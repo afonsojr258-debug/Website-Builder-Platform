@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -27,7 +24,6 @@
             color: #0f172a;
         }
         
-        /* Pages */
         .page {
             display: none;
         }
@@ -36,7 +32,7 @@
             display: block;
         }
         
-        /* Modern Auth Pages */
+        /* Auth Pages */
         .auth-page {
             min-height: 100vh;
             display: flex;
@@ -45,21 +41,6 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             padding: 20px;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .auth-page::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
-            animation: pulse 10s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: translate(-25%, -25%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-25%, -25%) scale(1.1); opacity: 0.8; }
         }
         
         .auth-container {
@@ -71,7 +52,6 @@
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(10px);
         }
         
         .auth-header {
@@ -82,7 +62,7 @@
         .auth-header .logo {
             font-size: 56px;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -90,7 +70,7 @@
         .auth-header h1 {
             font-size: 36px;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -106,7 +86,7 @@
             color: #334155;
         }
         
-        .input-group input, .input-group select, .input-group textarea {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid #e2e8f0;
@@ -115,16 +95,16 @@
             transition: all 0.3s;
         }
         
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
         }
         
         .btn-primary {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             border: none;
             border-radius: 16px;
@@ -136,21 +116,22 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(102,126,234,0.4);
+            box-shadow: 0 10px 25px -5px rgba(99,102,241,0.4);
         }
         
-        .btn-secondary {
+        .btn-outline {
             padding: 10px 20px;
             background: #f1f5f9;
-            border: none;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s;
         }
         
-        .btn-secondary:hover {
+        .btn-outline:hover {
             background: #e2e8f0;
+            transform: translateY(-2px);
         }
         
         .auth-switch {
@@ -160,13 +141,13 @@
         }
         
         .auth-switch a {
-            color: #667eea;
+            color: #6366f1;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
         }
         
-        /* Professional Dashboard */
+        /* Dashboard */
         .dashboard-layout {
             display: flex;
             min-height: 100vh;
@@ -187,7 +168,7 @@
             font-size: 28px;
             font-weight: 800;
             margin-bottom: 48px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -217,8 +198,8 @@
         }
         
         .sidebar-menu a:hover, .sidebar-menu a.active {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            color: #667eea;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            color: #6366f1;
         }
         
         .sidebar-footer {
@@ -253,7 +234,7 @@
         
         .sites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 24px;
         }
         
@@ -263,13 +244,11 @@
             padding: 24px;
             transition: all 0.3s;
             border: 1px solid #e2e8f0;
-            cursor: pointer;
         }
         
         .site-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
-            border-color: #cbd5e1;
         }
         
         .site-card-header {
@@ -282,7 +261,7 @@
         .site-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -302,41 +281,21 @@
             font-size: 13px;
         }
         
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
         .site-card-actions {
             display: flex;
             gap: 12px;
-        }
-        
-        .btn-outline {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        
-        .btn-outline:hover {
-            border-color: #667eea;
-            color: #667eea;
-            transform: translateY(-2px);
-        }
-        
-        .btn-danger {
-            padding: 8px 16px;
-            background: #fee2e2;
-            border: none;
-            border-radius: 12px;
-            color: #dc2626;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .btn-danger:hover {
-            background: #fecaca;
-            transform: translateY(-2px);
+            margin-top: 16px;
         }
         
         /* Modal */
@@ -363,12 +322,12 @@
             border-radius: 32px;
             padding: 40px;
             width: 90%;
-            max-width: 650px;
+            max-width: 700px;
             max-height: 85vh;
             overflow-y: auto;
         }
         
-        /* Professional Editor */
+        /* Editor */
         .editor-layout {
             display: flex;
             height: 100vh;
@@ -376,7 +335,7 @@
         }
         
         .editor-sidebar {
-            width: 450px;
+            width: 480px;
             background: white;
             border-right: 1px solid #e2e8f0;
             padding: 32px;
@@ -427,10 +386,10 @@
             transition: all 0.2s;
         }
         
-        .editor-field input:focus, .editor-field textarea:focus {
+        .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
         }
         
         .color-input-group {
@@ -444,6 +403,33 @@
             height: 50px;
             padding: 4px;
             cursor: pointer;
+            border-radius: 12px;
+        }
+        
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .icon-option {
+            padding: 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .icon-option:hover, .icon-option.selected {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+        
+        .icon-option i {
+            font-size: 20px;
+            color: #6366f1;
         }
         
         /* Toast */
@@ -467,7 +453,6 @@
         
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
-        .toast.info { background: #3b82f6; }
         
         .loading {
             text-align: center;
@@ -485,11 +470,6 @@
             margin-bottom: 24px;
         }
         
-        .empty-state h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-        }
-        
         .template-card {
             border: 2px solid #e2e8f0;
             border-radius: 20px;
@@ -500,20 +480,9 @@
         }
         
         .template-card:hover, .template-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-color: #6366f1;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
             transform: translateX(8px);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #e0e7ff;
-            color: #4f46e5;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 8px;
         }
         
         @media (max-width: 768px) {
@@ -561,13 +530,30 @@
         let currentUser = null;
         let currentEditingSite = null;
         
-        // Templates profissionais completos
+        // Available fonts
+        const fontOptions = [
+            { value: 'Inter', label: 'Inter', category: 'Modern Sans' },
+            { value: 'Poppins', label: 'Poppins', category: 'Geometric Sans' },
+            { value: 'Montserrat', label: 'Montserrat', category: 'Urban Sans' },
+            { value: 'Roboto', label: 'Roboto', category: 'Neutral Sans' },
+            { value: 'Playfair Display', label: 'Playfair Display', category: 'Elegant Serif' }
+        ];
+        
+        // Available icons for services
+        const iconOptions = [
+            'fa-paintbrush', 'fa-code', 'fa-chart-line', 'fa-mobile-alt',
+            'fa-camera', 'fa-video', 'fa-music', 'fa-book', 'fa-graduation-cap',
+            'fa-heartbeat', 'fa-car', 'fa-plane', 'fa-shopping-cart', 'fa-truck',
+            'fa-headset', 'fa-shield-alt', 'fa-cloud', 'fa-database', 'fa-rocket'
+        ];
+        
+        // Professional Templates
         const templates = {
             modern: {
                 id: 'modern',
                 name: 'Modern Studio',
                 icon: 'fa-star',
-                description: 'Design minimalista e elegante para profissionais criativos',
+                description: 'Design minimalista para criativos e agências',
                 structure: {
                     heroTitle: 'Creative Studio',
                     heroSubtitle: 'Transformando ideias em realidade',
@@ -575,21 +561,17 @@
                     primaryColor: '#6366f1',
                     secondaryColor: '#8b5cf6',
                     fontFamily: 'Inter',
-                    aboutTitle: 'Sobre Nós',
-                    aboutText: 'Somos uma agência criativa focada em entregar soluções inovadoras.',
+                    aboutTitle: 'About Us',
+                    aboutText: 'We are a creative agency focused on delivering innovative solutions that connect brands to people.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Vim pelo seu site',
+                    whatsappMessage: 'Hello! I came through your website',
                     showEmail: true,
-                    emailAddress: 'contato@estudio.com',
+                    emailAddress: 'contact@studio.com',
                     services: [
-                        { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush', price: 'A partir de R$ 1.000' },
-                        { name: 'Desenvolvimento', description: 'Sites e apps modernos', icon: 'fa-code', price: 'A partir de R$ 3.000' },
-                        { name: 'Marketing', description: 'Estratégias digitais', icon: 'fa-chart-line', price: 'A partir de R$ 1.500' }
-                    ],
-                    social: { instagram: '#', linkedin: '#', behance: '#', twitter: '#' },
-                    testimonials: [
-                        { name: 'Cliente 1', text: 'Excelente trabalho!', rating: 5 }
+                        { name: 'Design', description: 'Unique visual identity', icon: 'fa-paintbrush' },
+                        { name: 'Development', description: 'Modern websites and apps', icon: 'fa-code' },
+                        { name: 'Marketing', description: 'Digital strategies', icon: 'fa-chart-line' }
                     ]
                 }
             },
@@ -600,106 +582,47 @@
                 description: 'Sofisticado para empresas e negócios',
                 structure: {
                     companyName: 'Elite Corp',
-                    tagline: 'Excelência em resultados',
+                    tagline: 'Excellence in results',
                     heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600',
                     primaryColor: '#2563eb',
                     secondaryColor: '#06b6d4',
                     fontFamily: 'Poppins',
-                    description: 'Lideramos o mercado com soluções inovadoras.',
+                    description: 'We lead the market with innovative solutions and personalized service.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Tenho interesse nos serviços',
+                    whatsappMessage: 'Hello! I am interested in your services',
                     showEmail: true,
-                    emailAddress: 'contato@elitecorp.com',
+                    emailAddress: 'contact@elitecorp.com',
                     showPhone: true,
                     phoneNumber: '+55 11 99999-9999',
-                    showAddress: true,
-                    address: 'Av. Paulista, 1000 - São Paulo, SP',
                     services: [
-                        { name: 'Consultoria', description: 'Estratégia empresarial', icon: 'fa-chart-simple', price: 'Consultar' },
-                        { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip', price: 'Sob consulta' },
-                        { name: 'Suporte', description: 'Atendimento 24/7', icon: 'fa-headset', price: 'Incluso' }
-                    ],
-                    businessHours: 'Segunda a Sexta: 9h às 18h'
+                        { name: 'Consulting', description: 'Business strategy', icon: 'fa-chart-simple' },
+                        { name: 'Technology', description: 'Digital solutions', icon: 'fa-microchip' },
+                        { name: 'Support', description: '24/7 assistance', icon: 'fa-headset' }
+                    ]
                 }
             },
             personal: {
                 id: 'personal',
                 name: 'Personal Brand',
                 icon: 'fa-user-astronaut',
-                description: 'Portfólio pessoal impactante',
+                description: 'Portfólio profissional impactante',
                 structure: {
                     name: 'Ana Silva',
-                    title: 'Designer & Diretora Criativa',
+                    title: 'Designer & Creative Director',
                     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
-                    bio: 'Especialista em criar experiências digitais memoráveis.',
+                    bio: 'Specialist in creating memorable digital experiences with over 8 years of experience.',
                     primaryColor: '#ea580c',
                     secondaryColor: '#dc2626',
                     fontFamily: 'Playfair Display',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Gostei do seu trabalho',
+                    whatsappMessage: 'Hello! I liked your work',
                     showEmail: true,
                     emailAddress: 'ana@studio.com',
                     projects: [
-                        { name: 'Brand Revolution', description: 'Rebranding completo', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600', link: '#' },
-                        { name: 'Digital Experience', description: 'Plataforma interativa', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600', link: '#' }
-                    ],
-                    skills: ['UI/UX Design', 'Branding', 'Figma', 'Adobe Creative Suite'],
-                    social: { instagram: '#', linkedin: '#', dribbble: '#', github: '#' }
-                }
-            },
-            linkhub: {
-                id: 'linkhub',
-                name: 'LinkHub Pro',
-                icon: 'fa-link',
-                description: 'Central profissional de links',
-                structure: {
-                    name: 'João Santos',
-                    bio: 'Criador de conteúdo | Palestrante',
-                    avatar: 'https://ui-avatars.com/api/?background=10b981&color=fff&size=200&bold=true',
-                    primaryColor: '#10b981',
-                    secondaryColor: '#059669',
-                    fontFamily: 'Inter',
-                    showWhatsapp: true,
-                    whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Vim pelo seu LinkHub',
-                    links: [
-                        { title: 'Portfólio', url: '#', icon: 'fa-briefcase' },
-                        { title: 'Instagram', url: '#', icon: 'fa-instagram' },
-                        { title: 'LinkedIn', url: '#', icon: 'fa-linkedin' },
-                        { title: 'YouTube', url: '#', icon: 'fa-youtube' },
-                        { title: 'WhatsApp', url: 'https://wa.me/5511999999999', icon: 'fa-whatsapp' }
-                    ]
-                }
-            },
-            restaurant: {
-                id: 'restaurant',
-                name: 'Gourmet Restaurant',
-                icon: 'fa-utensils',
-                description: 'Perfeito para restaurantes, cafés e food trucks',
-                structure: {
-                    restaurantName: 'Gourmet Bistrô',
-                    tagline: 'Sabores que encantam',
-                    heroImage: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600',
-                    primaryColor: '#dc2626',
-                    secondaryColor: '#f97316',
-                    fontFamily: 'Poppins',
-                    description: 'Culinária refinada com ingredientes selecionados',
-                    showWhatsapp: true,
-                    whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Gostaria de fazer uma reserva',
-                    showPhone: true,
-                    phoneNumber: '+55 11 3333-3333',
-                    showEmail: true,
-                    emailAddress: 'contato@gourmet.com',
-                    showAddress: true,
-                    address: 'Rua dos Sabores, 123 - São Paulo',
-                    businessHours: 'Terça a Domingo: 19h às 23h',
-                    menu: [
-                        { name: 'Entradas', items: ['Bruschetta', 'Carpaccio'] },
-                        { name: 'Pratos Principais', items: ['Filé Mignon', 'Salmão'] },
-                        { name: 'Sobremesas', items: ['Tiramisu', 'Panna Cotta'] }
+                        { name: 'Brand Revolution', description: 'Complete rebranding', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600' },
+                        { name: 'Digital Experience', description: 'Interactive platform', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600' }
                     ]
                 }
             }
@@ -714,21 +637,21 @@
                             <div class="auth-header">
                                 <div class="logo"><i class="fas fa-crown"></i></div>
                                 <h1>WebCraft Pro</h1>
-                                <p style="color:#64748b;">Crie websites profissionais em minutos</p>
+                                <p style="color:#64748b;">Create professional websites in minutes</p>
                             </div>
                             <form id="loginForm">
                                 <div class="input-group">
-                                    <label><i class="fas fa-envelope"></i> Email</label>
-                                    <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                                    <label>Email</label>
+                                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
                                 </div>
                                 <div class="input-group">
-                                    <label><i class="fas fa-lock"></i> Senha</label>
+                                    <label>Password</label>
                                     <input type="password" id="loginPassword" placeholder="••••••••" required>
                                 </div>
-                                <button type="submit" class="btn-primary">🚀 Entrar na plataforma</button>
+                                <button type="submit" class="btn-primary">Sign In</button>
                             </form>
                             <p class="auth-switch">
-                                🆕 Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a>
+                                No account? <a id="showRegisterBtn">Create free account</a>
                             </p>
                         </div>
                     </div>
@@ -739,26 +662,26 @@
                         <div class="auth-container">
                             <div class="auth-header">
                                 <div class="logo"><i class="fas fa-crown"></i></div>
-                                <h1>Criar Conta</h1>
-                                <p style="color:#64748b;">Comece sua jornada digital</p>
+                                <h1>Create Account</h1>
+                                <p style="color:#64748b;">Start your digital journey</p>
                             </div>
                             <form id="registerForm">
                                 <div class="input-group">
-                                    <label><i class="fas fa-user"></i> Nome completo</label>
-                                    <input type="text" id="registerName" placeholder="João Silva" required>
+                                    <label>Full Name</label>
+                                    <input type="text" id="registerName" placeholder="John Doe" required>
                                 </div>
                                 <div class="input-group">
-                                    <label><i class="fas fa-envelope"></i> Email</label>
-                                    <input type="email" id="registerEmail" placeholder="joao@email.com" required>
+                                    <label>Email</label>
+                                    <input type="email" id="registerEmail" placeholder="john@email.com" required>
                                 </div>
                                 <div class="input-group">
-                                    <label><i class="fas fa-lock"></i> Senha</label>
-                                    <input type="password" id="registerPassword" placeholder="mínimo 6 caracteres" required>
+                                    <label>Password</label>
+                                    <input type="password" id="registerPassword" placeholder="minimum 6 characters" required>
                                 </div>
-                                <button type="submit" class="btn-primary">✨ Criar conta gratuita</button>
+                                <button type="submit" class="btn-primary">Create Account</button>
                             </form>
                             <p class="auth-switch">
-                                🔐 Já tem conta? <a id="showLoginBtn">Fazer login</a>
+                                Already have an account? <a id="showLoginBtn">Sign In</a>
                             </p>
                         </div>
                     </div>
@@ -771,26 +694,24 @@
                                 <i class="fas fa-crown"></i> WebCraft Pro
                             </div>
                             <ul class="sidebar-menu">
-                                <li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li>
-                                <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
-                                <li><a><i class="fas fa-chart-line"></i> Analytics</a></li>
-                                <li><a><i class="fas fa-credit-card"></i> Planos</a></li>
+                                <li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> My Sites</a></li>
+                                <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Create Site</a></li>
                             </ul>
                             <div class="sidebar-footer">
                                 <div class="user-info" style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                                    <i class="fas fa-user-circle" style="font-size:32px; color:#667eea;"></i>
+                                    <i class="fas fa-user-circle" style="font-size:32px; color:#6366f1;"></i>
                                     <div>
                                         <div style="font-weight:600;" id="userName"></div>
-                                        <div style="font-size:12px; color:#64748b;">Plano Grátis</div>
+                                        <div style="font-size:12px; color:#64748b;">Free Plan</div>
                                     </div>
                                 </div>
-                                <button id="logoutBtn" class="btn-outline" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                                <button id="logoutBtn" class="btn-outline" style="width:100%;">Sign Out</button>
                             </div>
                         </aside>
                         <main class="main-content">
                             <div class="dashboard-header">
-                                <h1><i class="fas fa-th-large"></i> Meus Sites</h1>
-                                <button id="createSiteBtn" class="btn-primary"><i class="fas fa-plus"></i> Novo Site</button>
+                                <h1>My Websites</h1>
+                                <button id="createSiteBtn" class="btn-primary">+ New Site</button>
                             </div>
                             <div id="sitesGrid"></div>
                         </main>
@@ -802,11 +723,11 @@
                         <div class="editor-sidebar">
                             <h3 id="editorTitle" style="margin-bottom:24px;"></h3>
                             <div id="editorFields"></div>
-                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button>
-                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button>
+                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Save Changes</button>
+                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">← Back</button>
                         </div>
                         <div class="editor-preview">
-                            <h3 style="margin-bottom:20px;"><i class="fas fa-mobile-alt"></i> Pré-visualização ao vivo</h3>
+                            <h3 style="margin-bottom:20px;">Live Preview</h3>
                             <div id="livePreview"></div>
                         </div>
                     </div>
@@ -814,23 +735,23 @@
                 
                 <div id="createModal" class="modal">
                     <div class="modal-content">
-                        <h2 style="margin-bottom:24px;"><i class="fas fa-magic"></i> Criar novo site</h2>
+                        <h2 style="margin-bottom:24px;">Create New Website</h2>
                         <div class="input-group">
-                            <label><i class="fas fa-tag"></i> Nome do site</label>
-                            <input type="text" id="siteTitle" placeholder="Ex: Meu Portfólio">
+                            <label>Site Name</label>
+                            <input type="text" id="siteTitle" placeholder="My Portfolio">
                         </div>
                         <div class="input-group">
-                            <label><i class="fas fa-link"></i> Endereço único (slug)</label>
-                            <input type="text" id="siteSlug" placeholder="meusite">
-                            <small style="color:#64748b;">🔗 Seu site estará em: <strong id="slugPreview" style="color:#667eea;">meusite</strong>.webcraft.app</small>
+                            <label>Site Slug (URL)</label>
+                            <input type="text" id="siteSlug" placeholder="myportfolio">
+                            <small style="color:#64748b;">Your site will be at: <strong id="slugPreview" style="color:#6366f1;">myportfolio</strong></small>
                         </div>
                         <div class="input-group">
-                            <label><i class="fas fa-palette"></i> Escolha um template</label>
+                            <label>Choose a Template</label>
                             <input type="hidden" id="selectedTemplate" value="modern">
                             ${Object.entries(templates).map(([id, t]) => `
                                 <div class="template-card" data-template="${id}">
                                     <div style="display:flex; align-items:center; gap:12px;">
-                                        <i class="fas ${t.icon}" style="font-size:24px; color:#667eea;"></i>
+                                        <i class="fas ${t.icon}" style="font-size:24px; color:#6366f1;"></i>
                                         <div style="flex:1;">
                                             <h3 style="margin-bottom:4px;">${t.name}</h3>
                                             <p style="color:#64748b; font-size:13px;">${t.description}</p>
@@ -839,8 +760,8 @@
                                 </div>
                             `).join('')}
                         </div>
-                        <button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button>
-                        <button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button>
+                        <button id="confirmCreateBtn" class="btn-primary">Create Site</button>
+                        <button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancel</button>
                     </div>
                 </div>
                 
@@ -856,7 +777,7 @@
                 const password = document.getElementById('loginPassword').value;
                 try {
                     await signInWithEmailAndPassword(auth, email, password);
-                    showToast('Login realizado com sucesso!', 'success');
+                    showToast('Login successful!', 'success');
                 } catch (error) {
                     showToast(error.message, 'error');
                 }
@@ -870,7 +791,7 @@
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     await updateProfile(userCredential.user, { displayName: name });
-                    showToast('Conta criada com sucesso!', 'success');
+                    showToast('Account created successfully!', 'success');
                 } catch (error) {
                     showToast(error.message, 'error');
                 }
@@ -886,7 +807,7 @@
             document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
             document.getElementById('logoutBtn')?.addEventListener('click', async () => {
                 await signOut(auth);
-                showToast('Logout realizado', 'success');
+                showToast('Logged out', 'success');
             });
             
             document.querySelectorAll('.template-card').forEach(card => {
@@ -899,7 +820,7 @@
             
             document.getElementById('siteSlug')?.addEventListener('input', (e) => {
                 const preview = document.getElementById('slugPreview');
-                if (preview) preview.textContent = e.target.value || 'meusite';
+                if (preview) preview.textContent = e.target.value || 'mysite';
             });
         }
         
@@ -919,7 +840,7 @@
             if (!currentUser) return;
             
             const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando seus sites...</div>';
+            sitesGrid.innerHTML = '<div class="loading">Loading your sites...</div>';
             
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
@@ -931,9 +852,9 @@
                     sitesGrid.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-crown"></i>
-                            <h3>✨ Crie seu primeiro site profissional</h3>
-                            <p style="color:#64748b; margin-bottom:24px;">Escolha entre 5 templates exclusivos e comece agora</p>
-                            <button class="btn-primary" id="emptyCreateBtn"><i class="fas fa-plus"></i> Criar meu primeiro site</button>
+                            <h3>Create your first website</h3>
+                            <p style="color:#64748b; margin-bottom:24px;">Choose from professional templates and start now</p>
+                            <button class="btn-primary" id="emptyCreateBtn">Create Website</button>
                         </div>
                     `;
                     document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal());
@@ -949,71 +870,72 @@
                                 <div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div>
                                 <div class="site-info">
                                     <h3>${escapeHtml(site.title)}</h3>
-                                    <p><i class="fas fa-link"></i> /${site.slug}</p>
+                                    <p>/${site.slug}</p>
                                     <span class="badge">${templates[site.template]?.name || 'Template'}</span>
                                 </div>
                             </div>
                             <div class="site-card-actions">
-                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')"><i class="fas fa-edit"></i> Editar</button>
-                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')"><i class="fas fa-eye"></i> Ver</button>
-                                <button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')"><i class="fas fa-trash"></i></button>
+                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Edit</button>
+                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">View</button>
+                                <button class="btn-outline" style="border-color:#fee2e2; color:#dc2626;" onclick="window.deleteSiteById('${doc.id}')">Delete</button>
                             </div>
                         </div>
                     `;
                 });
             } catch (error) {
-                sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`;
+                sitesGrid.innerHTML = `<div class="empty-state">Error: ${error.message}</div>`;
             }
         }
         
         window.editSiteById = async (siteId) => {
-            const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
-            const snapshot = await getDocs(q);
-            snapshot.forEach(doc => {
-                if (doc.id === siteId) {
-                    currentEditingSite = { id: doc.id, ...doc.data() };
-                    showEditor();
-                }
-            });
+            const docRef = doc(db, 'sites', siteId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                currentEditingSite = { id: docSnap.id, ...docSnap.data() };
+                showEditor();
+            }
         };
         
         window.deleteSiteById = async (siteId) => {
-            if (!confirm('⚠️ Tem certeza? Esta ação é irreversível.')) return;
+            if (!confirm('Are you sure? This action cannot be undone.')) return;
             await deleteDoc(doc(db, 'sites', siteId));
-            showToast('Site excluído com sucesso', 'success');
+            showToast('Site deleted successfully', 'success');
             loadDashboard();
         };
         
         function showEditor() {
             showPage('editorPage');
-            document.getElementById('editorTitle').innerHTML = `<i class="fas fa-edit"></i> Editando: ${currentEditingSite.title}`;
+            document.getElementById('editorTitle').innerHTML = `Editing: ${currentEditingSite.title}`;
             
             let html = '';
+            const content = currentEditingSite.content;
             
-            // Seção de Informações Básicas
-            html += `<div class="editor-section"><h4><i class="fas fa-info-circle"></i> Informações Básicas</h4>`;
-            for (let [key, value] of Object.entries(currentEditingSite.content)) {
-                if (typeof value === 'string' && !key.includes('Color') && key !== 'heroImage' && key !== 'avatar') {
+            // Basic Information Section
+            html += `<div class="editor-section"><h4>Basic Information</h4>`;
+            const basicFields = ['heroTitle', 'heroSubtitle', 'companyName', 'tagline', 'name', 'title', 'aboutTitle', 'aboutText', 'description', 'bio'];
+            for (let field of basicFields) {
+                if (content[field] !== undefined) {
                     html += `
                         <div class="editor-field">
-                            <label>📝 ${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
-                            <input type="text" id="field_${key}" value="${escapeHtml(value)}">
+                            <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+                            <input type="text" id="field_${field}" value="${escapeHtml(content[field])}">
                         </div>
                     `;
                 }
             }
             html += `</div>`;
             
-            // Seção de Cores
-            html += `<div class="editor-section"><h4><i class="fas fa-palette"></i> Cores do Site</h4>`;
-            for (let [key, value] of Object.entries(currentEditingSite.content)) {
-                if (typeof value === 'string' && key.includes('Color')) {
+            // Colors Section
+            html += `<div class="editor-section"><h4>Colors</h4>`;
+            const colorFields = ['primaryColor', 'secondaryColor'];
+            for (let field of colorFields) {
+                if (content[field] !== undefined) {
                     html += `
                         <div class="editor-field">
-                            <label>🎨 ${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+                            <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
                             <div class="color-input-group">
-                                <input type="color" id="field_${key}" value="${value}">
-                                <input type="text" value="${value}" style="flex:1;" onchange="document.getElementById('field_${key}').value = this.value; document.getElementById('field_${key}').dispatchEvent(new Event('change'))">
+                                <input type="color" id="field_${field}" value="${content[field]}">
+                                <input type="text" value="${content[field]}" style="flex:1;" onchange="document.getElementById('field_${field}').value = this.value; document.getElementById('field_${field}').dispatchEvent(new Event('change'))">
                             </div>
                         </div>
                     `;
@@ -1021,23 +943,36 @@
             }
             html += `</div>`;
             
-            // Seção de Contato e WhatsApp
-            html += `<div class="editor-section"><h4><i class="fab fa-whatsapp"></i> Contato & WhatsApp</h4>`;
-            const contactFields = ['showWhatsapp', 'whatsappNumber', 'whatsappMessage', 'showEmail', 'emailAddress', 'showPhone', 'phoneNumber', 'showAddress', 'address'];
-            for (let key of contactFields) {
-                if (currentEditingSite.content.hasOwnProperty(key)) {
-                    const value = currentEditingSite.content[key];
-                    if (typeof value === 'boolean') {
+            // Font Section
+            html += `<div class="editor-section"><h4>Typography</h4>`;
+            html += `
+                <div class="editor-field">
+                    <label>Font Family</label>
+                    <select id="field_fontFamily">
+                        ${fontOptions.map(font => `<option value="${font.value}" ${content.fontFamily === font.value ? 'selected' : ''}>${font.label} (${font.category})</option>`).join('')}
+                    </select>
+                </div>
+            `;
+            html += `</div>`;
+            
+            // Contact Section
+            html += `<div class="editor-section"><h4>Contact & WhatsApp</h4>`;
+            const contactFields = ['showWhatsapp', 'whatsappNumber', 'whatsappMessage', 'showEmail', 'emailAddress', 'showPhone', 'phoneNumber'];
+            for (let field of contactFields) {
+                if (content[field] !== undefined) {
+                    if (typeof content[field] === 'boolean') {
                         html += `
                             <div class="editor-field">
-                                <label><input type="checkbox" id="field_${key}" ${value ? 'checked' : ''}> ${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+                                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                                    <input type="checkbox" id="field_${field}" ${content[field] ? 'checked' : ''}> Enable ${field.replace('show', '').replace(/([A-Z])/g, ' $1')}
+                                </label>
                             </div>
                         `;
-                    } else if (typeof value === 'string') {
+                    } else {
                         html += `
                             <div class="editor-field">
-                                <label>📞 ${key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
-                                <input type="text" id="field_${key}" value="${escapeHtml(value)}">
+                                <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+                                <input type="text" id="field_${field}" value="${escapeHtml(content[field])}" placeholder="Enter ${field}">
                             </div>
                         `;
                     }
@@ -1045,26 +980,114 @@
             }
             html += `</div>`;
             
+            // Services Section with Icon Selector
+            if (content.services && Array.isArray(content.services)) {
+                html += `<div class="editor-section"><h4>Services</h4>`;
+                content.services.forEach((service, index) => {
+                    html += `
+                        <div style="border:1px solid #e2e8f0; border-radius:16px; padding:16px; margin-bottom:16px;">
+                            <div class="editor-field">
+                                <label>Service Name</label>
+                                <input type="text" id="service_name_${index}" value="${escapeHtml(service.name)}">
+                            </div>
+                            <div class="editor-field">
+                                <label>Description</label>
+                                <input type="text" id="service_desc_${index}" value="${escapeHtml(service.description)}">
+                            </div>
+                            <div class="editor-field">
+                                <label>Icon</label>
+                                <div class="icon-selector" id="icon_selector_${index}">
+                                    ${iconOptions.map(icon => `
+                                        <div class="icon-option ${service.icon === icon ? 'selected' : ''}" data-icon="${icon}">
+                                            <i class="fas ${icon}"></i>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <input type="hidden" id="service_icon_${index}" value="${service.icon || 'fa-star'}">
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `<button class="btn-outline" id="addServiceBtn" style="width:100%;">+ Add Service</button>`;
+                html += `</div>`;
+            }
+            
             document.getElementById('editorFields').innerHTML = html;
             
-            // Attach event listeners
-            for (let [key, value] of Object.entries(currentEditingSite.content)) {
+            // Attach event listeners for all fields
+            for (let [key, value] of Object.entries(content)) {
                 const field = document.getElementById(`field_${key}`);
                 if (field) {
                     if (field.type === 'checkbox') {
                         field.addEventListener('change', async (e) => {
-                            currentEditingSite.content[key] = e.target.checked;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                            content[key] = e.target.checked;
+                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                            showToast('Saved!', 'success');
                             updatePreview();
                         });
                     } else {
                         field.addEventListener('change', async (e) => {
-                            currentEditingSite.content[key] = e.target.value;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                            content[key] = e.target.value;
+                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                            showToast('Saved!', 'success');
                             updatePreview();
                         });
                     }
                 }
+            }
+            
+            // Service fields
+            if (content.services) {
+                for (let i = 0; i < content.services.length; i++) {
+                    const nameField = document.getElementById(`service_name_${i}`);
+                    const descField = document.getElementById(`service_desc_${i}`);
+                    const iconField = document.getElementById(`service_icon_${i}`);
+                    
+                    if (nameField) {
+                        nameField.addEventListener('change', async (e) => {
+                            content.services[i].name = e.target.value;
+                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                            showToast('Saved!', 'success');
+                            updatePreview();
+                        });
+                    }
+                    if (descField) {
+                        descField.addEventListener('change', async (e) => {
+                            content.services[i].description = e.target.value;
+                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                            showToast('Saved!', 'success');
+                            updatePreview();
+                        });
+                    }
+                    
+                    // Icon selector
+                    const selector = document.getElementById(`icon_selector_${i}`);
+                    if (selector) {
+                        selector.querySelectorAll('.icon-option').forEach(opt => {
+                            opt.addEventListener('click', () => {
+                                selector.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+                                opt.classList.add('selected');
+                                const icon = opt.dataset.icon;
+                                content.services[i].icon = icon;
+                                if (iconField) iconField.value = icon;
+                                updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                                showToast('Icon updated!', 'success');
+                                updatePreview();
+                            });
+                        });
+                    }
+                }
+            }
+            
+            // Add service button
+            const addBtn = document.getElementById('addServiceBtn');
+            if (addBtn) {
+                addBtn.addEventListener('click', async () => {
+                    content.services.push({ name: 'New Service', description: 'Service description', icon: 'fa-star' });
+                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
+                    showToast('Service added!', 'success');
+                    showEditor(); // Refresh editor
+                });
             }
             
             updatePreview();
@@ -1081,83 +1104,68 @@
             const c = site.content;
             const t = site.template;
             
-            const fontFamily = c.fontFamily === 'Playfair Display' ? "'Playfair Display', serif" : c.fontFamily === 'Poppins' ? "'Poppins', sans-serif" : "'Inter', sans-serif";
+            let fontFamily = 'Inter, sans-serif';
+            if (c.fontFamily === 'Playfair Display') fontFamily = "'Playfair Display', serif";
+            else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
+            else if (c.fontFamily === 'Montserrat') fontFamily = "'Montserrat', sans-serif";
+            else if (c.fontFamily === 'Roboto') fontFamily = "'Roboto', sans-serif";
             
-            if (t === 'modern') {
-                return `
-                    <div style="font-family:${fontFamily};">
-                        <div style="height:70vh; background:linear-gradient(135deg, ${c.primaryColor || '#6366f1'}, ${c.secondaryColor || '#8b5cf6'}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; position:relative;">
-                            <div style="position:relative; z-index:2; max-width:800px; padding:20px;">
-                                <h1 style="font-size:72px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Creative Studio'}</h1>
-                                <p style="font-size:24px; opacity:0.95;">${c.heroSubtitle || 'Transformando ideias em realidade'}</p>
-                                <div style="margin-top:40px; display:flex; gap:16px; justify-content:center;">
-                                    ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${c.primaryColor}; font-weight:600;">📱 WhatsApp</a>` : ''}
-                                    ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">✉️ Email</a>` : ''}
-                                </div>
+            const primaryColor = c.primaryColor || '#6366f1';
+            const secondaryColor = c.secondaryColor || '#8b5cf6';
+            
+            return `
+                <div style="font-family:${fontFamily};">
+                    <div style="height:60vh; background:linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:20px;">
+                        <div style="max-width:800px;">
+                            <h1 style="font-size:64px; margin-bottom:20px; font-weight:800;">${c.heroTitle || c.companyName || c.name || 'My Website'}</h1>
+                            <p style="font-size:24px; opacity:0.95;">${c.heroSubtitle || c.tagline || c.title || 'Welcome'}</p>
+                            <div style="margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Hello!')}" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primaryColor}; font-weight:600; transition:transform 0.2s;">WhatsApp</a>` : ''}
+                                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                                ${c.showPhone ? `<a href="tel:${c.phoneNumber}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Call Us</a>` : ''}
                             </div>
                         </div>
-                        <div style="max-width:1200px; margin:0 auto; padding:80px 20px;">
+                    </div>
+                    <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
+                        ${c.aboutText ? `
                             <div style="text-align:center; margin-bottom:60px;">
-                                <h2 style="font-size:42px; margin-bottom:20px;">${c.aboutTitle || 'Sobre Nós'}</h2>
-                                <p style="font-size:18px; color:#475569; max-width:700px; margin:0 auto;">${c.aboutText || 'Somos uma agência criativa focada em entregar soluções inovadoras.'}</p>
+                                <h2 style="font-size:36px; margin-bottom:20px;">${c.aboutTitle || 'About Us'}</h2>
+                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p>
                             </div>
+                        ` : ''}
+                        ${c.bio ? `
+                            <div style="text-align:center; margin-bottom:60px;">
+                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.bio}</p>
+                            </div>
+                        ` : ''}
+                        ${c.description ? `
+                            <div style="text-align:center; margin-bottom:60px;">
+                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.description}</p>
+                            </div>
+                        ` : ''}
+                        ${c.services && c.services.length > 0 ? `
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:30px;">
-                                ${c.services?.map(s => `
+                                ${c.services.map(s => `
                                     <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 6px rgba(0,0,0,0.05); transition:transform 0.3s;">
-                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:56px; color:${c.primaryColor || '#6366f1'}; margin-bottom:20px;"></i>
+                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:56px; color:${primaryColor}; margin-bottom:20px;"></i>
                                         <h3 style="margin-bottom:10px; font-size:22px;">${s.name}</h3>
                                         <p style="color:#64748b;">${s.description || ''}</p>
-                                        ${s.price ? `<div style="margin-top:16px; font-weight:600; color:${c.primaryColor};">${s.price}</div>` : ''}
                                     </div>
-                                `).join('') || ''}
+                                `).join('')}
                             </div>
-                        </div>
+                        ` : ''}
                     </div>
-                `;
-            } else if (t === 'restaurant') {
-                return `
-                    <div style="font-family:${fontFamily};">
-                        <div style="height:60vh; background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${c.heroImage || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'}'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; text-align:center; color:white;">
-                            <div>
-                                <h1 style="font-size:64px; margin-bottom:16px;">${c.restaurantName || 'Gourmet Bistrô'}</h1>
-                                <p style="font-size:20px;">${c.tagline || 'Sabores que encantam'}</p>
-                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá! Gostaria de fazer uma reserva')}" style="display:inline-block; margin-top:30px; padding:14px 32px; background:${c.primaryColor || '#dc2626'}; border-radius:50px; text-decoration:none; color:white;">📱 Reservar pelo WhatsApp</a>` : ''}
-                            </div>
-                        </div>
-                        <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
-                            <p style="text-align:center; font-size:18px; margin-bottom:60px;">${c.description || 'Culinária refinada com ingredientes selecionados'}</p>
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:30px; margin-bottom:60px;">
-                                <div><h3>📍 Endereço</h3><p>${c.address || 'Rua dos Sabores, 123'}</p></div>
-                                <div><h3>📞 Telefone</h3><p>${c.phoneNumber || '+55 11 3333-3333'}</p></div>
-                                <div><h3>⏰ Horário</h3><p>${c.businessHours || 'Terça a Domingo: 19h às 23h'}</p></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div style="font-family:${fontFamily};">
-                        <div style="height:60vh; background:linear-gradient(135deg, ${c.primaryColor || '#667eea'}, ${c.secondaryColor || '#764ba2'}); display:flex; align-items:center; justify-content:center; text-align:center; color:white;">
-                            <div>
-                                <h1 style="font-size:64px;">${c.companyName || c.name || 'Meu Site'}</h1>
-                                <p style="font-size:20px;">${c.tagline || c.title || 'Bem-vindo'}</p>
-                            </div>
-                        </div>
-                        <div style="max-width:1000px; margin:0 auto; padding:60px 20px; text-align:center;">
-                            <p style="font-size:18px;">${c.description || c.bio || 'Conteúdo do seu site'}</p>
-                            ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}" style="display:inline-block; margin-top:30px; padding:12px 32px; background:${c.primaryColor || '#25D366'}; border-radius:50px; text-decoration:none; color:white;"><i class="fab fa-whatsapp"></i> WhatsApp</a>` : ''}
-                        </div>
-                    </div>
-                `;
-            }
+                </div>
+            `;
         }
         
         async function saveSite() {
             if (currentEditingSite) {
-                await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-                showToast('✅ Site salvo com sucesso!', 'success');
-                closeEditor();
-                loadDashboard();
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
+                    content: currentEditingSite.content,
+                    updatedAt: new Date().toISOString()
+                });
+                showToast('Website saved successfully!', 'success');
             }
         }
         
@@ -1184,7 +1192,7 @@
             const templateId = document.getElementById('selectedTemplate').value;
             
             if (!title || !slug) {
-                showToast('Preencha todos os campos', 'error');
+                showToast('Please fill all fields', 'error');
                 return;
             }
             
@@ -1200,11 +1208,11 @@
                 };
                 
                 await addDoc(collection(db, 'sites'), siteData);
-                showToast('✨ Site criado com sucesso!', 'success');
+                showToast('Website created successfully!', 'success');
                 closeCreateModal();
                 loadDashboard();
             } catch (error) {
-                showToast('Erro: ' + error.message, 'error');
+                showToast('Error: ' + error.message, 'error');
             }
         }
         
@@ -1227,20 +1235,23 @@
                     document.getElementById('app').innerHTML = `
                         <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
                             <i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i>
-                            <h2>🔍 Site não encontrado</h2>
-                            <a href="/" style="color:#667eea;">← Voltar para WebCraft Pro</a>
+                            <h2>Website Not Found</h2>
+                            <a href="/" style="color:#6366f1;">← Back to WebCraft Pro</a>
                         </div>
                     `;
                     return;
                 }
                 
                 const site = snapshot.docs[0].data();
-                document.getElementById('app').innerHTML = renderSitePreview(site);
-                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">✨ Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro</footer>`;
+                document.getElementById('app').innerHTML = renderSitePreview({ content: site.content, template: site.template });
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Created with WebCraft Pro</footer>`;
             } catch (error) {
-                document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`;
+                document.getElementById('app').innerHTML = `<div style="padding:40px;">Error: ${error.message}</div>`;
             }
         }
+        
+        // Helper function to get document
+        window.getDoc = getDoc;
         
         renderApp();
         
