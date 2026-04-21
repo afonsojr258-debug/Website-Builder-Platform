@@ -26,10 +26,6 @@
         .logo-img { height: 45px; width: auto; border-radius: 10px; }
         .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .main-nav { display: none; }
-        .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
-        .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; z-index: 999; }
-        .mobile-nav.open { display: flex; }
         .nav-buttons { display: flex; gap: 16px; }
         
         /* Botões */
@@ -133,7 +129,7 @@
         
         /* Editor */
         .editor-layout { display: flex; height: 100vh; background: #f8fafc; }
-        .editor-sidebar { width: 550px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
+        .editor-sidebar { width: 580px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
         .editor-sidebar h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; color: #0f172a; display: flex; align-items: center; gap: 8px; }
         .editor-preview { flex: 1; overflow-y: auto; padding: 32px; background: #f1f5f9; }
         .editor-preview h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
@@ -205,11 +201,11 @@
         .float-left { left: 30px; }
         .float-right { right: 30px; }
         
-        /* Foto Perfil */
-        .profile-photo { object-fit: cover; }
-        .photo-circle { border-radius: 50%; }
-        .photo-rounded { border-radius: 20px; }
-        .photo-square { border-radius: 0; }
+        /* Imagem Personalizada */
+        .custom-image { object-fit: cover; }
+        .img-circle { border-radius: 50%; }
+        .img-rounded { border-radius: 20px; }
+        .img-square { border-radius: 0; }
         
         .loading { text-align: center; padding: 60px; font-size: 18px; color: #64748b; }
         .loading i { font-size: 40px; margin-bottom: 16px; color: #6366f1; animation: spin 1s linear infinite; }
@@ -326,7 +322,7 @@
                         { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
                     ],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#6366f1', size: '150', position: 'hero' }
+                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '300', position: 'hero' }
                 }
             },
             corporate: {
@@ -343,7 +339,7 @@
                         { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' }
                     ],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#2563eb', size: '150', position: 'hero' }
+                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#2563eb', size: '300', position: 'hero' }
                 }
             },
             personal: {
@@ -356,7 +352,7 @@
                     showEmail: true, emailAddress: 'ana@studio.com',
                     buttons: [], services: [],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#ea580c', size: '150', position: 'hero' }
+                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#ea580c', size: '300', position: 'hero' }
                 }
             }
         };
@@ -386,16 +382,10 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav"></div>
-                        <button class="mobile-menu-btn" id="mobileMenuBtnPolicy"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                         </div>
-                    </div>
-                    <div class="mobile-nav" id="mobileNavPolicy">
-                        ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                     </div>
                 </div>
                 <div class="legal-content">
@@ -454,16 +444,10 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav"></div>
-                        <button class="mobile-menu-btn" id="mobileMenuBtnTerms"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                         </div>
-                    </div>
-                    <div class="mobile-nav" id="mobileNavTerms">
-                        ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                     </div>
                 </div>
                 <div class="legal-content">
@@ -529,16 +513,10 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav"></div>
-                        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                         </div>
-                    </div>
-                    <div class="mobile-nav" id="mobileNav">
-                        <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                     </div>
                 </div>
                 <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;" onclick="window.showPrivacyPolicy()">Política</button></div></div></div>
@@ -579,8 +557,8 @@
                 <!-- Modal para editar Botão Flutuante (Apenas PRO) -->
                 <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..."></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon">${floatIconOptions.map(opt => `<option value="${opt.icon}">${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
                 
-                <!-- Modal para editar Foto de Perfil -->
-                <div id="editPhotoModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Foto de Perfil</h3><button class="close-modal" onclick="closePhotoModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="photoUrl" placeholder="https://exemplo.com/minha-foto.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="photoShape"><option value="circle">Redondo (Círculo)</option><option value="rounded">Arredondado (Bordas suaves)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="photoBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="photoBorderColor" value="#6366f1"><input type="text" id="photoBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="photoSize"><option value="100">Pequeno (100px)</option><option value="150" selected>Médio (150px)</option><option value="200">Grande (200px)</option><option value="250">Extra Grande (250px)</option></select></div><div class="input-group"><label>Posição no Hero</label><select id="photoPosition"><option value="hero">No Hero (Junto com título)</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closePhotoModal()">Cancelar</button><button class="btn-primary" id="savePhotoChangesBtn">Salvar Alterações</button></div></div></div>
+                <!-- Modal para editar Imagem Personalizada -->
+                <div id="editImageModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Imagem Personalizada</h3><button class="close-modal" onclick="closeImageModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="imageUrl" placeholder="https://exemplo.com/minha-imagem.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="imageShape"><option value="rounded">Arredondado (Bordas suaves)</option><option value="circle">Redondo (Círculo)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="imageBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="imageBorderColor" value="#6366f1"><input type="text" id="imageBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="imageSize"><option value="150">Pequeno (150px)</option><option value="250" selected>Médio (250px)</option><option value="350">Grande (350px)</option><option value="450">Extra Grande (450px)</option></select></div><div class="input-group"><label>Posição</label><select id="imagePosition"><option value="hero">No Hero (Junto com título)</option><option value="above-title">Acima do título</option><option value="below-title">Abaixo do título</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeImageModal()">Cancelar</button><button class="btn-primary" id="saveImageChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
                 <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
@@ -641,20 +619,7 @@
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
             
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileNav = document.getElementById('mobileNav'); if (mobileMenuBtn && mobileNav) { mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open')); }
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
-            
-            const mobileMenuBtnPolicy = document.getElementById('mobileMenuBtnPolicy'); 
-            if (mobileMenuBtnPolicy) {
-                const mobileNavPolicy = document.getElementById('mobileNavPolicy');
-                if (mobileNavPolicy) mobileMenuBtnPolicy.addEventListener('click', () => mobileNavPolicy.classList.toggle('open'));
-            }
-            
-            const mobileMenuBtnTerms = document.getElementById('mobileMenuBtnTerms'); 
-            if (mobileMenuBtnTerms) {
-                const mobileNavTerms = document.getElementById('mobileNavTerms');
-                if (mobileNavTerms) mobileMenuBtnTerms.addEventListener('click', () => mobileNavTerms.classList.toggle('open'));
-            }
         }
         
         window.showPrivacyPolicy = () => {
@@ -705,20 +670,20 @@
             document.getElementById('editFloatModal').classList.remove('active');
         };
         
-        window.openPhotoModal = () => {
-            const photo = currentEditingSite.content.profilePhoto || { url: '', shape: 'circle', border: false, borderColor: '#6366f1', size: '150', position: 'hero' };
-            document.getElementById('photoUrl').value = photo.url || '';
-            document.getElementById('photoShape').value = photo.shape || 'circle';
-            document.getElementById('photoBorder').checked = photo.border || false;
-            document.getElementById('photoBorderColor').value = photo.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
-            document.getElementById('photoBorderColorText').value = photo.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
-            document.getElementById('photoSize').value = photo.size || '150';
-            document.getElementById('photoPosition').value = photo.position || 'hero';
-            document.getElementById('editPhotoModal').classList.add('active');
+        window.openImageModal = () => {
+            const image = currentEditingSite.content.customImage || { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero' };
+            document.getElementById('imageUrl').value = image.url || '';
+            document.getElementById('imageShape').value = image.shape || 'rounded';
+            document.getElementById('imageBorder').checked = image.border || false;
+            document.getElementById('imageBorderColor').value = image.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
+            document.getElementById('imageBorderColorText').value = image.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
+            document.getElementById('imageSize').value = image.size || '250';
+            document.getElementById('imagePosition').value = image.position || 'hero';
+            document.getElementById('editImageModal').classList.add('active');
         };
         
-        window.closePhotoModal = () => {
-            document.getElementById('editPhotoModal').classList.remove('active');
+        window.closeImageModal = () => {
+            document.getElementById('editImageModal').classList.remove('active');
         };
         
         window.openButtonModal = (index) => {
@@ -784,7 +749,14 @@
             showToast('Serviço removido', 'success');
         };
         
-        window.showLandingPage = () => showPage('landingPage');
+        window.showLandingPage = () => {
+            if (currentUser) {
+                showPage('dashboardPage');
+                loadDashboard();
+            } else {
+                showPage('landingPage');
+            }
+        };
         window.showLoginPage = () => showPage('loginPage');
         window.showRegisterPage = () => showPage('registerPage');
         
@@ -851,8 +823,8 @@
                     if (!currentEditingSite.content.floatButton) {
                         currentEditingSite.content.floatButton = { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                     }
-                    if (!currentEditingSite.content.profilePhoto) {
-                        currentEditingSite.content.profilePhoto = { url: '', shape: 'circle', border: false, borderColor: currentEditingSite.content.primaryColor || '#6366f1', size: '150', position: 'hero' };
+                    if (!currentEditingSite.content.customImage) {
+                        currentEditingSite.content.customImage = { url: '', shape: 'rounded', border: false, borderColor: currentEditingSite.content.primaryColor || '#6366f1', size: '250', position: 'hero' };
                     }
                     showEditor(); 
                 } else { 
@@ -882,20 +854,20 @@
                     <div class="editor-field"><label>Título Principal</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}" placeholder="Título do seu site"></div>
                     <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}" placeholder="Subtítulo"></div>
                 </div>
-                <div class="editor-section"><h4><i class="fas fa-image"></i> Foto de Perfil</h4>
-                    <div id="photoInfo" class="item-preview" style="cursor:pointer;" onclick="window.openPhotoModal()">
+                <div class="editor-section"><h4><i class="fas fa-image"></i> Imagem Personalizada</h4>
+                    <div id="imageInfo" class="item-preview" style="cursor:pointer;" onclick="window.openImageModal()">
                         <div class="item-info">
-                            <div class="item-icon"><i class="fas fa-user-circle"></i></div>
+                            <div class="item-icon"><i class="fas fa-image"></i></div>
                             <div class="item-details">
-                                <div class="item-name">${content.profilePhoto?.url ? 'Foto configurada' : 'Nenhuma foto'}</div>
-                                <div class="item-desc">Formato: ${content.profilePhoto?.shape === 'circle' ? 'Redondo' : content.profilePhoto?.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${content.profilePhoto?.size || '150'}px</div>
+                                <div class="item-name">${content.customImage?.url ? 'Imagem configurada' : 'Nenhuma imagem'}</div>
+                                <div class="item-desc">Formato: ${content.customImage?.shape === 'circle' ? 'Redondo' : content.customImage?.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${content.customImage?.size || '250'}px</div>
                             </div>
                         </div>
                         <div class="item-actions">
-                            <button class="btn-icon" onclick="event.stopPropagation(); window.openPhotoModal()"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn-icon" onclick="event.stopPropagation(); window.openImageModal()"><i class="fas fa-edit"></i> Editar</button>
                         </div>
                     </div>
-                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Adicione uma foto de perfil usando link direto da imagem</p>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Adicione uma imagem usando link direto (ex: logo, foto, ilustração)</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
                     <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1"></div></div>
@@ -1077,34 +1049,34 @@
                 }
             });
             
-            document.getElementById('savePhotoChangesBtn')?.addEventListener('click', () => {
-                const photo = {
-                    url: document.getElementById('photoUrl').value,
-                    shape: document.getElementById('photoShape').value,
-                    border: document.getElementById('photoBorder').checked,
-                    borderColor: document.getElementById('photoBorderColor').value,
-                    size: document.getElementById('photoSize').value,
-                    position: document.getElementById('photoPosition').value
+            document.getElementById('saveImageChangesBtn')?.addEventListener('click', () => {
+                const image = {
+                    url: document.getElementById('imageUrl').value,
+                    shape: document.getElementById('imageShape').value,
+                    border: document.getElementById('imageBorder').checked,
+                    borderColor: document.getElementById('imageBorderColor').value,
+                    size: document.getElementById('imageSize').value,
+                    position: document.getElementById('imagePosition').value
                 };
-                currentEditingSite.content.profilePhoto = photo;
+                currentEditingSite.content.customImage = image;
                 updateSiteContent();
-                closePhotoModal();
-                const photoInfoDiv = document.getElementById('photoInfo');
-                if (photoInfoDiv) {
-                    photoInfoDiv.innerHTML = `
+                closeImageModal();
+                const imageInfoDiv = document.getElementById('imageInfo');
+                if (imageInfoDiv) {
+                    imageInfoDiv.innerHTML = `
                         <div class="item-info">
-                            <div class="item-icon"><i class="fas fa-user-circle"></i></div>
+                            <div class="item-icon"><i class="fas fa-image"></i></div>
                             <div class="item-details">
-                                <div class="item-name">${photo.url ? 'Foto configurada' : 'Nenhuma foto'}</div>
-                                <div class="item-desc">Formato: ${photo.shape === 'circle' ? 'Redondo' : photo.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${photo.size}px</div>
+                                <div class="item-name">${image.url ? 'Imagem configurada' : 'Nenhuma imagem'}</div>
+                                <div class="item-desc">Formato: ${image.shape === 'circle' ? 'Redondo' : image.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${image.size}px</div>
                             </div>
                         </div>
                         <div class="item-actions">
-                            <button class="btn-icon" onclick="event.stopPropagation(); window.openPhotoModal()"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn-icon" onclick="event.stopPropagation(); window.openImageModal()"><i class="fas fa-edit"></i> Editar</button>
                         </div>
                     `;
                 }
-                showToast('Foto atualizada!', 'success');
+                showToast('Imagem atualizada!', 'success');
             });
             
             document.getElementById('saveFloatChangesBtn')?.addEventListener('click', () => {
@@ -1150,7 +1122,7 @@
             const showEmail = document.getElementById('showEmail');
             if (showEmail) showEmail.addEventListener('change', () => updateSiteContent());
             
-            const colorTexts = ['primaryColorText', 'secondaryColorText', 'photoBorderColorText'];
+            const colorTexts = ['primaryColorText', 'secondaryColorText', 'imageBorderColorText'];
             colorTexts.forEach(ct => { const el = document.getElementById(ct); if (el) { el.addEventListener('change', (e) => { const colorField = ct.replace('Text', ''); const colorEl = document.getElementById(colorField); if (colorEl) colorEl.value = e.target.value; updateSiteContent(); }); } });
             
             const floatColor = document.getElementById('floatColor');
@@ -1160,16 +1132,16 @@
                 floatColorText.addEventListener('change', (e) => { floatColor.value = e.target.value; });
             }
             
-            const photoBorder = document.getElementById('photoBorder');
-            const photoBorderColor = document.getElementById('photoBorderColor');
-            const photoBorderColorText = document.getElementById('photoBorderColorText');
-            if (photoBorder && photoBorderColor) {
-                photoBorder.addEventListener('change', () => {
-                    photoBorderColor.disabled = !photoBorder.checked;
-                    photoBorderColorText.disabled = !photoBorder.checked;
+            const imageBorder = document.getElementById('imageBorder');
+            const imageBorderColor = document.getElementById('imageBorderColor');
+            const imageBorderColorText = document.getElementById('imageBorderColorText');
+            if (imageBorder && imageBorderColor) {
+                imageBorder.addEventListener('change', () => {
+                    imageBorderColor.disabled = !imageBorder.checked;
+                    imageBorderColorText.disabled = !imageBorder.checked;
                 });
-                photoBorderColor.disabled = !(document.getElementById('photoBorder').checked);
-                photoBorderColorText.disabled = !(document.getElementById('photoBorder').checked);
+                imageBorderColor.disabled = !(document.getElementById('imageBorder').checked);
+                imageBorderColorText.disabled = !(document.getElementById('imageBorder').checked);
             }
             
             updateSiteContent = async () => {
@@ -1240,14 +1212,21 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            const photo = c.profilePhoto || {};
-            let photoHtml = '';
-            if (photo.url && photo.url.trim() !== '') {
-                const shapeClass = photo.shape === 'circle' ? 'photo-circle' : (photo.shape === 'rounded' ? 'photo-rounded' : 'photo-square');
-                const borderStyle = photo.border ? `border: 3px solid ${photo.borderColor || primary};` : '';
-                photoHtml = `<div style="text-align:center; margin-bottom: 24px;">
-                    <img src="${photo.url}" class="profile-photo ${shapeClass}" style="width: ${photo.size || 150}px; height: ${photo.size || 150}px; object-fit: cover; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                </div>`;
+            const image = c.customImage || {};
+            let imageHtml = '';
+            if (image.url && image.url.trim() !== '') {
+                const shapeClass = image.shape === 'circle' ? 'img-circle' : (image.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                const borderStyle = image.border ? `border: 3px solid ${image.borderColor || primary};` : '';
+                const imagePosition = image.position || 'hero';
+                let imageContainerHtml = '';
+                if (imagePosition === 'hero') {
+                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 30px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                } else if (imagePosition === 'above-title') {
+                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                } else if (imagePosition === 'below-title') {
+                    imageContainerHtml = `<div style="text-align:center; margin-top: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                }
+                imageHtml = imageContainerHtml;
             }
             
             let servicesHtml = '';
@@ -1272,18 +1251,25 @@
                 servicesHtml += '</div>';
             }
             
+            // Determinar onde colocar a imagem baseado na posição
+            let heroContentHtml = `
+                ${image.position === 'above-title' ? imageHtml : ''}
+                <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
+                ${image.position === 'hero' ? imageHtml : ''}
+                <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
+                ${image.position === 'below-title' ? imageHtml : ''}
+                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                    ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                    ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                    ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                </div>
+            `;
+            
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
                 ${floatButtonHtml}
                 <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
                     <div>
-                        ${photoHtml}
-                        <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
-                        <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
-                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                            ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
-                            ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
-                            ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                        </div>
+                        ${heroContentHtml}
                     </div>
                 </div>
                 <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
@@ -1410,14 +1396,21 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            const photo = c.profilePhoto || {};
-            let photoHtml = '';
-            if (photo.url && photo.url.trim() !== '') {
-                const shapeClass = photo.shape === 'circle' ? 'photo-circle' : (photo.shape === 'rounded' ? 'photo-rounded' : 'photo-square');
-                const borderStyle = photo.border ? `border: 3px solid ${photo.borderColor || primary};` : '';
-                photoHtml = `<div style="text-align:center; margin-bottom: 24px;">
-                    <img src="${photo.url}" class="profile-photo ${shapeClass}" style="width: ${photo.size || 150}px; height: ${photo.size || 150}px; object-fit: cover; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                </div>`;
+            const image = c.customImage || {};
+            let imageHtml = '';
+            if (image.url && image.url.trim() !== '') {
+                const shapeClass = image.shape === 'circle' ? 'img-circle' : (image.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                const borderStyle = image.border ? `border: 3px solid ${image.borderColor || primary};` : '';
+                const imagePosition = image.position || 'hero';
+                let imageContainerHtml = '';
+                if (imagePosition === 'hero') {
+                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 30px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                } else if (imagePosition === 'above-title') {
+                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                } else if (imagePosition === 'below-title') {
+                    imageContainerHtml = `<div style="text-align:center; margin-top: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+                }
+                imageHtml = imageContainerHtml;
             }
             
             let servicesHtml = '';
@@ -1442,18 +1435,24 @@
                 servicesHtml += '</div>';
             }
             
+            let heroContentHtml = `
+                ${image.position === 'above-title' ? imageHtml : ''}
+                <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
+                ${image.position === 'hero' ? imageHtml : ''}
+                <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
+                ${image.position === 'below-title' ? imageHtml : ''}
+                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                    ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                    ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                    ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                </div>
+            `;
+            
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
                 ${floatButtonHtml}
                 <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
                     <div>
-                        ${photoHtml}
-                        <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
-                        <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
-                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                            ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
-                            ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
-                            ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                        </div>
+                        ${heroContentHtml}
                     </div>
                 </div>
                 <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
