@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebCraft | Plataforma de Websites Profissionais</title>
+    <title>WebCraft | Crie websites profissionais</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,12 +24,12 @@
             color: #1a1a2e;
         }
         
-        /* App Layout */
-        .app-container {
+        /* Pages */
+        .page {
             display: none;
         }
         
-        .app-container.active {
+        .page.active {
             display: block;
         }
         
@@ -444,7 +444,150 @@
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="auth-page">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <div class="logo"><i class="fas fa-rocket"></i></div>
+                    <h1>WebCraft</h1>
+                    <p>Crie websites profissionais em minutos</p>
+                </div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required placeholder="seu@email.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Senha</label>
+                        <input type="password" id="loginPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-primary">Entrar</button>
+                </form>
+                <p class="auth-switch">
+                    Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Register Page -->
+    <div id="registerPage" class="page">
+        <div class="auth-page">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <div class="logo"><i class="fas fa-rocket"></i></div>
+                    <h1>Criar Conta</h1>
+                    <p>Comece gratuitamente</p>
+                </div>
+                <form id="registerForm">
+                    <div class="input-group">
+                        <label>Nome completo</label>
+                        <input type="text" id="registerName" required placeholder="João Silva">
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" required placeholder="joao@email.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Senha</label>
+                        <input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres">
+                    </div>
+                    <button type="submit" class="btn-primary">Criar conta gratuita</button>
+                </form>
+                <p class="auth-switch">
+                    Já tem conta? <a id="showLoginBtn">Fazer login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+    <div id="dashboardPage" class="page">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <i class="fas fa-rocket"></i> WebCraft
+                </div>
+                <ul class="sidebar-menu">
+                    <li><a class="active" id="dashboardLink"><i class="fas fa-th-large"></i> Meus Sites</a></li>
+                    <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
+                </ul>
+                <div class="sidebar-footer">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">Carregando...</span>
+                    </div>
+                    <button id="logoutBtn" class="btn-outline" style="width: 100%; margin-top: 16px;">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <h1>Meus Sites</h1>
+                    <button id="createSiteBtn" class="btn-primary">
+                        <i class="fas fa-plus"></i> Criar novo site
+                    </button>
+                </div>
+                <div id="sitesGrid">
+                    <div class="loading">Carregando sites...</div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Editor Page -->
+    <div id="editorPage" class="page">
+        <div class="editor-layout">
+            <div class="editor-sidebar">
+                <h3 id="editorTitle">Editando site</h3>
+                <div id="editorFields"></div>
+                <button id="saveSiteBtn" class="btn-primary" style="margin-top: 20px;">Salvar e Publicar</button>
+                <button id="closeEditorBtn" class="btn-outline" style="margin-top: 10px; width: 100%;">Voltar ao Dashboard</button>
+            </div>
+            <div class="editor-preview">
+                <h3 style="margin-bottom: 20px;"><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3>
+                <div id="livePreview"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Modal -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 24px;">Criar novo site</h2>
+            <div class="input-group">
+                <label>Nome do site</label>
+                <input type="text" id="siteTitle" placeholder="Ex: Meu Portfólio">
+            </div>
+            <div class="input-group">
+                <label>Endereço do site</label>
+                <input type="text" id="siteSlug" placeholder="exemplo">
+                <small>Seu site estará em: <span id="slugPreview">exemplo</span></small>
+            </div>
+            <div class="input-group">
+                <label>Escolha um template</label>
+                <input type="hidden" id="selectedTemplate" value="portfolio">
+                <div class="template-card" data-template="portfolio">
+                    <h3><i class="fas fa-palette"></i> Portfólio Criativo</h3>
+                    <p>Ideal para designers, artistas e fotógrafos</p>
+                </div>
+                <div class="template-card" data-template="business">
+                    <h3><i class="fas fa-building"></i> Empresa Moderna</h3>
+                    <p>Perfeito para negócios e startups</p>
+                </div>
+                <div class="template-card" data-template="linkhub">
+                    <h3><i class="fas fa-link"></i> Link Hub</h3>
+                    <p>Centralize todos seus links</p>
+                </div>
+            </div>
+            <button id="confirmCreateBtn" class="btn-primary">Criar Site</button>
+            <button id="cancelCreateBtn" class="btn-outline" style="margin-top: 10px;">Cancelar</button>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -468,13 +611,12 @@
         let currentUser = null;
         let currentEditingSite = null;
         
-        // Templates completos
+        // Templates
         const templates = {
             portfolio: {
                 id: 'portfolio',
                 name: 'Portfólio Criativo',
                 icon: 'fa-palette',
-                description: 'Ideal para designers, artistas e fotógrafos',
                 structure: {
                     heroTitle: 'Meu Portfólio',
                     heroSubtitle: 'Criativo & Inovador',
@@ -483,15 +625,13 @@
                     aboutText: 'Sou um profissional apaixonado por criar experiências digitais únicas e memoráveis.',
                     projects: [
                         { name: 'Projeto Destaque', description: 'Descrição do projeto', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600' }
-                    ],
-                    social: { instagram: '#', linkedin: '#', github: '#' }
+                    ]
                 }
             },
             business: {
                 id: 'business',
                 name: 'Empresa Moderna',
                 icon: 'fa-building',
-                description: 'Perfeito para negócios, startups e consultorias',
                 structure: {
                     companyName: 'Nexus Corp',
                     tagline: 'Inovação que Transforma',
@@ -510,7 +650,6 @@
                 id: 'linkhub',
                 name: 'Link Hub',
                 icon: 'fa-link',
-                description: 'Centralize todos seus links em um só lugar',
                 structure: {
                     name: 'João Silva',
                     bio: 'Criador de Conteúdo | Empreendedor',
@@ -524,9 +663,26 @@
             }
         };
         
-        // Render Public Site
+        // Helper Functions
+        function showPage(pageId) {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('registerPage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.remove('active');
+            document.getElementById('editorPage').classList.remove('active');
+            document.getElementById(pageId).classList.add('active');
+        }
+        
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        // Render Public Site (for URL routes)
         async function renderPublicSite(slug) {
             const appDiv = document.getElementById('app');
+            if (!appDiv) return;
             
             try {
                 const sitesRef = collection(db, 'sites');
@@ -534,26 +690,26 @@
                 const snapshot = await getDocs(q);
                 
                 if (snapshot.empty) {
-                    appDiv.innerHTML = `
+                    document.body.innerHTML = `
                         <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px;">
                             <i class="fas fa-search" style="font-size: 64px; color: #cbd5e0;"></i>
                             <h2>Site não encontrado</h2>
                             <p>O site que você procura não existe ou foi removido.</p>
-                            <a href="/" style="color: #667eea;">Criar meu site →</a>
+                            <a href="/" style="color: #667eea;">Voltar para WebCraft →</a>
                         </div>
                     `;
                     return;
                 }
                 
                 const site = snapshot.docs[0].data();
-                appDiv.innerHTML = renderSiteHTML(site);
-                appDiv.innerHTML += `
+                document.body.innerHTML = renderSiteHTML(site);
+                document.body.innerHTML += `
                     <footer style="text-align: center; padding: 20px; background: #f7fafc; color: #a0aec0; font-size: 13px;">
                         Criado com <i class="fas fa-heart" style="color: #fc8181;"></i> WebCraft
                     </footer>
                 `;
             } catch (error) {
-                appDiv.innerHTML = `<div style="padding: 40px; text-align: center;">Erro: ${error.message}</div>`;
+                document.body.innerHTML = `<div style="padding: 40px; text-align: center;">Erro: ${error.message}</div>`;
             }
         }
         
@@ -641,58 +797,24 @@
             }
         }
         
-        // Auth Functions
-        async function handleSignup(e) {
-            e.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await updateProfile(userCredential.user, { displayName: name });
-                showToast('Conta criada com sucesso!', 'success');
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-        
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                showToast('Login realizado!', 'success');
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-        
-        function showToast(message, type) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.textContent = message;
-            toast.className = `toast ${type} show`;
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-        
-        // Dashboard
+        // Dashboard Functions
         async function loadDashboard() {
             if (!currentUser) return;
             
             const sitesGrid = document.getElementById('sitesGrid');
             if (!sitesGrid) return;
             
-            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
+            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>';
             
             try {
                 const sitesRef = collection(db, 'sites');
                 const q = query(sitesRef, where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
                 
-                document.getElementById('userName').textContent = currentUser.displayName || currentUser.email;
+                const userNameSpan = document.getElementById('userName');
+                if (userNameSpan) {
+                    userNameSpan.textContent = currentUser.displayName || currentUser.email;
+                }
                 
                 if (snapshot.empty) {
                     sitesGrid.innerHTML = `
@@ -700,11 +822,13 @@
                             <i class="fas fa-globe"></i>
                             <h3>Você ainda não tem sites</h3>
                             <p>Crie seu primeiro site profissional agora mesmo</p>
-                            <button class="btn-primary" onclick="openCreateModal()">
+                            <button class="btn-primary" id="emptyCreateBtn">
                                 <i class="fas fa-plus"></i> Criar meu primeiro site
                             </button>
                         </div>
                     `;
+                    const emptyBtn = document.getElementById('emptyCreateBtn');
+                    if (emptyBtn) emptyBtn.onclick = () => openCreateModal();
                     return;
                 }
                 
@@ -716,46 +840,59 @@
                             <div class="site-card-header">
                                 <div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div>
                                 <div class="site-info">
-                                    <h3>${site.title}</h3>
+                                    <h3>${escapeHtml(site.title)}</h3>
                                     <p>/${site.slug}</p>
                                 </div>
                             </div>
                             <div class="site-card-actions">
-                                <button class="btn-outline" onclick="editSite('${doc.id}')">
+                                <button class="btn-outline" data-siteid="${doc.id}" data-action="edit">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
-                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">
+                                <button class="btn-outline" data-siteid="${doc.id}" data-slug="${site.slug}" data-action="view">
                                     <i class="fas fa-eye"></i> Ver
                                 </button>
-                                <button class="btn-danger" onclick="deleteSite('${doc.id}')">
+                                <button class="btn-danger" data-siteid="${doc.id}" data-action="delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </div>
                     `;
                 });
+                
+                // Attach event listeners
+                document.querySelectorAll('[data-action="edit"]').forEach(btn => {
+                    btn.onclick = () => editSite(btn.dataset.siteid);
+                });
+                document.querySelectorAll('[data-action="view"]').forEach(btn => {
+                    btn.onclick = () => window.open(`/${btn.dataset.slug}`, '_blank');
+                });
+                document.querySelectorAll('[data-action="delete"]').forEach(btn => {
+                    btn.onclick = () => deleteSite(btn.dataset.siteid);
+                });
             } catch (error) {
+                console.error('Error loading sites:', error);
                 sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`;
             }
         }
         
-        // Create Site Modal
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
         function openCreateModal() {
-            const modal = document.getElementById('createModal');
-            if (modal) modal.classList.add('active');
+            document.getElementById('createModal').classList.add('active');
         }
         
         function closeCreateModal() {
-            const modal = document.getElementById('createModal');
-            if (modal) modal.classList.remove('active');
-        }
-        
-        function selectTemplate(templateId) {
-            document.querySelectorAll('.template-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            document.getElementById('selectedTemplate').value = templateId;
+            document.getElementById('createModal').classList.remove('active');
+            document.getElementById('siteTitle').value = '';
+            document.getElementById('siteSlug').value = '';
         }
         
         async function createSite() {
@@ -769,19 +906,19 @@
             }
             
             // Check if slug exists
-            const sitesRef = collection(db, 'sites');
-            const q = query(sitesRef, where('slug', '==', slug));
-            const existing = await getDocs(q);
-            
-            if (!existing.empty) {
-                showToast('Este endereço já está em uso', 'error');
-                return;
-            }
-            
             try {
+                const sitesRef = collection(db, 'sites');
+                const q = query(sitesRef, where('slug', '==', slug));
+                const existing = await getDocs(q);
+                
+                if (!existing.empty) {
+                    showToast('Este endereço já está em uso', 'error');
+                    return;
+                }
+                
                 const siteData = {
                     title: title,
-                    slug: slug,
+                    slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
                     template: templateId,
                     content: JSON.parse(JSON.stringify(templates[templateId].structure)),
                     userId: currentUser.uid,
@@ -794,36 +931,40 @@
                 closeCreateModal();
                 loadDashboard();
             } catch (error) {
+                console.error('Error creating site:', error);
                 showToast('Erro: ' + error.message, 'error');
             }
         }
         
         async function editSite(siteId) {
-            const docRef = doc(db, 'sites', siteId);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                currentEditingSite = { id: siteId, ...docSnap.data() };
-                showEditor();
+            try {
+                const docRef = doc(db, 'sites', siteId);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    currentEditingSite = { id: siteId, ...docSnap.data() };
+                    showEditor();
+                }
+            } catch (error) {
+                showToast('Erro ao carregar site para edição', 'error');
             }
         }
         
         function showEditor() {
-            document.getElementById('dashboardPage').classList.remove('active');
-            document.getElementById('editorPage').classList.add('active');
+            showPage('editorPage');
+            document.getElementById('editorTitle').textContent = `Editando: ${currentEditingSite.title}`;
             
             // Render editor fields
             const fieldsContainer = document.getElementById('editorFields');
             const content = currentEditingSite.content;
             
-            let html = '<h3>Editando: ' + currentEditingSite.title + '</h3>';
-            
+            let html = '';
             for (let [key, value] of Object.entries(content)) {
                 if (typeof value === 'string') {
                     html += `
                         <div class="editor-field">
                             <label>${key.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
-                            <input type="text" value="${value.replace(/"/g, '&quot;')}" onchange="updateField('${key}', this.value)">
+                            <input type="text" id="field_${key}" value="${escapeHtml(value)}" data-field="${key}">
                         </div>
                     `;
                 } else if (Array.isArray(value)) {
@@ -832,266 +973,189 @@
                             <label>${key.toUpperCase()}</label>
                             <div id="array_${key}">
                                 ${value.map((item, idx) => `
-                                    <div style="margin-bottom: 10px;">
-                                        <input type="text" value="${item.name || item.title || ''}" placeholder="Título" 
-                                               onchange="updateArrayItem('${key}', ${idx}, 'name', this.value)">
-                                        <input type="text" value="${item.description || item.url || ''}" placeholder="Descrição/URL"
-                                               onchange="updateArrayItem('${key}', ${idx}, 'description', this.value)">
+                                    <div style="margin-bottom: 10px; border: 1px solid #e2e8f0; padding: 10px; border-radius: 8px;">
+                                        <input type="text" placeholder="Título" value="${escapeHtml(item.name || item.title || '')}" data-array="${key}" data-index="${idx}" data-prop="name" style="margin-bottom: 8px;">
+                                        <input type="text" placeholder="Descrição/URL" value="${escapeHtml(item.description || item.url || '')}" data-array="${key}" data-index="${idx}" data-prop="description">
                                     </div>
                                 `).join('')}
                             </div>
-                            <button class="btn-secondary" onclick="addArrayItem('${key}')">+ Adicionar</button>
+                            <button class="btn-secondary" id="addArray_${key}">+ Adicionar</button>
                         </div>
                     `;
                 }
             }
             
-            html += `
-                <button class="btn-primary" onclick="saveAndClose()" style="margin-top: 20px;">Salvar e Publicar</button>
-                <button class="btn-outline" onclick="closeEditor()" style="margin-top: 10px;">Cancelar</button>
-            `;
-            
             fieldsContainer.innerHTML = html;
             
-            // Update preview
-            const preview = document.getElementById('livePreview');
-            preview.innerHTML = renderSiteHTML(currentEditingSite, currentEditingSite.template);
+            // Add event listeners for fields
+            document.querySelectorAll('#editorFields input[data-field]').forEach(input => {
+                input.addEventListener('change', async (e) => {
+                    currentEditingSite.content[e.target.dataset.field] = e.target.value;
+                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                    updatePreview();
+                });
+            });
+            
+            document.querySelectorAll('#editorFields input[data-array]').forEach(input => {
+                input.addEventListener('change', async (e) => {
+                    const arrayName = e.target.dataset.array;
+                    const index = parseInt(e.target.dataset.index);
+                    const prop = e.target.dataset.prop;
+                    currentEditingSite.content[arrayName][index][prop] = e.target.value;
+                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                    updatePreview();
+                });
+            });
+            
+            document.querySelectorAll('[id^="addArray_"]').forEach(btn => {
+                btn.onclick = async () => {
+                    const arrayName = btn.id.replace('addArray_', '');
+                    currentEditingSite.content[arrayName].push({ name: 'Novo item', description: '' });
+                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                    showEditor(); // Refresh editor
+                };
+            });
+            
+            updatePreview();
         }
         
-        window.updateField = async function(field, value) {
-            currentEditingSite.content[field] = value;
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            document.getElementById('livePreview').innerHTML = renderSiteHTML(currentEditingSite, currentEditingSite.template);
-        };
+        function updatePreview() {
+            const preview = document.getElementById('livePreview');
+            if (preview && currentEditingSite) {
+                preview.innerHTML = renderSiteHTML(currentEditingSite, currentEditingSite.template);
+            }
+        }
         
-        window.updateArrayItem = async function(field, index, prop, value) {
-            currentEditingSite.content[field][index][prop] = value;
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            document.getElementById('livePreview').innerHTML = renderSiteHTML(currentEditingSite, currentEditingSite.template);
-        };
-        
-        window.addArrayItem = async function(field) {
-            currentEditingSite.content[field].push({ name: 'Novo item', description: '' });
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            showEditor(); // Refresh editor
-        };
-        
-        window.saveAndClose = async function() {
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
-                content: currentEditingSite.content,
-                updatedAt: new Date().toISOString()
-            });
-            showToast('Site salvo e publicado!', 'success');
-            closeEditor();
-            loadDashboard();
-        };
+        async function saveAndClose() {
+            if (currentEditingSite) {
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
+                    content: currentEditingSite.content,
+                    updatedAt: new Date().toISOString()
+                });
+                showToast('Site salvo e publicado!', 'success');
+                closeEditor();
+                loadDashboard();
+            }
+        }
         
         function closeEditor() {
-            document.getElementById('editorPage').classList.remove('active');
-            document.getElementById('dashboardPage').classList.add('active');
             currentEditingSite = null;
+            showPage('dashboardPage');
+            loadDashboard();
         }
         
         async function deleteSite(siteId) {
             if (!confirm('Tem certeza? Esta ação é irreversível.')) return;
             try {
                 await deleteDoc(doc(db, 'sites', siteId));
-                showToast('Site excluído', 'success');
+                showToast('Site excluído com sucesso', 'success');
                 loadDashboard();
             } catch (error) {
-                showToast('Erro ao excluir', 'error');
+                showToast('Erro ao excluir site', 'error');
             }
         }
         
-        // Router
-        function handleRouting() {
+        // Check if we're viewing a public site
+        function checkPublicSite() {
             const path = window.location.pathname;
             const slug = path.substring(1);
             
             if (slug && slug !== '') {
                 renderPublicSite(slug);
-                document.querySelector('.app-container')?.classList.remove('active');
-            } else {
-                document.querySelector('.app-container')?.classList.add('active');
-                if (currentUser) {
-                    document.getElementById('loginPage')?.classList.remove('active');
-                    document.getElementById('registerPage')?.classList.remove('active');
-                    document.getElementById('dashboardPage')?.classList.add('active');
-                    loadDashboard();
-                }
+                return true;
             }
+            return false;
         }
+        
+        // Event Listeners
+        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast('Login realizado com sucesso!', 'success');
+            } catch (error) {
+                showToast('Erro: ' + error.message, 'error');
+            }
+        });
+        
+        document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, { displayName: name });
+                showToast('Conta criada com sucesso!', 'success');
+            } catch (error) {
+                showToast('Erro: ' + error.message, 'error');
+            }
+        });
+        
+        document.getElementById('showRegisterBtn')?.addEventListener('click', () => {
+            showPage('registerPage');
+        });
+        
+        document.getElementById('showLoginBtn')?.addEventListener('click', () => {
+            showPage('loginPage');
+        });
+        
+        document.getElementById('createSiteBtn')?.addEventListener('click', () => openCreateModal());
+        document.getElementById('createSiteLink')?.addEventListener('click', () => openCreateModal());
+        document.getElementById('confirmCreateBtn')?.addEventListener('click', () => createSite());
+        document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
+        document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveAndClose());
+        document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
+        
+        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+            await signOut(auth);
+            showToast('Logout realizado', 'success');
+        });
+        
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                document.getElementById('selectedTemplate').value = card.dataset.template;
+            });
+        });
+        
+        // Slug preview
+        document.getElementById('siteSlug')?.addEventListener('input', (e) => {
+            const slugPreview = document.getElementById('slugPreview');
+            if (slugPreview) slugPreview.textContent = e.target.value || 'exemplo';
+        });
         
         // Auth State
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
-            handleRouting();
+            
+            // Check if it's a public site route
+            if (checkPublicSite()) return;
+            
+            if (user) {
+                showPage('dashboardPage');
+                loadDashboard();
+            } else {
+                showPage('loginPage');
+            }
         });
         
-        // Make global functions available
-        window.handleSignup = handleSignup;
-        window.handleLogin = handleLogin;
-        window.openCreateModal = openCreateModal;
-        window.closeCreateModal = closeCreateModal;
-        window.createSite = createSite;
-        window.editSite = editSite;
-        window.deleteSite = deleteSite;
-        window.selectTemplate = selectTemplate;
-        window.closeEditor = closeEditor;
-        window.saveAndClose = saveAndClose;
-        
-        // Initial render
-        window.addEventListener('popstate', handleRouting);
-        handleRouting();
-    </script>
-    
-    <!-- HTML Structure -->
-    <div class="app-container" id="appContainer">
-        <!-- Login Page -->
-        <div id="loginPage" class="auth-page" style="display: flex;">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <div class="logo"><i class="fas fa-rocket"></i></div>
-                    <h1>WebCraft</h1>
-                    <p>Crie websites profissionais em minutos</p>
-                </div>
-                <form onsubmit="handleLogin(event); return false;">
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="loginEmail" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Senha</label>
-                        <input type="password" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Entrar</button>
-                </form>
-                <p class="auth-switch">
-                    Não tem conta? <a onclick="document.getElementById('loginPage').style.display='none';document.getElementById('registerPage').style.display='flex'">Criar conta</a>
-                </p>
-            </div>
-        </div>
-        
-        <!-- Register Page -->
-        <div id="registerPage" class="auth-page" style="display: none;">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <div class="logo"><i class="fas fa-rocket"></i></div>
-                    <h1>Criar Conta</h1>
-                    <p>Comece gratuitamente</p>
-                </div>
-                <form onsubmit="handleSignup(event); return false;">
-                    <div class="input-group">
-                        <label>Nome</label>
-                        <input type="text" id="signupName" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="signupEmail" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Senha</label>
-                        <input type="password" id="signupPassword" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Criar Conta</button>
-                </form>
-                <p class="auth-switch">
-                    Já tem conta? <a onclick="document.getElementById('registerPage').style.display='none';document.getElementById('loginPage').style.display='flex'">Fazer login</a>
-                </p>
-            </div>
-        </div>
-        
-        <!-- Dashboard -->
-        <div id="dashboardPage" class="dashboard-layout" style="display: none;">
-            <aside class="sidebar">
-                <div class="sidebar-logo">
-                    <i class="fas fa-rocket"></i> WebCraft
-                </div>
-                <ul class="sidebar-menu">
-                    <li><a class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li>
-                    <li><a onclick="openCreateModal()"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
-                </ul>
-                <div class="sidebar-footer">
-                    <div class="user-info">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="userName"></span>
-                    </div>
-                    <button onclick="signOut(auth)" class="btn-outline" style="width: 100%; margin-top: 16px;">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
-                </div>
-            </aside>
-            <main class="main-content">
-                <div class="dashboard-header">
-                    <h1>Meus Sites</h1>
-                    <button class="btn-primary" onclick="openCreateModal()">
-                        <i class="fas fa-plus"></i> Criar Site
-                    </button>
-                </div>
-                <div id="sitesGrid"></div>
-            </main>
-        </div>
-        
-        <!-- Editor -->
-        <div id="editorPage" class="editor-layout" style="display: none;">
-            <div class="editor-sidebar">
-                <div id="editorFields"></div>
-            </div>
-            <div class="editor-preview">
-                <h3 style="margin-bottom: 20px;">Pré-visualização ao vivo</h3>
-                <div id="livePreview"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Create Modal -->
-    <div id="createModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 24px;">Criar novo site</h2>
-            <div class="input-group">
-                <label>Nome do site</label>
-                <input type="text" id="siteTitle" placeholder="Ex: Meu Portfólio">
-            </div>
-            <div class="input-group">
-                <label>Endereço do site</label>
-                <input type="text" id="siteSlug" placeholder="exemplo">
-                <small>Seu site estará em: seu-site.com/<strong id="slugPreview">exemplo</strong></small>
-            </div>
-            <div class="input-group">
-                <label>Escolha um template</label>
-                <input type="hidden" id="selectedTemplate" value="portfolio">
-                <div onclick="selectTemplate('portfolio')" class="template-card">
-                    <h3><i class="fas fa-palette"></i> Portfólio Criativo</h3>
-                    <p>Ideal para designers, artistas e fotógrafos</p>
-                </div>
-                <div onclick="selectTemplate('business')" class="template-card">
-                    <h3><i class="fas fa-building"></i> Empresa Moderna</h3>
-                    <p>Perfeito para negócios e startups</p>
-                </div>
-                <div onclick="selectTemplate('linkhub')" class="template-card">
-                    <h3><i class="fas fa-link"></i> Link Hub</h3>
-                    <p>Centralize todos seus links</p>
-                </div>
-            </div>
-            <button class="btn-primary" onclick="createSite()">Criar Site</button>
-            <button class="btn-outline" onclick="closeCreateModal()" style="margin-top: 10px;">Cancelar</button>
-        </div>
-    </div>
-    
-    <div id="toast" class="toast"></div>
-    
-    <script>
-        // Live slug preview
-        document.getElementById('siteSlug')?.addEventListener('input', function() {
-            document.getElementById('slugPreview').textContent = this.value || 'exemplo';
-        });
-        
-        // Make auth available globally
-        window.signOut = async () => {
-            const { signOut } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
-            const auth = window.auth;
-            if (auth) await signOut(auth);
-        };
+        // Initial check
+        if (!checkPublicSite()) {
+            // If no public site, show auth based on existing user
+            if (auth.currentUser) {
+                showPage('dashboardPage');
+                loadDashboard();
+            } else {
+                showPage('loginPage');
+            }
+        }
     </script>
 </body>
 </html>
