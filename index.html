@@ -14,6 +14,7 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
         .page { display: none; animation: fadeIn 0.5s ease; }
         .page.active { display: block; }
@@ -41,7 +42,10 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99,102,241,0.3); }
         .btn-outline { padding: 10px 20px; background: #f1f5f9; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
         .btn-outline:hover { background: #e2e8f0; transform: translateY(-2px); }
-        .btn-danger { padding: 10px 20px; background: #fee2e2; border: 2px solid #fecaca; border-radius: 12px; cursor: pointer; font-weight: 500; color: #dc2626; }
+        .btn-danger { padding: 10px 20px; background: #fee2e2; border: 2px solid #fecaca; border-radius: 12px; cursor: pointer; font-weight: 500; color: #dc2626; transition: all 0.2s; }
+        .btn-danger:hover { background: #fecaca; transform: translateY(-2px); }
+        .btn-icon { background: #f1f5f9; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 14px; }
+        .btn-icon:hover { background: #e2e8f0; transform: translateY(-2px); }
         
         /* Hero */
         .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; }
@@ -128,28 +132,35 @@
         .color-input-group { display: flex; gap: 12px; align-items: center; }
         .color-input-group input[type="color"] { width: 60px; height: 50px; }
         
-        /* Service Cards */
-        .service-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; }
-        .service-card input, .service-card textarea { width: 100%; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; }
-        .icon-selector-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin: 12px 0; background: white; padding: 16px; border-radius: 16px; border: 1px solid #e2e8f0; }
-        .icon-option-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s; background: #f8fafc; border: 1px solid #e2e8f0; }
+        /* Lista de Botões e Cards - Estilo simplificado */
+        .items-list { display: flex; flex-direction: column; gap: 12px; }
+        .item-preview { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+        .item-preview:hover { background: #f1f5f9; border-color: #cbd5e1; }
+        .item-info { display: flex; align-items: center; gap: 12px; flex: 1; }
+        .item-icon { width: 40px; height: 40px; background: #eef2ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #6366f1; font-size: 20px; }
+        .item-details { flex: 1; }
+        .item-name { font-weight: 600; margin-bottom: 4px; }
+        .item-desc { font-size: 12px; color: #64748b; }
+        .item-actions { display: flex; gap: 8px; }
+        
+        /* Modal Popup */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.active { display: flex; }
+        .edit-modal { background: white; border-radius: 32px; width: 90%; max-width: 550px; max-height: 85vh; overflow-y: auto; animation: popIn 0.3s ease; }
+        .edit-modal-header { padding: 24px 28px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .edit-modal-header h3 { font-size: 20px; font-weight: 700; }
+        .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: #94a3b8; transition: all 0.2s; }
+        .close-modal:hover { color: #ef4444; transform: scale(1.1); }
+        .edit-modal-body { padding: 28px; }
+        .edit-modal-footer { padding: 20px 28px; border-top: 1px solid #e2e8f0; display: flex; gap: 12px; justify-content: flex-end; }
+        
+        /* Icon Selector Grid */
+        .icon-selector-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-top: 12px; background: #f8fafc; padding: 16px; border-radius: 16px; border: 1px solid #e2e8f0; max-height: 250px; overflow-y: auto; }
+        .icon-option-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s; background: white; border: 1px solid #e2e8f0; }
         .icon-option-card:hover { background: #eef2ff; border-color: #6366f1; transform: scale(1.05); }
         .icon-option-card.selected { background: #eef2ff; border-color: #6366f1; }
-        .icon-option-card i { font-size: 24px; color: #6366f1; }
-        .icon-option-card span { font-size: 10px; color: #64748b; text-align: center; }
-        
-        /* Button Cards */
-        .btn-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; }
-        .btn-card input, .btn-card select { width: 100%; padding: 10px 12px; margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 12px; }
-        .remove-btn { width: 100%; margin-top: 12px; padding: 10px; background: #fee2e2; border: none; border-radius: 12px; color: #dc2626; cursor: pointer; font-weight: 600; }
-        .remove-btn:hover { background: #fecaca; }
-        
-        /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 1000; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 32px; padding: 40px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; }
-        .template-card { border: 2px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s; }
-        .template-card:hover, .template-card.selected { border-color: #6366f1; background: #eef2ff; transform: translateX(8px); }
+        .icon-option-card i { font-size: 22px; color: #6366f1; }
+        .icon-option-card span { font-size: 9px; color: #64748b; text-align: center; }
         
         /* Toast */
         .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 28px; border-radius: 16px; color: white; transform: translateX(450px); transition: transform 0.3s; z-index: 2000; font-weight: 500; }
@@ -161,6 +172,13 @@
         .empty-state { text-align: center; padding: 80px 20px; }
         .empty-state i { font-size: 80px; color: #cbd5e0; margin-bottom: 24px; }
         .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        
+        /* Modal de criação */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 32px; padding: 40px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; }
+        .template-card { border: 2px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s; }
+        .template-card:hover, .template-card.selected { border-color: #6366f1; background: #eef2ff; transform: translateX(8px); }
         
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
@@ -203,6 +221,8 @@
         
         let currentUser = null;
         let currentEditingSite = null;
+        let currentEditingButtonIndex = null;
+        let currentEditingServiceIndex = null;
         
         const fontOptions = [
             { value: 'Inter', label: 'Inter' },
@@ -304,9 +324,16 @@
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
                 <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
                 <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
-                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan">Plano Grátis</div></div></div><button id="logoutBtn" class="btn-outline" style="width:100%;">Sair</button></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
+                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan">Plano Grátis</div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
                 <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small>Seu site estará em: <strong id="slugPreview">meuportfolio</strong></small></div><div class="input-group"><label>Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary">Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
+                
+                <!-- Modal para editar Botão -->
+                <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-services">Após os Cards de Serviços</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
+                
+                <!-- Modal para editar Card/Serviço -->
+                <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
+                
                 <div id="toast" class="toast"></div>
             `;
             attachEvents();
@@ -336,9 +363,11 @@
             document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
             document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveSite());
             document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
-            document.getElementById('logoutBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout', 'success'); });
+            document.getElementById('logoutSidebarBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout realizado', 'success'); showPage('landingPage'); });
+            
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
+            
             const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileNav = document.getElementById('mobileNav'); if (mobileMenuBtn && mobileNav) { mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open')); }
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
         }
@@ -408,6 +437,48 @@
             catch (error) { showToast('Erro ao excluir', 'error'); } 
         };
         
+        function openButtonModal(index) {
+            currentEditingButtonIndex = index;
+            const btn = currentEditingSite.content.buttons[index];
+            document.getElementById('editBtnText').value = btn.text || '';
+            document.getElementById('editBtnUrl').value = btn.url || '#';
+            document.getElementById('editBtnType').value = btn.type || 'primary';
+            document.getElementById('editBtnPosition').value = btn.position || 'hero';
+            document.getElementById('editBtnShape').value = btn.shape || 'rounded';
+            document.getElementById('editBtnAlign').value = btn.align || 'center';
+            document.getElementById('editButtonModal').classList.add('active');
+        }
+        
+        function closeButtonModal() {
+            document.getElementById('editButtonModal').classList.remove('active');
+            currentEditingButtonIndex = null;
+        }
+        
+        function openServiceModal(index) {
+            currentEditingServiceIndex = index;
+            const service = currentEditingSite.content.services[index];
+            document.getElementById('editServiceName').value = service.name || '';
+            document.getElementById('editServiceDesc').value = service.description || '';
+            // Render icon selector
+            const container = document.getElementById('serviceIconSelector');
+            container.innerHTML = iconOptions.map(icon => `<div class="icon-option-card ${service.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('');
+            container.querySelectorAll('.icon-option-card').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    container.querySelectorAll('.icon-option-card').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                });
+            });
+            document.getElementById('editServiceModal').classList.add('active');
+        }
+        
+        function closeServiceModal() {
+            document.getElementById('editServiceModal').classList.remove('active');
+            currentEditingServiceIndex = null;
+        }
+        
+        window.closeButtonModal = closeButtonModal;
+        window.closeServiceModal = closeServiceModal;
+        
         function showEditor() {
             showPage('editorPage');
             const editorTitle = document.getElementById('editorTitle');
@@ -434,8 +505,14 @@
                     <div class="editor-field"><label><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Email</label></div>
                     <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}"></div>
                 </div>
-                <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4><div id="buttonsContainer"></div><button class="btn-outline" id="addButtonBtn" style="width:100%;">+ Adicionar Botão</button></div>
-                <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4><div id="servicesContainer"></div><button class="btn-outline" id="addServiceBtn" style="width:100%;">+ Adicionar Serviço</button></div>
+                <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4>
+                    <div id="buttonsList" class="items-list"></div>
+                    <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:12px;">+ Adicionar Botão</button>
+                </div>
+                <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4>
+                    <div id="servicesList" class="items-list"></div>
+                    <button class="btn-outline" id="addServiceBtn" style="width:100%; margin-top:12px;">+ Adicionar Serviço</button>
+                </div>
                 <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre</h4><div class="editor-field"><textarea id="aboutText" rows="4">${escapeHtml(content.aboutText || '')}</textarea></div></div>
             `;
             
@@ -445,74 +522,112 @@
             const buttons = content.buttons || [];
             const services = content.services || [];
             
-            function renderButtons() {
-                const container = document.getElementById('buttonsContainer');
+            function renderButtonsList() {
+                const container = document.getElementById('buttonsList');
                 if (container) {
-                    container.innerHTML = buttons.map((btn, idx) => `
-                        <div class="btn-card">
-                            <input type="text" placeholder="Texto" value="${escapeHtml(btn.text || 'Novo Botão')}" data-btn-index="${idx}" data-btn-field="text">
-                            <input type="text" placeholder="URL" value="${escapeHtml(btn.url || '#')}" data-btn-index="${idx}" data-btn-field="url">
-                            <select data-btn-index="${idx}" data-btn-field="type"><option value="primary" ${btn.type === 'primary' ? 'selected' : ''}>Primário</option><option value="secondary" ${btn.type === 'secondary' ? 'selected' : ''}>Secundário</option></select>
-                            <select data-btn-index="${idx}" data-btn-field="position"><option value="hero" ${btn.position === 'hero' ? 'selected' : ''}>No Hero</option><option value="after-services" ${btn.position === 'after-services' ? 'selected' : ''}>Após Serviços</option><option value="after-about" ${btn.position === 'after-about' ? 'selected' : ''}>Após Sobre</option></select>
-                            <select data-btn-index="${idx}" data-btn-field="shape"><option value="rounded" ${btn.shape === 'rounded' ? 'selected' : ''}>Arredondado</option><option value="pill" ${btn.shape === 'pill' ? 'selected' : ''}>Pílula</option><option value="square" ${btn.shape === 'square' ? 'selected' : ''}>Quadrado</option></select>
-                            <select data-btn-index="${idx}" data-btn-field="align"><option value="center" ${btn.align === 'center' ? 'selected' : ''}>Centralizado</option><option value="left" ${btn.align === 'left' ? 'selected' : ''}>Esquerda</option><option value="right" ${btn.align === 'right' ? 'selected' : ''}>Direita</option></select>
-                            <button class="remove-btn" data-btn-index="${idx}">Remover</button>
-                        </div>
-                    `).join('');
-                    document.querySelectorAll('[data-btn-field]').forEach(input => { input.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.btnIndex); const field = e.target.dataset.btnField; buttons[idx][field] = e.target.value; updateSiteContent(); }); });
-                    document.querySelectorAll('.remove-btn').forEach(btn => { btn.addEventListener('click', (e) => { const idx = parseInt(e.target.dataset.btnIndex); buttons.splice(idx, 1); renderButtons(); updateSiteContent(); }); });
-                }
-            }
-            
-            function renderServices() {
-                const container = document.getElementById('servicesContainer');
-                if (container) {
-                    container.innerHTML = services.map((srv, idx) => `
-                        <div class="service-card">
-                            <input type="text" placeholder="Nome" value="${escapeHtml(srv.name || 'Novo Serviço')}" data-service-index="${idx}" data-service-field="name">
-                            <textarea placeholder="Descrição" rows="2" data-service-index="${idx}" data-service-field="description">${escapeHtml(srv.description || '')}</textarea>
-                            <div class="icon-selector-grid" id="icon_selector_${idx}">
-                                ${iconOptions.map(icon => `<div class="icon-option-card ${srv.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('')}
+                    if (buttons.length === 0) {
+                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">Nenhum botão adicionado. Clique em "+ Adicionar Botão"</div>';
+                    } else {
+                        container.innerHTML = buttons.map((btn, idx) => `
+                            <div class="item-preview">
+                                <div class="item-info">
+                                    <div class="item-icon"><i class="fas fa-link"></i></div>
+                                    <div class="item-details">
+                                        <div class="item-name">${escapeHtml(btn.text || 'Botão')}</div>
+                                        <div class="item-desc">${escapeHtml(btn.url || '#')} | ${btn.position || 'hero'} | ${btn.shape || 'rounded'}</div>
+                                    </div>
+                                </div>
+                                <div class="item-actions">
+                                    <button class="btn-icon" onclick="openButtonModal(${idx})"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon" onclick="removeButton(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
-                            <input type="hidden" id="service_icon_${idx}" value="${srv.icon || 'fa-star'}">
-                            <button class="remove-btn" data-service-index="${idx}">Remover</button>
-                        </div>
-                    `).join('');
-                    
-                    document.querySelectorAll('[data-service-field]').forEach(input => { input.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.serviceIndex); const field = e.target.dataset.serviceField; services[idx][field] = e.target.value; updateSiteContent(); }); });
-                    document.querySelectorAll('.remove-btn[data-service-index]').forEach(btn => { btn.addEventListener('click', (e) => { const idx = parseInt(e.target.dataset.serviceIndex); services.splice(idx, 1); renderServices(); updateSiteContent(); }); });
-                    
-                    services.forEach((_, idx) => {
-                        const selector = document.getElementById(`icon_selector_${idx}`);
-                        if (selector) {
-                            selector.querySelectorAll('.icon-option-card').forEach(opt => {
-                                opt.addEventListener('click', () => {
-                                    selector.querySelectorAll('.icon-option-card').forEach(o => o.classList.remove('selected'));
-                                    opt.classList.add('selected');
-                                    const icon = opt.dataset.icon;
-                                    services[idx].icon = icon;
-                                    const iconField = document.getElementById(`service_icon_${idx}`);
-                                    if (iconField) iconField.value = icon;
-                                    updateSiteContent();
-                                    showToast('Ícone selecionado!', 'success');
-                                });
-                            });
-                        }
-                    });
+                        `).join('');
+                    }
                 }
             }
             
-            renderButtons();
-            renderServices();
+            function renderServicesList() {
+                const container = document.getElementById('servicesList');
+                if (container) {
+                    if (services.length === 0) {
+                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">Nenhum serviço adicionado. Clique em "+ Adicionar Serviço"</div>';
+                    } else {
+                        container.innerHTML = services.map((srv, idx) => `
+                            <div class="item-preview">
+                                <div class="item-info">
+                                    <div class="item-icon"><i class="fas ${srv.icon || 'fa-star'}"></i></div>
+                                    <div class="item-details">
+                                        <div class="item-name">${escapeHtml(srv.name || 'Serviço')}</div>
+                                        <div class="item-desc">${escapeHtml(srv.description || '')}</div>
+                                    </div>
+                                </div>
+                                <div class="item-actions">
+                                    <button class="btn-icon" onclick="openServiceModal(${idx})"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon" onclick="removeService(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            }
+            
+            window.removeButton = (idx) => { buttons.splice(idx, 1); renderButtonsList(); updateSiteContent(); showToast('Botão removido', 'success'); };
+            window.removeService = (idx) => { services.splice(idx, 1); renderServicesList(); updateSiteContent(); showToast('Serviço removido', 'success'); };
+            
+            renderButtonsList();
+            renderServicesList();
             
             const addButtonBtn = document.getElementById('addButtonBtn');
             if (addButtonBtn) {
-                addButtonBtn.addEventListener('click', () => { buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', shape: 'rounded', align: 'center' }); renderButtons(); updateSiteContent(); showToast('Botão adicionado!', 'success'); });
+                addButtonBtn.addEventListener('click', () => { 
+                    buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', shape: 'rounded', align: 'center' }); 
+                    renderButtonsList(); 
+                    updateSiteContent(); 
+                    showToast('Botão adicionado!', 'success'); 
+                });
             }
             const addServiceBtn = document.getElementById('addServiceBtn');
             if (addServiceBtn) {
-                addServiceBtn.addEventListener('click', () => { services.push({ name: 'Novo Serviço', description: 'Descrição', icon: 'fa-star' }); renderServices(); updateSiteContent(); showToast('Serviço adicionado!', 'success'); });
+                addServiceBtn.addEventListener('click', () => { 
+                    services.push({ name: 'Novo Serviço', description: 'Descrição do serviço', icon: 'fa-star' }); 
+                    renderServicesList(); 
+                    updateSiteContent(); 
+                    showToast('Serviço adicionado!', 'success'); 
+                });
             }
+            
+            // Save button changes
+            document.getElementById('saveButtonChangesBtn')?.addEventListener('click', () => {
+                if (currentEditingButtonIndex !== null) {
+                    const btn = buttons[currentEditingButtonIndex];
+                    btn.text = document.getElementById('editBtnText').value;
+                    btn.url = document.getElementById('editBtnUrl').value;
+                    btn.type = document.getElementById('editBtnType').value;
+                    btn.position = document.getElementById('editBtnPosition').value;
+                    btn.shape = document.getElementById('editBtnShape').value;
+                    btn.align = document.getElementById('editBtnAlign').value;
+                    renderButtonsList();
+                    updateSiteContent();
+                    closeButtonModal();
+                    showToast('Botão atualizado!', 'success');
+                }
+            });
+            
+            // Save service changes
+            document.getElementById('saveServiceChangesBtn')?.addEventListener('click', () => {
+                if (currentEditingServiceIndex !== null) {
+                    const service = services[currentEditingServiceIndex];
+                    service.name = document.getElementById('editServiceName').value;
+                    service.description = document.getElementById('editServiceDesc').value;
+                    const selectedIcon = document.querySelector('#serviceIconSelector .icon-option-card.selected');
+                    if (selectedIcon) service.icon = selectedIcon.dataset.icon;
+                    renderServicesList();
+                    updateSiteContent();
+                    closeServiceModal();
+                    showToast('Serviço atualizado!', 'success');
+                }
+            });
             
             const fields = ['heroTitle', 'heroSubtitle', 'primaryColor', 'secondaryColor', 'fontFamily', 'whatsappNumber', 'whatsappMessage', 'emailAddress', 'aboutText'];
             fields.forEach(field => { const el = document.getElementById(field); if (el) el.addEventListener('change', () => updateSiteContent()); });
@@ -578,6 +693,11 @@
                 if (btn.shape === 'pill') return '40px';
                 if (btn.shape === 'square') return '12px';
                 return '50px';
+            };
+            const getAlign = (btn) => {
+                if (btn.align === 'left') return 'flex-start';
+                if (btn.align === 'right') return 'flex-end';
+                return 'center';
             };
             return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div><h1 style="font-size:56px; margin-bottom:20px;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px; background:white; border-radius:24px;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3>${s.name}</h3><p>${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<p style="text-align:center; font-size:18px;">${c.aboutText}</p>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div></div></div>`;
         }
