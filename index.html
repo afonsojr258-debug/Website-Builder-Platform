@@ -47,6 +47,8 @@
         .btn-danger:hover { background: #fecaca; transform: translateY(-2px); }
         .btn-icon { background: #f1f5f9; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 14px; }
         .btn-icon:hover { background: #e2e8f0; transform: translateY(-2px); }
+        .btn-pro { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; }
+        .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(245,158,11,0.3); }
         
         /* Hero Section */
         .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
@@ -107,11 +109,12 @@
         .sidebar-menu li { margin-bottom: 8px; }
         .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #475569; text-decoration: none; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
         .sidebar-menu a:hover, .sidebar-menu a.active { background: #eef2ff; color: #6366f1; }
-        .sidebar-footer { padding-top: 24px; padding-bottom: 40px; border-top: 1px solid #e2e8f0; margin-top: auto; }
+        .sidebar-footer { padding-top: 40px; border-top: 1px solid #e2e8f0; margin-top: auto; }
         .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 16px; }
         .user-info i { font-size: 32px; color: #6366f1; }
         .user-name { font-weight: 600; color: #0f172a; }
         .user-plan { font-size: 12px; color: #64748b; }
+        .pro-badge { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; margin-left: 8px; }
         .mobile-sidebar-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 25px; color: white; font-size: 24px; cursor: pointer; z-index: 101; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .main-content { flex: 1; margin-left: 280px; padding: 32px 48px; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
@@ -199,6 +202,13 @@
         .empty-state p { color: #64748b; margin-bottom: 24px; }
         .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         
+        /* Plano Pro Modal */
+        .pricing-card { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .pricing-price { font-size: 48px; font-weight: 800; color: #d97706; }
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 8px 0; display: flex; align-items: center; gap: 8px; }
+        .pricing-features i { color: #10b981; }
+        
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
@@ -222,7 +232,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
@@ -242,6 +252,7 @@
         let currentEditingSite = null;
         let currentEditingButtonIndex = null;
         let currentEditingServiceIndex = null;
+        let currentUserPlan = { isPro: false };
         
         const fontOptions = [
             { value: 'Inter', label: 'Inter' },
@@ -305,7 +316,26 @@
             }
         };
         
+        async function loadUserPlan() {
+            if (!currentUser) return;
+            try {
+                const userDocRef = doc(db, 'users', currentUser.uid);
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    currentUserPlan = userDoc.data();
+                } else {
+                    // Criar documento do usuário se não existir
+                    await setDoc(userDocRef, { isPro: false, createdAt: new Date().toISOString() });
+                    currentUserPlan = { isPro: false };
+                }
+            } catch (error) {
+                console.error('Erro ao carregar plano:', error);
+                currentUserPlan = { isPro: false };
+            }
+        }
+        
         function renderLandingPage() {
+            const currentYear = new Date().getFullYear();
             return `
                 <div class="main-header">
                     <div class="header-container">
@@ -330,17 +360,18 @@
                 <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button></div></div></div>
                 <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com clientes</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
-                <div class="main-footer"><div class="footer-content"><p>© 2024 WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
+                <div class="main-footer"><div class="footer-content"><p>© ${currentYear} WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
             `;
         }
         
         function renderApp() {
+            const currentYear = new Date().getFullYear();
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
                 <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
                 <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
-                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan">Plano Grátis</div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
+                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="plansLink"><i class="fas fa-crown"></i> Planos <span style="background:#f59e0b; color:white; padding:2px 8px; border-radius:20px; font-size:10px; margin-left:8px;">PRO</span></a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan" id="userPlanDisplay">Plano Grátis</div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
                 <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
@@ -349,6 +380,9 @@
                 
                 <!-- Modal para editar Card/Serviço -->
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
+                
+                <!-- Modal para Planos -->
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">🚀 Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -368,7 +402,13 @@
                 const name = document.getElementById('registerName').value;
                 const email = document.getElementById('registerEmail').value;
                 const password = document.getElementById('registerPassword').value;
-                try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); await updateProfile(userCredential.user, { displayName: name }); showToast('Conta criada!', 'success'); } 
+                try { 
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
+                    await updateProfile(userCredential.user, { displayName: name });
+                    // Criar documento do usuário no Firestore
+                    await setDoc(doc(db, 'users', userCredential.user.uid), { isPro: false, createdAt: new Date().toISOString() });
+                    showToast('Conta criada!', 'success'); 
+                } 
                 catch (error) { showToast(error.message, 'error'); }
             });
             document.getElementById('showRegisterBtn')?.addEventListener('click', () => showPage('registerPage'));
@@ -380,6 +420,11 @@
             document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveSite());
             document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
             document.getElementById('logoutSidebarBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout realizado', 'success'); showPage('landingPage'); });
+            document.getElementById('plansLink')?.addEventListener('click', () => openPlansModal());
+            document.getElementById('closePlansBtn')?.addEventListener('click', () => closePlansModal());
+            document.getElementById('payWhatsappBtn')?.addEventListener('click', () => {
+                window.open('https://wa.me/25884216749?text=Olá! Gostaria de adquirir o plano PRO do WebCraft Pro. Meu email é: ' + encodeURIComponent(currentUser?.email || ''), '_blank');
+            });
             
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
@@ -387,6 +432,9 @@
             const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileNav = document.getElementById('mobileNav'); if (mobileMenuBtn && mobileNav) { mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open')); }
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
         }
+        
+        function openPlansModal() { document.getElementById('plansModal').classList.add('active'); }
+        function closePlansModal() { document.getElementById('plansModal').classList.remove('active'); }
         
         // Funções globais para os modais
         window.openButtonModal = (index) => {
@@ -411,7 +459,6 @@
             const service = currentEditingSite.content.services[index];
             document.getElementById('editServiceName').value = service.name || '';
             document.getElementById('editServiceDesc').value = service.description || '';
-            // Render icon selector
             const container = document.getElementById('serviceIconSelector');
             container.innerHTML = iconOptions.map(icon => `<div class="icon-option-card ${service.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('');
             container.querySelectorAll('.icon-option-card').forEach(opt => {
@@ -450,7 +497,7 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
             const targetPage = document.getElementById(pageId);
             if (targetPage) targetPage.classList.add('active');
-            if (pageId === 'dashboardPage' && currentUser) loadDashboard(); 
+            if (pageId === 'dashboardPage' && currentUser) { loadUserPlan(); loadDashboard(); }
         }
         
         function showToast(message, type) { 
@@ -464,6 +511,8 @@
         
         async function loadDashboard() {
             if (!currentUser) return;
+            await loadUserPlan();
+            
             const sitesGrid = document.getElementById('sitesGrid');
             if (!sitesGrid) return;
             sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><br>Carregando seus sites...</div>';
@@ -471,13 +520,23 @@
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
                 const userNameSpan = document.getElementById('userName');
+                const userPlanSpan = document.getElementById('userPlanDisplay');
                 if (userNameSpan) userNameSpan.innerHTML = currentUser.displayName || currentUser.email;
+                if (userPlanSpan) {
+                    if (currentUserPlan.isPro) {
+                        userPlanSpan.innerHTML = 'Plano Pro <span class="pro-badge">PRO</span>';
+                    } else {
+                        userPlanSpan.innerHTML = 'Plano Grátis';
+                    }
+                }
+                
                 if (snapshot.empty) { 
                     sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><p>Escolha entre templates profissionais e comece agora</p><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`; 
                     const emptyBtn = document.getElementById('emptyCreateBtn');
                     if (emptyBtn) emptyBtn.addEventListener('click', () => openCreateModal());
                     return; 
                 }
+                
                 sitesGrid.innerHTML = '';
                 snapshot.forEach(doc => { 
                     const site = doc.data(); 
@@ -628,7 +687,6 @@
                 });
             }
             
-            // Save button changes
             document.getElementById('saveButtonChangesBtn')?.addEventListener('click', () => {
                 if (currentEditingButtonIndex !== null) {
                     const btn = buttons[currentEditingButtonIndex];
@@ -645,7 +703,6 @@
                 }
             });
             
-            // Save service changes
             document.getElementById('saveServiceChangesBtn')?.addEventListener('click', () => {
                 if (currentEditingServiceIndex !== null) {
                     const service = services[currentEditingServiceIndex];
@@ -738,10 +795,33 @@
         function closeEditor() { currentEditingSite = null; showPage('dashboardPage'); loadDashboard(); }
         
         function openCreateModal() { 
-            const modal = document.getElementById('createModal');
-            if (modal) modal.classList.add('active');
-            const firstCard = document.querySelector('.template-card');
-            if (firstCard) firstCard.classList.add('selected');
+            // Verificar limite de sites para usuários Free
+            if (!currentUserPlan.isPro) {
+                // Verificar quantos sites o usuário já tem
+                const checkSites = async () => {
+                    const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
+                    const snapshot = await getDocs(q);
+                    if (snapshot.size >= 2) {
+                        showToast('⚠️ Plano Grátis permite apenas 2 sites. Adquira o Plano Pro para criar sites ilimitados!', 'error');
+                        openPlansModal();
+                        return false;
+                    }
+                    return true;
+                };
+                checkSites().then(canCreate => {
+                    if (canCreate) {
+                        const modal = document.getElementById('createModal');
+                        if (modal) modal.classList.add('active');
+                        const firstCard = document.querySelector('.template-card');
+                        if (firstCard) firstCard.classList.add('selected');
+                    }
+                });
+            } else {
+                const modal = document.getElementById('createModal');
+                if (modal) modal.classList.add('active');
+                const firstCard = document.querySelector('.template-card');
+                if (firstCard) firstCard.classList.add('selected');
+            }
         }
         
         function closeCreateModal() { 
@@ -758,7 +838,25 @@
             const slug = document.getElementById('siteSlug')?.value || ''; 
             const templateId = document.getElementById('selectedTemplate')?.value || 'modern'; 
             if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } 
-            try { await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); showToast('Site criado com sucesso!', 'success'); closeCreateModal(); loadDashboard(); } 
+            
+            // Verificar limite novamente antes de criar
+            if (!currentUserPlan.isPro) {
+                const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
+                const snapshot = await getDocs(q);
+                if (snapshot.size >= 2) {
+                    showToast('⚠️ Limite de 2 sites atingido. Adquira o Plano Pro!', 'error');
+                    closeCreateModal();
+                    openPlansModal();
+                    return;
+                }
+            }
+            
+            try { 
+                await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); 
+                showToast('Site criado com sucesso!', 'success'); 
+                closeCreateModal(); 
+                loadDashboard(); 
+            } 
             catch (error) { showToast('Erro: ' + error.message, 'error'); } 
         }
         
@@ -774,7 +872,8 @@
                 } 
                 const site = snapshot.docs[0].data(); 
                 document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); 
-                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro</footer>`; 
+                const currentYear = new Date().getFullYear();
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro - © ${currentYear}</footer>`; 
             } catch (error) { document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`; }
         }
         
