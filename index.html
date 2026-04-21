@@ -1584,27 +1584,21 @@
         }
         
         renderApp();
-        // ROTEAMENTO CORRIGIDO
-const slug = window.location.pathname.substring(1);
-console.log('📍 Slug detectado:', slug);
-
-if (slug && slug !== '') {
-    // Se tem slug, mostra o site público (ignora autenticação)
-    console.log('🎯 Modo público - carregando site:', slug);
-    viewPublicSite(slug);
-} else {
-    // Se não tem slug, mostra landing/dashboard baseado no login
-    console.log('🏠 Modo normal - verificando autenticação');
-    onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-        if (user) {
-            showPage('dashboardPage');
-            loadDashboard();
-        } else {
-            showPage('landingPage');
+        const slug = window.location.pathname.substring(1);
+if (slug && slug !== '') { 
+    viewPublicSite(slug); 
+} 
+else { 
+    onAuthStateChanged(auth, (user) => { 
+        currentUser = user; 
+        if (user) { 
+            showPage('dashboardPage'); 
+            loadDashboard(); 
+        } else { 
+            showPage('landingPage'); 
+        } 
+    }); 
         }
-    });
-}
     </script>
 </body>
 </html>
