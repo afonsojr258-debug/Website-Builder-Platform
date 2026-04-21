@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>WebCraft Pro | Plataforma de Websites Profissionais</title>
     
     <!-- Font Awesome 6 -->
@@ -111,6 +111,7 @@
             -webkit-text-fill-color: transparent;
         }
         
+        /* Menu Desktop */
         .main-nav {
             display: flex;
             gap: 40px;
@@ -142,6 +143,57 @@
         
         .main-nav a:hover::after {
             width: 100%;
+        }
+        
+        /* Menu Mobile - Hamburguer */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #475569;
+            padding: 8px;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 77px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            flex-direction: column;
+            gap: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        
+        .mobile-nav.open {
+            display: flex;
+        }
+        
+        .mobile-nav a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        
+        .mobile-nav a:hover {
+            background: #f1f5f9;
+            color: #6366f1;
+        }
+        
+        .mobile-nav .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
         }
         
         .nav-buttons {
@@ -234,21 +286,6 @@
             transform: translateY(-2px);
         }
         
-        .btn-icon {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 10px;
-            transition: all 0.2s;
-            color: #64748b;
-        }
-        
-        .btn-icon:hover {
-            background: #f1f5f9;
-            color: #6366f1;
-        }
-        
         /* ============================================
            HERO SECTION
         ============================================ */
@@ -335,7 +372,6 @@
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
-            border-color: #cbd5e1;
         }
         
         .feature-icon {
@@ -352,17 +388,6 @@
         .feature-icon i {
             font-size: 40px;
             color: #6366f1;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 12px;
-            color: #0f172a;
-        }
-        
-        .feature-card p {
-            color: #64748b;
-            line-height: 1.6;
         }
         
         /* ============================================
@@ -405,13 +430,6 @@
             overflow: hidden;
         }
         
-        .template-preview::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2) 0%, transparent 70%);
-        }
-        
         .template-preview i {
             font-size: 64px;
             position: relative;
@@ -422,15 +440,6 @@
             padding: 28px;
         }
         
-        .template-info h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-        
-        .template-info p {
-            color: #64748b;
-        }
-        
         /* ============================================
            FOOTER
         ============================================ */
@@ -439,16 +448,6 @@
             color: #94a3b8;
             padding: 48px;
             text-align: center;
-            border-top: 1px solid #1e293b;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .footer-content p {
-            margin: 8px 0;
         }
         
         /* ============================================
@@ -461,7 +460,6 @@
             justify-content: center;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             padding: 20px;
-            position: relative;
         }
         
         .auth-container {
@@ -490,10 +488,6 @@
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        
-        .auth-header p {
-            color: #64748b;
         }
         
         /* ============================================
@@ -561,6 +555,7 @@
             height: 100vh;
             overflow-y: auto;
             transition: transform 0.3s ease;
+            z-index: 100;
         }
         
         .sidebar-logo {
@@ -569,11 +564,6 @@
             gap: 12px;
             margin-bottom: 48px;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        .sidebar-logo:hover {
-            transform: scale(1.02);
         }
         
         .sidebar-logo img {
@@ -640,19 +630,24 @@
             color: #6366f1;
         }
         
-        .user-name {
-            font-weight: 600;
-            color: #0f172a;
+        /* Botão para abrir menu mobile */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 101;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        .user-plan {
-            font-size: 12px;
-            color: #64748b;
-        }
-        
-        /* ============================================
-           DASHBOARD - MAIN CONTENT
-        ============================================ */
         .main-content {
             flex: 1;
             margin-left: 280px;
@@ -689,13 +684,11 @@
             padding: 24px;
             transition: all 0.3s;
             border: 1px solid #e2e8f0;
-            cursor: pointer;
         }
         
         .site-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
-            border-color: #cbd5e1;
         }
         
         .site-card-header {
@@ -721,11 +714,6 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 4px;
-        }
-        
-        .site-info p {
-            color: #64748b;
-            font-size: 13px;
         }
         
         .badge {
@@ -762,15 +750,6 @@
             overflow-y: auto;
         }
         
-        .editor-sidebar h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #e2e8f0;
-            color: #0f172a;
-        }
-        
         .editor-preview {
             flex: 1;
             overflow-y: auto;
@@ -778,21 +757,10 @@
             background: #f1f5f9;
         }
         
-        .editor-preview h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #0f172a;
-        }
-        
         .editor-section {
             margin-bottom: 32px;
             padding-bottom: 24px;
             border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .editor-section:last-child {
-            border-bottom: none;
         }
         
         .editor-section h4 {
@@ -829,16 +797,7 @@
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
-            transition: all 0.2s;
             font-family: inherit;
-        }
-        
-        .editor-field input:focus, 
-        .editor-field textarea:focus, 
-        .editor-field select:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
         }
         
         .color-input-group {
@@ -850,15 +809,10 @@
         .color-input-group input[type="color"] {
             width: 60px;
             height: 50px;
-            padding: 4px;
-            cursor: pointer;
-            border-radius: 12px;
         }
         
-        /* ============================================
-           BOTÕES PERSONALIZÁVEIS (CARDS)
-        ============================================ */
-        .btn-card {
+        /* Cards de Serviços (para adicionar/remover) */
+        .service-card {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
@@ -867,23 +821,27 @@
             transition: all 0.2s;
         }
         
-        .btn-card:hover {
+        .service-card:hover {
             background: #f1f5f9;
             border-color: #cbd5e1;
         }
         
-        .btn-card input, 
-        .btn-card select {
-            width: 100%;
-            padding: 10px 12px;
+        /* Cards de Botões */
+        .btn-card {
+            background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 14px;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
         }
         
-        .btn-card input:last-of-type {
-            margin-bottom: 0;
+        .btn-card select, 
+        .btn-card input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
         }
         
         .remove-btn {
@@ -896,12 +854,10 @@
             color: #dc2626;
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.2s;
         }
         
         .remove-btn:hover {
             background: #fecaca;
-            transform: translateY(-2px);
         }
         
         /* ============================================
@@ -933,13 +889,6 @@
             max-width: 600px;
             max-height: 85vh;
             overflow-y: auto;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        .modal-content h2 {
-            font-size: 28px;
-            margin-bottom: 24px;
-            color: #0f172a;
         }
         
         .template-card {
@@ -951,36 +900,14 @@
             transition: all 0.3s;
         }
         
-        .template-card:hover {
+        .template-card:hover, .template-card.selected {
             border-color: #6366f1;
             background: #eef2ff;
             transform: translateX(8px);
-        }
-        
-        .template-card.selected {
-            border-color: #6366f1;
-            background: #eef2ff;
-            transform: translateX(8px);
-        }
-        
-        .template-card i {
-            font-size: 24px;
-            color: #6366f1;
-            margin-right: 12px;
-        }
-        
-        .template-card strong {
-            font-size: 18px;
-        }
-        
-        .template-card p {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 8px;
         }
         
         /* ============================================
-           TOAST NOTIFICATION
+           TOAST
         ============================================ */
         .toast {
             position: fixed;
@@ -993,35 +920,18 @@
             transition: transform 0.3s;
             z-index: 2000;
             font-weight: 500;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
         
         .toast.show {
             transform: translateX(0);
         }
         
-        .toast.success { 
-            background: #10b981; 
-        }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
         
-        .toast.error { 
-            background: #ef4444; 
-        }
-        
-        /* ============================================
-           LOADING E EMPTY STATES
-        ============================================ */
         .loading {
             text-align: center;
             padding: 60px;
-            font-size: 18px;
-            color: #64748b;
-        }
-        
-        .loading i {
-            font-size: 40px;
-            margin-bottom: 16px;
-            color: #6366f1;
         }
         
         .empty-state {
@@ -1033,27 +943,6 @@
             font-size: 80px;
             color: #cbd5e0;
             margin-bottom: 24px;
-        }
-        
-        .empty-state h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: #0f172a;
-        }
-        
-        .empty-state p {
-            color: #64748b;
-            margin-bottom: 24px;
-        }
-        
-        /* ============================================
-           PREVIEW DO SITE (LIVE PREVIEW)
-        ============================================ */
-        .live-preview-container {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
         /* ============================================
@@ -1068,6 +957,10 @@
                 display: none;
             }
             
+            .mobile-menu-btn {
+                display: block;
+            }
+            
             .hero-section, 
             .features-section, 
             .templates-section {
@@ -1078,18 +971,20 @@
                 font-size: 36px;
             }
             
-            .hero-content p {
-                font-size: 16px;
-            }
-            
             .sidebar {
                 transform: translateX(-100%);
                 position: fixed;
-                z-index: 100;
+                z-index: 1000;
             }
             
             .sidebar.open {
                 transform: translateX(0);
+            }
+            
+            .mobile-sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .main-content {
@@ -1145,19 +1040,26 @@
             { value: 'Playfair Display', label: 'Playfair Display' }
         ];
         
+        const iconOptions = [
+            'fa-paintbrush', 'fa-code', 'fa-chart-line', 'fa-mobile-alt',
+            'fa-camera', 'fa-video', 'fa-music', 'fa-book', 'fa-graduation-cap',
+            'fa-heartbeat', 'fa-car', 'fa-plane', 'fa-shopping-cart', 'fa-truck',
+            'fa-headset', 'fa-shield-alt', 'fa-cloud', 'fa-database', 'fa-rocket'
+        ];
+        
         const templates = {
             modern: {
                 id: 'modern',
                 name: 'Modern Studio',
                 icon: 'fa-star',
-                description: 'Design minimalista para criativos e agências',
+                description: 'Design minimalista para criativos',
                 structure: {
                     heroTitle: 'Creative Studio',
                     heroSubtitle: 'Transformando ideias em realidade',
                     primaryColor: '#6366f1',
                     secondaryColor: '#8b5cf6',
                     fontFamily: 'Inter',
-                    aboutText: 'Somos uma agência criativa focada em entregar soluções inovadoras.',
+                    aboutText: 'Somos uma agência criativa focada em soluções inovadoras.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
                     whatsappMessage: 'Olá! Vim pelo meu site',
@@ -1166,7 +1068,7 @@
                     buttons: [],
                     services: [
                         { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush' },
-                        { name: 'Desenvolvimento', description: 'Sites e apps modernos', icon: 'fa-code' }
+                        { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
                     ]
                 }
             },
@@ -1174,7 +1076,7 @@
                 id: 'corporate',
                 name: 'Corporate Elite',
                 icon: 'fa-building',
-                description: 'Sofisticado para empresas e negócios',
+                description: 'Sofisticado para empresas',
                 structure: {
                     companyName: 'Elite Corp',
                     tagline: 'Excelência em resultados',
@@ -1184,7 +1086,7 @@
                     description: 'Lideramos o mercado com soluções inovadoras.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Olá! Tenho interesse nos serviços',
+                    whatsappMessage: 'Olá! Tenho interesse',
                     showEmail: true,
                     emailAddress: 'contato@elitecorp.com',
                     buttons: [],
@@ -1198,10 +1100,10 @@
                 id: 'personal',
                 name: 'Personal Brand',
                 icon: 'fa-user-astronaut',
-                description: 'Portfólio profissional impactante',
+                description: 'Portfólio profissional',
                 structure: {
                     name: 'Ana Silva',
-                    title: 'Designer & Diretora Criativa',
+                    title: 'Designer & Diretora',
                     primaryColor: '#ea580c',
                     secondaryColor: '#dc2626',
                     fontFamily: 'Playfair Display',
@@ -1212,7 +1114,7 @@
                     showEmail: true,
                     emailAddress: 'ana@studio.com',
                     buttons: [],
-                    projects: []
+                    services: []
                 }
             }
         };
@@ -1222,7 +1124,7 @@
                 <div class="main-header">
                     <div class="header-container">
                         <div class="logo-area" onclick="window.showLandingPage()">
-                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="WebCraft Pro" class="logo-img">
+                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
                         <div class="main-nav">
@@ -1231,9 +1133,20 @@
                             <a href="#">Recursos</a>
                             <a href="#">Preços</a>
                         </div>
+                        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
+                        </div>
+                    </div>
+                    <div class="mobile-nav" id="mobileNav">
+                        <a href="#">Início</a>
+                        <a href="#">Templates</a>
+                        <a href="#">Recursos</a>
+                        <a href="#">Preços</a>
+                        <div class="nav-buttons">
+                            <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                         </div>
                     </div>
                 </div>
@@ -1241,72 +1154,36 @@
                 <div class="hero-section">
                     <div class="hero-content">
                         <h1>Crie Websites Profissionais<br>Em Minutos</h1>
-                        <p>Sem necessidade de código. Escolha templates bonitos, personalize tudo com nosso editor intuitivo e publique instantaneamente.</p>
+                        <p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p>
                         <div class="hero-buttons">
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button>
-                            <button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white; border-color:rgba(255,255,255,0.3);">Ver Templates</button>
+                            <button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="features-section">
-                    <h2 class="section-title">Tudo que você precisa para ter sucesso</h2>
+                    <h2 class="section-title">Tudo que você precisa</h2>
                     <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-palette"></i></div>
-                            <h3>Templates Bonitos</h3>
-                            <p>Escolha entre templates profissionalmente desenhados para qualquer indústria</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h3>100% Responsivo</h3>
-                            <p>Seu site fica perfeito em todos os dispositivos - desktop, tablet e mobile</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
-                            <h3>Integração WhatsApp</h3>
-                            <p>Conecte-se com seus clientes diretamente pelo WhatsApp</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-link"></i></div>
-                            <h3>Botões Personalizados</h3>
-                            <p>Adicione botões ilimitados com links para onde quiser</p>
-                        </div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais para qualquer negócio</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos os dispositivos</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com seus clientes</p></div>
+                        <div class="feature-card"><div class="feature-icon"><i class="fas fa-link"></i></div><h3>Botões Customizados</h3><p>Links para onde quiser</p></div>
                     </div>
                 </div>
                 
                 <div class="templates-section">
                     <h2 class="section-title">Templates Profissionais</h2>
                     <div class="templates-showcase">
-                        <div class="template-showcase-card">
-                            <div class="template-preview"><i class="fas fa-star"></i></div>
-                            <div class="template-info">
-                                <h3>Modern Studio</h3>
-                                <p>Perfeito para profissionais criativos e agências</p>
-                            </div>
-                        </div>
-                        <div class="template-showcase-card">
-                            <div class="template-preview"><i class="fas fa-building"></i></div>
-                            <div class="template-info">
-                                <h3>Corporate Elite</h3>
-                                <p>Ideal para empresas e corporações</p>
-                            </div>
-                        </div>
-                        <div class="template-showcase-card">
-                            <div class="template-preview"><i class="fas fa-user-astronaut"></i></div>
-                            <div class="template-info">
-                                <h3>Personal Brand</h3>
-                                <p>Ótimo para portfólios e marcas pessoais</p>
-                            </div>
-                        </div>
+                        <div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div>
+                        <div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div>
+                        <div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div>
                     </div>
                 </div>
                 
                 <div class="main-footer">
-                    <div class="footer-content">
-                        <p>© 2024 WebCraft Pro. Todos os direitos reservados.</p>
-                        <p>Crie seu site profissional hoje</p>
-                    </div>
+                    <p>© 2024 WebCraft Pro. Todos os direitos reservados.</p>
+                    <p>Crie seu site profissional hoje</p>
                 </div>
             `;
         }
@@ -1314,137 +1191,12 @@
         function renderApp() {
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
-                <div id="landingPage" class="page">
-                    ${renderLandingPage()}
-                </div>
-                
-                <div id="loginPage" class="page">
-                    <div class="auth-page">
-                        <div class="auth-container">
-                            <div class="auth-header">
-                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo">
-                                <h1>Bem-vindo de Volta</h1>
-                                <p>Entre na sua conta</p>
-                            </div>
-                            <form id="loginForm">
-                                <div class="input-group">
-                                    <label>Email</label>
-                                    <input type="email" id="loginEmail" required placeholder="seu@email.com">
-                                </div>
-                                <div class="input-group">
-                                    <label>Senha</label>
-                                    <input type="password" id="loginPassword" required placeholder="••••••••">
-                                </div>
-                                <button type="submit" class="btn-primary">Entrar</button>
-                            </form>
-                            <p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta grátis</a></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="registerPage" class="page">
-                    <div class="auth-page">
-                        <div class="auth-container">
-                            <div class="auth-header">
-                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo">
-                                <h1>Criar Conta</h1>
-                                <p>Comece a construir seu site hoje</p>
-                            </div>
-                            <form id="registerForm">
-                                <div class="input-group">
-                                    <label>Nome Completo</label>
-                                    <input type="text" id="registerName" required placeholder="João Silva">
-                                </div>
-                                <div class="input-group">
-                                    <label>Email</label>
-                                    <input type="email" id="registerEmail" required placeholder="joao@email.com">
-                                </div>
-                                <div class="input-group">
-                                    <label>Senha</label>
-                                    <input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres">
-                                </div>
-                                <button type="submit" class="btn-primary">Criar Conta</button>
-                            </form>
-                            <p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="dashboardPage" class="page">
-                    <div class="dashboard-layout">
-                        <aside class="sidebar">
-                            <div class="sidebar-logo" onclick="window.showLandingPage()">
-                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo">
-                                <span>WebCraft Pro</span>
-                            </div>
-                            <ul class="sidebar-menu">
-                                <li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li>
-                                <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
-                            </ul>
-                            <div class="sidebar-footer">
-                                <div class="user-info">
-                                    <i class="fas fa-user-circle"></i>
-                                    <div>
-                                        <div class="user-name" id="userName"></div>
-                                        <div class="user-plan">Plano Grátis</div>
-                                    </div>
-                                </div>
-                                <button id="logoutBtn" class="btn-outline" style="width:100%;"><i class="fas fa-sign-out-alt"></i> Sair</button>
-                            </div>
-                        </aside>
-                        <main class="main-content">
-                            <div class="dashboard-header">
-                                <h1>Meus Sites</h1>
-                                <button id="createSiteBtn" class="btn-primary"><i class="fas fa-plus"></i> Criar Site</button>
-                            </div>
-                            <div id="sitesGrid"></div>
-                        </main>
-                    </div>
-                </div>
-                
-                <div id="editorPage" class="page">
-                    <div class="editor-layout">
-                        <div class="editor-sidebar">
-                            <h3 id="editorTitle"></h3>
-                            <div id="editorFields"></div>
-                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button>
-                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar ao Dashboard</button>
-                        </div>
-                        <div class="editor-preview">
-                            <h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3>
-                            <div id="livePreview" class="live-preview-container"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="createModal" class="modal">
-                    <div class="modal-content">
-                        <h2><i class="fas fa-magic"></i> Criar Novo Site</h2>
-                        <div class="input-group">
-                            <label>Nome do Site</label>
-                            <input type="text" id="siteTitle" placeholder="Meu Portfólio">
-                        </div>
-                        <div class="input-group">
-                            <label>Slug (URL)</label>
-                            <input type="text" id="siteSlug" placeholder="meuportfolio">
-                            <small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small>
-                        </div>
-                        <div class="input-group">
-                            <label>Escolha um Template</label>
-                            <input type="hidden" id="selectedTemplate" value="modern">
-                            ${Object.entries(templates).map(([id, t]) => `
-                                <div class="template-card" data-template="${id}">
-                                    <i class="fas ${t.icon}"></i>
-                                    <strong>${t.name}</strong>
-                                    <p>${t.description}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button>
-                        <button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button>
-                    </div>
-                </div>
-                
+                <div id="landingPage" class="page">${renderLandingPage()}</div>
+                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
+                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
+                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div id="userName"></div><div>Plano Grátis</div></div></div><button id="logoutBtn" class="btn-outline" style="width:100%;">Sair</button></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
+                <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3 id="editorTitle"></h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button></div><div class="editor-preview"><h3>Pré-visualização</h3><div id="livePreview"></div></div></div></div>
+                <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Site"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meusite"></div><div class="input-group"><label>Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i> <strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary">Criar</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 <div id="toast" class="toast"></div>
             `;
             attachEvents();
@@ -1455,12 +1207,8 @@
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    showToast('Login realizado com sucesso!', 'success');
-                } catch (error) {
-                    showToast(error.message, 'error');
-                }
+                try { await signInWithEmailAndPassword(auth, email, password); showToast('Login realizado!', 'success'); } 
+                catch (error) { showToast(error.message, 'error'); }
             });
             
             document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
@@ -1471,10 +1219,8 @@
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     await updateProfile(userCredential.user, { displayName: name });
-                    showToast('Conta criada com sucesso!', 'success');
-                } catch (error) {
-                    showToast(error.message, 'error');
-                }
+                    showToast('Conta criada!', 'success');
+                } catch (error) { showToast(error.message, 'error'); }
             });
             
             document.getElementById('showRegisterBtn')?.addEventListener('click', () => showPage('registerPage'));
@@ -1485,10 +1231,7 @@
             document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
             document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveSite());
             document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
-            document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-                await signOut(auth);
-                showToast('Logout realizado', 'success');
-            });
+            document.getElementById('logoutBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout', 'success'); });
             
             document.querySelectorAll('.template-card').forEach(card => {
                 card.addEventListener('click', () => {
@@ -1498,9 +1241,22 @@
                 });
             });
             
+            // Menu Mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileMenuBtn && mobileNav) {
+                mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open'));
+            }
+            
+            const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (mobileSidebarToggle && sidebar) {
+                mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            }
+            
             document.getElementById('siteSlug')?.addEventListener('input', (e) => {
                 const preview = document.getElementById('slugPreview');
-                if (preview) preview.textContent = e.target.value || 'meuportfolio';
+                if (preview) preview.textContent = e.target.value || 'meusite';
             });
         }
         
@@ -1511,6 +1267,7 @@
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            if (pageId === 'dashboardPage' && currentUser) loadDashboard();
         }
         
         function showToast(message, type) {
@@ -1522,176 +1279,107 @@
         
         async function loadDashboard() {
             if (!currentUser) return;
-            
             const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><br>Carregando seus sites...</div>';
-            
+            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
-                
                 document.getElementById('userName').innerHTML = currentUser.displayName || currentUser.email;
-                
                 if (snapshot.empty) {
-                    sitesGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-crown"></i>
-                            <h3>Crie seu primeiro site</h3>
-                            <p>Escolha entre templates profissionais e comece agora</p>
-                            <button class="btn-primary" id="emptyCreateBtn"><i class="fas fa-plus"></i> Criar Site</button>
-                        </div>
-                    `;
+                    sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`;
                     document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal());
                     return;
                 }
-                
                 sitesGrid.innerHTML = '';
                 snapshot.forEach(doc => {
                     const site = doc.data();
-                    sitesGrid.innerHTML += `
-                        <div class="site-card">
-                            <div class="site-card-header">
-                                <div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div>
-                                <div class="site-info">
-                                    <h3>${escapeHtml(site.title)}</h3>
-                                    <p><i class="fas fa-link"></i> /${site.slug}</p>
-                                    <span class="badge"><i class="fas ${templates[site.template]?.icon}"></i> ${templates[site.template]?.name || 'Template'}</span>
-                                </div>
-                            </div>
-                            <div class="site-card-actions">
-                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')"><i class="fas fa-edit"></i> Editar</button>
-                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')"><i class="fas fa-eye"></i> Ver</button>
-                                <button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')"><i class="fas fa-trash"></i> Excluir</button>
-                            </div>
-                        </div>
-                    `;
+                    sitesGrid.innerHTML += `<div class="site-card"><div class="site-card-header"><div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div><div class="site-info"><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p><span class="badge">${templates[site.template]?.name}</span></div></div><div class="site-card-actions"><button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button><button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button><button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button></div></div>`;
                 });
-            } catch (error) {
-                sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`;
-            }
+            } catch (error) { sitesGrid.innerHTML = `<div>Erro: ${error.message}</div>`; }
         }
         
         window.editSiteById = async (siteId) => {
             const docRef = doc(db, 'sites', siteId);
             const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                currentEditingSite = { id: docSnap.id, ...docSnap.data() };
-                showEditor();
-            }
+            if (docSnap.exists()) { currentEditingSite = { id: docSnap.id, ...docSnap.data() }; showEditor(); }
         };
         
         window.deleteSiteById = async (siteId) => {
-            if (!confirm('Tem certeza? Esta ação não pode ser desfeita.')) return;
+            if (!confirm('Tem certeza?')) return;
             await deleteDoc(doc(db, 'sites', siteId));
-            showToast('Site excluído com sucesso', 'success');
+            showToast('Site excluído', 'success');
             loadDashboard();
         };
         
         function showEditor() {
             showPage('editorPage');
-            document.getElementById('editorTitle').innerHTML = `<i class="fas fa-edit"></i> Editando: ${currentEditingSite.title}`;
-            
+            document.getElementById('editorTitle').innerHTML = `Editando: ${currentEditingSite.title}`;
             const content = currentEditingSite.content;
             
             let html = `
-                <div class="editor-section">
-                    <h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
-                    <div class="editor-field">
-                        <label>Título Principal</label>
-                        <input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || content.companyName || content.name || '')}" placeholder="Título do seu site">
-                    </div>
-                    <div class="editor-field">
-                        <label>Subtítulo</label>
-                        <input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || content.tagline || content.title || '')}" placeholder="Subtítulo">
-                    </div>
+                <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
+                    <div class="editor-field"><label>Título</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || content.companyName || content.name || '')}"></div>
+                    <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || content.tagline || content.title || '')}"></div>
                 </div>
-                
-                <div class="editor-section">
-                    <h4><i class="fas fa-palette"></i> Cores</h4>
-                    <div class="editor-field">
-                        <label>Cor Primária</label>
-                        <div class="color-input-group">
-                            <input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}">
-                            <input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1">
-                        </div>
-                    </div>
-                    <div class="editor-field">
-                        <label>Cor Secundária</label>
-                        <div class="color-input-group">
-                            <input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}">
-                            <input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}" placeholder="#8b5cf6">
-                        </div>
-                    </div>
+                <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
+                    <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}"></div></div>
+                    <div class="editor-field"><label>Cor Secundária</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}"></div></div>
                 </div>
-                
-                <div class="editor-section">
-                    <h4><i class="fas fa-font"></i> Tipografia</h4>
-                    <div class="editor-field">
-                        <label>Fonte</label>
-                        <select id="fontFamily">
-                            ${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}
-                        </select>
-                    </div>
+                <div class="editor-section"><h4><i class="fas fa-font"></i> Tipografia</h4>
+                    <div class="editor-field"><label>Fonte</label><select id="fontFamily">${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}</select></div>
                 </div>
-                
-                <div class="editor-section">
-                    <h4><i class="fab fa-whatsapp"></i> Contato & WhatsApp</h4>
-                    <div class="editor-field">
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                            <input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar Botão WhatsApp
-                        </label>
-                    </div>
-                    <div class="editor-field">
-                        <label>Número do WhatsApp</label>
-                        <input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}" placeholder="5511999999999">
-                    </div>
-                    <div class="editor-field">
-                        <label>Mensagem do WhatsApp</label>
-                        <input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}" placeholder="Olá! Vim pelo seu site">
-                    </div>
-                    <div class="editor-field">
-                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                            <input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Botão Email
-                        </label>
-                    </div>
-                    <div class="editor-field">
-                        <label>Email</label>
-                        <input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}" placeholder="contato@email.com">
-                    </div>
+                <div class="editor-section"><h4><i class="fab fa-whatsapp"></i> WhatsApp & Contato</h4>
+                    <div class="editor-field"><label><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar WhatsApp</label></div>
+                    <div class="editor-field"><label>Número</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}"></div>
+                    <div class="editor-field"><label>Mensagem</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}"></div>
+                    <div class="editor-field"><label><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Email</label></div>
+                    <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}"></div>
                 </div>
-                
-                <div class="editor-section">
-                    <h4><i class="fas fa-link"></i> Botões Personalizados</h4>
+                <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4>
                     <div id="buttonsContainer"></div>
-                    <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:8px;"><i class="fas fa-plus"></i> Adicionar Botão</button>
-                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Os botões aparecerão abaixo do título principal</p>
+                    <button class="btn-outline" id="addButtonBtn" style="width:100%;">+ Adicionar Botão</button>
                 </div>
-                
-                <div class="editor-section">
-                    <h4><i class="fas fa-align-left"></i> Sobre / Descrição</h4>
-                    <div class="editor-field">
-                        <label>Texto</label>
-                        <textarea id="aboutText" rows="4" placeholder="Sobre você ou sua empresa...">${escapeHtml(content.aboutText || content.description || content.bio || '')}</textarea>
-                    </div>
+                <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4>
+                    <div id="servicesContainer"></div>
+                    <button class="btn-outline" id="addServiceBtn" style="width:100%;">+ Adicionar Serviço</button>
+                </div>
+                <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre / Descrição</h4>
+                    <div class="editor-field"><textarea id="aboutText" rows="4">${escapeHtml(content.aboutText || content.description || content.bio || '')}</textarea></div>
                 </div>
             `;
             
             document.getElementById('editorFields').innerHTML = html;
             
             const buttons = content.buttons || [];
-            const buttonsContainer = document.getElementById('buttonsContainer');
+            const services = content.services || [];
             
             function renderButtons() {
-                if (buttonsContainer) {
-                    buttonsContainer.innerHTML = buttons.map((btn, idx) => `
+                const container = document.getElementById('buttonsContainer');
+                if (container) {
+                    container.innerHTML = buttons.map((btn, idx) => `
                         <div class="btn-card">
-                            <input type="text" placeholder="Texto do Botão" value="${escapeHtml(btn.text)}" data-btn-index="${idx}" data-btn-field="text">
-                            <input type="text" placeholder="URL do Botão" value="${escapeHtml(btn.url)}" data-btn-index="${idx}" data-btn-field="url">
+                            <input type="text" placeholder="Texto" value="${escapeHtml(btn.text)}" data-btn-index="${idx}" data-btn-field="text">
+                            <input type="text" placeholder="URL" value="${escapeHtml(btn.url)}" data-btn-index="${idx}" data-btn-field="url">
                             <select data-btn-index="${idx}" data-btn-field="type">
-                                <option value="primary" ${btn.type === 'primary' ? 'selected' : ''}>Botão Primário</option>
-                                <option value="secondary" ${btn.type === 'secondary' ? 'selected' : ''}>Botão Secundário</option>
+                                <option value="primary" ${btn.type === 'primary' ? 'selected' : ''}>Primário</option>
+                                <option value="secondary" ${btn.type === 'secondary' ? 'selected' : ''}>Secundário</option>
                             </select>
-                            <button class="remove-btn" data-btn-index="${idx}"><i class="fas fa-trash"></i> Remover Botão</button>
+                            <select data-btn-index="${idx}" data-btn-field="position">
+                                <option value="hero" ${btn.position === 'hero' ? 'selected' : ''}>No Hero (topo)</option>
+                                <option value="after-services" ${btn.position === 'after-services' ? 'selected' : ''}>Após serviços</option>
+                                <option value="after-about" ${btn.position === 'after-about' ? 'selected' : ''}>Após sobre</option>
+                            </select>
+                            <select data-btn-index="${idx}" data-btn-field="shape">
+                                <option value="rounded" ${btn.shape === 'rounded' ? 'selected' : ''}>Arredondado</option>
+                                <option value="pill" ${btn.shape === 'pill' ? 'selected' : ''}>Pílula</option>
+                                <option value="square" ${btn.shape === 'square' ? 'selected' : ''}>Quadrado</option>
+                            </select>
+                            <select data-btn-index="${idx}" data-btn-field="align">
+                                <option value="center" ${btn.align === 'center' ? 'selected' : ''}>Centralizado</option>
+                                <option value="left" ${btn.align === 'left' ? 'selected' : ''}>Esquerda</option>
+                                <option value="right" ${btn.align === 'right' ? 'selected' : ''}>Direita</option>
+                            </select>
+                            <button class="remove-btn" data-btn-index="${idx}">Remover Botão</button>
                         </div>
                     `).join('');
                     
@@ -1703,7 +1391,6 @@
                             updateSiteContent();
                         });
                     });
-                    
                     document.querySelectorAll('.remove-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => {
                             const idx = parseInt(e.target.dataset.btnIndex);
@@ -1714,11 +1401,50 @@
                     });
                 }
             }
+            
+            function renderServices() {
+                const container = document.getElementById('servicesContainer');
+                if (container) {
+                    container.innerHTML = services.map((srv, idx) => `
+                        <div class="service-card">
+                            <input type="text" placeholder="Nome do Serviço" value="${escapeHtml(srv.name)}" data-service-index="${idx}" data-service-field="name">
+                            <input type="text" placeholder="Descrição" value="${escapeHtml(srv.description)}" data-service-index="${idx}" data-service-field="description">
+                            <div class="editor-field"><label>Ícone</label><select data-service-index="${idx}" data-service-field="icon">${iconOptions.map(icon => `<option value="${icon}" ${srv.icon === icon ? 'selected' : ''}><i class="fas ${icon}"></i> ${icon}</option>`).join('')}</select></div>
+                            <button class="remove-btn" data-service-index="${idx}">Remover Serviço</button>
+                        </div>
+                    `).join('');
+                    
+                    document.querySelectorAll('[data-service-field]').forEach(input => {
+                        input.addEventListener('change', (e) => {
+                            const idx = parseInt(e.target.dataset.serviceIndex);
+                            const field = e.target.dataset.serviceField;
+                            services[idx][field] = e.target.value;
+                            updateSiteContent();
+                        });
+                    });
+                    document.querySelectorAll('.remove-btn[data-service-index]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const idx = parseInt(e.target.dataset.serviceIndex);
+                            services.splice(idx, 1);
+                            renderServices();
+                            updateSiteContent();
+                        });
+                    });
+                }
+            }
+            
             renderButtons();
+            renderServices();
             
             document.getElementById('addButtonBtn')?.addEventListener('click', () => {
-                buttons.push({ text: 'Novo Botão', url: '#', type: 'primary' });
+                buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', shape: 'rounded', align: 'center' });
                 renderButtons();
+                updateSiteContent();
+            });
+            
+            document.getElementById('addServiceBtn')?.addEventListener('click', () => {
+                services.push({ name: 'Novo Serviço', description: 'Descrição do serviço', icon: 'fa-star' });
+                renderServices();
                 updateSiteContent();
             });
             
@@ -1745,7 +1471,6 @@
             
             async function updateSiteContent() {
                 if (!currentEditingSite) return;
-                
                 currentEditingSite.content.heroTitle = document.getElementById('heroTitle')?.value || '';
                 currentEditingSite.content.heroSubtitle = document.getElementById('heroSubtitle')?.value || '';
                 currentEditingSite.content.primaryColor = document.getElementById('primaryColor')?.value || '#6366f1';
@@ -1758,23 +1483,18 @@
                 currentEditingSite.content.emailAddress = document.getElementById('emailAddress')?.value || '';
                 currentEditingSite.content.aboutText = document.getElementById('aboutText')?.value || '';
                 currentEditingSite.content.buttons = buttons;
-                
+                currentEditingSite.content.services = services;
                 try {
                     await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
                     updatePreview();
-                } catch (error) {
-                    console.error('Erro ao salvar:', error);
-                }
+                } catch (error) { console.error('Erro:', error); }
             }
-            
             updatePreview();
         }
         
         function updatePreview() {
             const preview = document.getElementById('livePreview');
-            if (preview && currentEditingSite) {
-                preview.innerHTML = renderSitePreview(currentEditingSite);
-            }
+            if (preview && currentEditingSite) preview.innerHTML = renderSitePreview(currentEditingSite);
         }
         
         function renderSitePreview(site) {
@@ -1783,32 +1503,52 @@
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
             
+            const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
+            const afterServicesButtons = (c.buttons || []).filter(b => b.position === 'after-services');
+            const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
+            
+            const getButtonStyle = (btn) => {
+                let borderRadius = '50px';
+                if (btn.shape === 'pill') borderRadius = '40px';
+                if (btn.shape === 'square') borderRadius = '12px';
+                let textAlign = 'center';
+                if (btn.align === 'left') textAlign = 'flex-start';
+                if (btn.align === 'right') textAlign = 'flex-end';
+                return { borderRadius, textAlign };
+            };
+            
             return `
                 <div style="font-family:${fontFamily};">
                     <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
                         <div style="max-width:800px;">
-                            <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || c.companyName || c.name || 'Meu Site'}</h1>
-                            <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || c.tagline || c.title || 'Bem-vindo'}</p>
+                            <h1 style="font-size:56px; margin-bottom:20px;">${c.heroTitle || c.companyName || c.name || 'Meu Site'}</h1>
+                            <p style="font-size:24px; margin-bottom:32px;">${c.heroSubtitle || c.tagline || c.title || 'Bem-vindo'}</p>
                             <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                                ${c.buttons?.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:50px; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                                ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}
                                 ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
-                                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+                                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white;">Email</a>` : ''}
                             </div>
                         </div>
                     </div>
                     <div style="max-width:1000px; margin:0 auto; padding:60px 20px;">
-                        ${c.aboutText ? `<p style="text-align:center; font-size:18px; line-height:1.8; color:#475569;">${c.aboutText}</p>` : ''}
                         ${c.services && c.services.length > 0 ? `
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-top:60px;">
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">
                                 ${c.services.map(s => `
-                                    <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;">
+                                    <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
                                         <i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i>
-                                        <h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3>
+                                        <h3 style="margin-bottom:12px;">${s.name}</h3>
                                         <p style="color:#64748b;">${s.description || ''}</p>
                                     </div>
                                 `).join('')}
                             </div>
+                            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">
+                                ${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                            </div>
                         ` : ''}
+                        ${c.aboutText ? `<p style="text-align:center; font-size:18px; line-height:1.8; color:#475569;">${c.aboutText}</p>` : ''}
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;">
+                            ${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getButtonStyle(btn).borderRadius}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
+                        </div>
                     </div>
                 </div>
             `;
@@ -1816,12 +1556,8 @@
         
         async function saveSite() {
             if (currentEditingSite) {
-                try {
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { updatedAt: new Date().toISOString() });
-                    showToast('Site salvo com sucesso!', 'success');
-                } catch (error) {
-                    showToast('Erro ao salvar: ' + error.message, 'error');
-                }
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { updatedAt: new Date().toISOString() });
+                showToast('Site salvo!', 'success');
             }
         }
         
@@ -1833,8 +1569,7 @@
         
         function openCreateModal() {
             document.getElementById('createModal').classList.add('active');
-            const firstCard = document.querySelector('.template-card');
-            if (firstCard) firstCard.classList.add('selected');
+            document.querySelector('.template-card')?.classList.add('selected');
         }
         
         function closeCreateModal() {
@@ -1847,28 +1582,20 @@
             const title = document.getElementById('siteTitle').value;
             const slug = document.getElementById('siteSlug').value;
             const templateId = document.getElementById('selectedTemplate').value;
-            
-            if (!title || !slug) {
-                showToast('Preencha todos os campos', 'error');
-                return;
-            }
-            
+            if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; }
             try {
                 await addDoc(collection(db, 'sites'), {
-                    title: title,
-                    slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
+                    title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
                     template: templateId,
                     content: JSON.parse(JSON.stringify(templates[templateId].structure)),
                     userId: currentUser.uid,
                     createdAt: new Date().toISOString(),
                     published: true
                 });
-                showToast('Site criado com sucesso!', 'success');
+                showToast('Site criado!', 'success');
                 closeCreateModal();
                 loadDashboard();
-            } catch (error) {
-                showToast('Erro: ' + error.message, 'error');
-            }
+            } catch (error) { showToast(error.message, 'error'); }
         }
         
         function escapeHtml(str) {
@@ -1881,37 +1608,24 @@
                 const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true));
                 const snapshot = await getDocs(q);
                 if (snapshot.empty) {
-                    document.getElementById('app').innerHTML = `
-                        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
-                            <i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i>
-                            <h2>Site não encontrado</h2>
-                            <a href="/" style="color:#6366f1;">← Voltar para WebCraft Pro</a>
-                        </div>
-                    `;
+                    document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center;"><h2>Site não encontrado</h2></div>`;
                     return;
                 }
                 const site = snapshot.docs[0].data();
                 document.getElementById('app').innerHTML = renderSitePreview({ content: site.content });
-                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro</footer>`;
-            } catch (error) {
-                document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`;
-            }
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc;">Criado com WebCraft Pro</footer>`;
+            } catch (error) { document.getElementById('app').innerHTML = `<div>Erro: ${error.message}</div>`; }
         }
         
         renderApp();
         
         const slug = window.location.pathname.substring(1);
-        if (slug && slug !== '') {
-            viewPublicSite(slug);
-        } else {
+        if (slug && slug !== '') { viewPublicSite(slug); } 
+        else {
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
-                if (user) {
-                    showPage('dashboardPage');
-                    loadDashboard();
-                } else {
-                    showPage('landingPage');
-                }
+                if (user) { showPage('dashboardPage'); loadDashboard(); } 
+                else { showPage('landingPage'); }
             });
         }
     </script>
