@@ -11,555 +11,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, orderBy, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
-            authDomain: "resu-1f787.firebaseapp.com",
-            databaseURL: "https://resu-1f787-default-rtdb.firebaseio.com",
-            projectId: "resu-1f787",
-            storageBucket: "resu-1f787.firebasestorage.app",
-            messagingSenderId: "343435423875",
-            appId: "1:343435423875:web:2434d6713644e165376bb6",
-            measurementId: "G-KEKY6WGP7J"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        // Templates
-        const templates = {
-            portfolio: {
-                name: "Portfólio Criativo",
-                icon: "fa-palette",
-                preview: "🎨 Ideal para designers, artistas e fotógrafos",
-                structure: {
-                    heroTitle: "Criativo & Inovador",
-                    heroSubtitle: "Transformando ideias em experiências digitais",
-                    bio: "Com mais de 5 anos de experiência, ajudo marcas a se destacarem no mundo digital através de designs únicos e estratégicos.",
-                    projects: [
-                        { name: "Branding Studio", description: "Identidade visual completa" },
-                        { name: "E-commerce Luxo", description: "Plataforma de vendas premium" }
-                    ],
-                    social: { instagram: "#", linkedin: "#", behance: "#" }
-                }
-            },
-            business: {
-                name: "Empresa Moderna",
-                icon: "fa-building",
-                preview: "🏢 Para negócios, consultorias e startups",
-                structure: {
-                    companyName: "Nexus Corp",
-                    tagline: "Inovação que transforma resultados",
-                    description: "Oferecemos soluções integradas para impulsionar seu negócio ao próximo nível. Tecnologia, estratégia e resultados.",
-                    services: ["Consultoria Estratégica", "Desenvolvimento Web", "Marketing Digital"],
-                    whatsapp: "5511999999999",
-                    email: "contato@nexus.com"
-                }
-            },
-            linkhub: {
-                name: "Link Hub",
-                icon: "fa-link",
-                preview: "🔗 Perfil profissional com todos os seus links",
-                structure: {
-                    name: "João Silva",
-                    bio: "Criador de conteúdo | Empreendedor",
-                    avatar: "https://ui-avatars.com/api/?background=6366f1&color=fff&size=100",
-                    links: [
-                        { title: "Instagram", url: "#", icon: "fa-instagram" },
-                        { title: "YouTube", url: "#", icon: "fa-youtube" },
-                        { title: "Portfólio", url: "#", icon: "fa-briefcase" }
-                    ]
-                }
-            }
-        };
-        
-        let currentUser = null;
-        
-        // Navigation
-        function showPage(page, data = null) {
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            document.getElementById(page + 'Page').classList.remove('hidden');
-            
-            if (page === 'dashboard' && currentUser) loadSites();
-            if (page === 'editor' && data) loadEditor(data);
-        }
-        
-        // Auth Functions
-        async function handleSignup(e) {
-            e.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await updateProfile(userCredential.user, { displayName: name });
-                currentUser = userCredential.user;
-                showDashboard();
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-        
-        async function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                currentUser = userCredential.user;
-                showDashboard();
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-        
-        async function handleLogout() {
-            await signOut(auth);
-            currentUser = null;
-            showPage('login');
-        }
-        
-        function showDashboard() {
-            showPage('dashboard');
-            loadSites();
-        }
-        
-        async function loadSites() {
-            const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>';
-            
-            try {
-                const sitesRef = collection(db, 'sites');
-                const q = query(sitesRef, where('userId', '==', currentUser.uid), orderBy('createdAt', 'desc'));
-                const snapshot = await getDocs(q);
-                
-                if (snapshot.empty) {
-                    sitesGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-globe"></i>
-                            <h3>Você ainda não tem sites</h3>
-                            <p>Crie seu primeiro site profissional agora mesmo</p>
-                            <button class="btn-primary" onclick="openCreateModal()">
-                                <i class="fas fa-plus"></i> Criar meu primeiro site
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                sitesGrid.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const site = doc.data();
-                    sitesGrid.innerHTML += `
-                        <div class="site-card">
-                            <div class="site-card-header">
-                                <div class="site-icon"><i class="fas ${site.template === 'portfolio' ? 'fa-palette' : site.template === 'business' ? 'fa-building' : 'fa-link'}"></i></div>
-                                <div class="site-info">
-                                    <h3>${site.title}</h3>
-                                    <p>${site.username}.meusite.com</p>
-                                </div>
-                            </div>
-                            <div class="site-card-actions">
-                                <button class="btn-outline" onclick="editSite('${doc.id}')">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="btn-outline" onclick="viewSite('${site.username}')">
-                                    <i class="fas fa-eye"></i> Visualizar
-                                </button>
-                                <button class="btn-danger" onclick="deleteSite('${doc.id}')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                sitesGrid.innerHTML = `<div class="error-state">Erro ao carregar sites: ${error.message}</div>`;
-            }
-        }
-        
-        function openCreateModal() {
-            document.getElementById('createModal').classList.add('active');
-        }
-        
-        function closeCreateModal() {
-            document.getElementById('createModal').classList.remove('active');
-        }
-        
-        async function createSite() {
-            const title = document.getElementById('siteTitle').value;
-            const username = document.getElementById('siteUsername').value;
-            const template = document.getElementById('siteTemplate').value;
-            
-            if (!title || !username) {
-                showToast('Preencha todos os campos', 'error');
-                return;
-            }
-            
-            // Check if username exists
-            const sitesRef = collection(db, 'sites');
-            const q = query(sitesRef, where('username', '==', username));
-            const existing = await getDocs(q);
-            
-            if (!existing.empty) {
-                showToast('Username já está em uso', 'error');
-                return;
-            }
-            
-            try {
-                const siteData = {
-                    title,
-                    username,
-                    template,
-                    content: templates[template].structure,
-                    userId: currentUser.uid,
-                    createdAt: new Date().toISOString(),
-                    published: true
-                };
-                
-                const docRef = await addDoc(collection(db, 'sites'), siteData);
-                showToast('Site criado com sucesso!', 'success');
-                closeCreateModal();
-                document.getElementById('siteTitle').value = '';
-                document.getElementById('siteUsername').value = '';
-                loadSites();
-            } catch (error) {
-                showToast('Erro ao criar site: ' + error.message, 'error');
-            }
-        }
-        
-        async function editSite(siteId) {
-            const docRef = doc(db, 'sites', siteId);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                currentEditingSite = { id: siteId, ...docSnap.data() };
-                loadEditor(currentEditingSite);
-            }
-        }
-        
-        function loadEditor(site) {
-            showPage('editor');
-            document.getElementById('editorTitle').textContent = `Editando: ${site.title}`;
-            
-            // Render editor fields based on template
-            const fieldsContainer = document.getElementById('editorFields');
-            const content = site.content;
-            
-            let html = '';
-            for (let [key, value] of Object.entries(content)) {
-                if (typeof value === 'string') {
-                    html += `
-                        <div class="editor-field">
-                            <label><i class="fas fa-edit"></i> ${formatLabel(key)}</label>
-                            <input type="text" value="${escapeHtml(value)}" onchange="updateField('${key}', this.value)">
-                        </div>
-                    `;
-                } else if (Array.isArray(value)) {
-                    html += `
-                        <div class="editor-field">
-                            <label><i class="fas fa-list"></i> ${formatLabel(key)}</label>
-                            <div id="arrayField_${key}">
-                                ${value.map((item, idx) => `
-                                    <div class="array-item">
-                                        <input type="text" value="${escapeHtml(typeof item === 'string' ? item : item.title)}" 
-                                               onchange="updateArrayItem('${key}', ${idx}, this.value)">
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <button class="btn-small" onclick="addArrayItem('${key}')"><i class="fas fa-plus"></i> Adicionar</button>
-                        </div>
-                    `;
-                }
-            }
-            
-            fieldsContainer.innerHTML = html;
-            updatePreview(site);
-        }
-        
-        window.updateField = async function(field, value) {
-            currentEditingSite.content[field] = value;
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            updatePreview(currentEditingSite);
-        };
-        
-        window.updateArrayItem = async function(field, index, value) {
-            if (typeof currentEditingSite.content[field][index] === 'string') {
-                currentEditingSite.content[field][index] = value;
-            } else {
-                currentEditingSite.content[field][index].title = value;
-            }
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            updatePreview(currentEditingSite);
-        };
-        
-        window.addArrayItem = async function(field) {
-            currentEditingSite.content[field].push({ title: "Novo item", url: "#" });
-            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-            loadEditor(currentEditingSite);
-        };
-        
-        function updatePreview(site) {
-            const preview = document.getElementById('livePreview');
-            preview.innerHTML = renderSite(site.content, site.template);
-        }
-        
-        function renderSite(content, template) {
-            if (template === 'portfolio') {
-                return `
-                    <div class="preview-portfolio">
-                        <div class="preview-hero">
-                            <h1>${content.heroTitle || 'Meu Portfólio'}</h1>
-                            <p>${content.heroSubtitle || 'Criativo & Designer'}</p>
-                        </div>
-                        <div class="preview-section">
-                            <h3>Sobre</h3>
-                            <p>${content.bio || 'Bio aqui...'}</p>
-                        </div>
-                        <div class="preview-section">
-                            <h3>Projetos</h3>
-                            ${content.projects?.map(p => `<div class="preview-card">${p.name}</div>`).join('') || ''}
-                        </div>
-                    </div>
-                `;
-            } else if (template === 'business') {
-                return `
-                    <div class="preview-business">
-                        <h1>${content.companyName || 'Empresa'}</h1>
-                        <p class="tagline">${content.tagline || 'Soluções inovadoras'}</p>
-                        <p>${content.description || 'Descrição da empresa...'}</p>
-                        <div class="preview-services">
-                            ${content.services?.map(s => `<span class="service-tag">${s}</span>`).join('') || ''}
-                        </div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div class="preview-linkhub">
-                        <img src="${content.avatar}" class="preview-avatar">
-                        <h3>${content.name || 'Usuário'}</h3>
-                        <p>${content.bio || 'Bio'}</p>
-                        <div class="preview-links">
-                            ${content.links?.map(l => `<a class="preview-link">${l.title}</a>`).join('') || ''}
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        async function viewSite(username) {
-            window.open(`/#/site/${username}`, '_blank');
-        }
-        
-        async function deleteSite(siteId) {
-            if (!confirm('Tem certeza que deseja excluir este site permanentemente?')) return;
-            
-            try {
-                await deleteDoc(doc(db, 'sites', siteId));
-                showToast('Site excluído com sucesso', 'success');
-                loadSites();
-            } catch (error) {
-                showToast('Erro ao excluir site', 'error');
-            }
-        }
-        
-        async function publishSite() {
-            if (currentEditingSite) {
-                await updateDoc(doc(db, 'sites', currentEditingSite.id), { published: true });
-                showToast('Site publicado com sucesso!', 'success');
-                showDashboard();
-            }
-        }
-        
-        function showToast(message, type) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast ${type}`;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-        
-        function formatLabel(key) {
-            return key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
-        // Public site viewer
-        async function renderPublicSite(username) {
-            const app = document.getElementById('app');
-            app.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando site...</div>';
-            
-            try {
-                const sitesRef = collection(db, 'sites');
-                const q = query(sitesRef, where('username', '==', username), where('published', '==', true));
-                const snapshot = await getDocs(q);
-                
-                if (snapshot.empty) {
-                    app.innerHTML = `
-                        <div class="public-error">
-                            <i class="fas fa-search"></i>
-                            <h2>Site não encontrado</h2>
-                            <p>O site que você está procurando não existe ou foi removido.</p>
-                            <a href="/" class="btn-primary">Criar meu site</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                const site = snapshot.docs[0].data();
-                app.innerHTML = renderFullSite(site.content, site.template);
-                app.innerHTML += `<footer class="watermark">Criado com <i class="fas fa-heart"></i> WebCraft</footer>`;
-            } catch (error) {
-                app.innerHTML = `<div class="public-error">Erro ao carregar site: ${error.message}</div>`;
-            }
-        }
-        
-        function renderFullSite(content, template) {
-            if (template === 'portfolio') {
-                return `
-                    <div class="full-portfolio">
-                        <div class="full-hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <div class="full-hero-content">
-                                <h1>${content.heroTitle || 'Meu Portfólio'}</h1>
-                                <p>${content.heroSubtitle || 'Designer & Desenvolvedor'}</p>
-                            </div>
-                        </div>
-                        <div class="full-container">
-                            <section class="full-section">
-                                <h2>Sobre Mim</h2>
-                                <p>${content.bio || 'Criativo apaixonado por design e tecnologia.'}</p>
-                            </section>
-                            <section class="full-section">
-                                <h2>Projetos Recentes</h2>
-                                <div class="full-projects">
-                                    ${content.projects?.map(p => `
-                                        <div class="full-project-card">
-                                            <h3>${p.name}</h3>
-                                            <p>${p.description || ''}</p>
-                                        </div>
-                                    `).join('') || ''}
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                `;
-            } else if (template === 'business') {
-                return `
-                    <div class="full-business">
-                        <div class="full-business-header">
-                            <h1>${content.companyName || 'Empresa'}</h1>
-                            <p class="full-tagline">${content.tagline || 'Excelência em serviços'}</p>
-                        </div>
-                        <div class="full-container">
-                            <p class="full-description">${content.description || 'Oferecemos as melhores soluções para seu negócio.'}</p>
-                            <div class="full-services">
-                                <h2>Nossos Serviços</h2>
-                                <div class="full-services-grid">
-                                    ${content.services?.map(s => `
-                                        <div class="full-service-card">
-                                            <i class="fas fa-check-circle"></i>
-                                            <span>${s}</span>
-                                        </div>
-                                    `).join('') || ''}
-                                </div>
-                            </div>
-                            <div class="full-contact">
-                                ${content.whatsapp ? `<a href="https://wa.me/${content.whatsapp}" class="full-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>` : ''}
-                                ${content.email ? `<a href="mailto:${content.email}" class="full-email"><i class="far fa-envelope"></i> Email</a>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div class="full-linkhub">
-                        <div class="full-linkhub-container">
-                            <img src="${content.avatar}" class="full-avatar">
-                            <h1>${content.name || 'Usuário'}</h1>
-                            <p class="full-bio">${content.bio || 'Conecte-se comigo'}</p>
-                            <div class="full-links">
-                                ${content.links?.map(l => `
-                                    <a href="${l.url}" class="full-link" target="_blank">
-                                        <i class="fab ${l.icon || 'fa-link'}"></i>
-                                        ${l.title}
-                                    </a>
-                                `).join('') || ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        // Auth state listener
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            const hash = window.location.hash;
-            
-            if (hash.startsWith('#/site/')) {
-                const username = hash.split('/')[2];
-                renderPublicSite(username);
-                document.getElementById('app').style.display = 'block';
-                document.querySelector('.main-app').style.display = 'none';
-            } else if (user) {
-                document.getElementById('app').style.display = 'none';
-                document.querySelector('.main-app').style.display = 'flex';
-                showDashboard();
-            } else {
-                document.getElementById('app').style.display = 'none';
-                document.querySelector('.main-app').style.display = 'flex';
-                showPage('login');
-            }
-        });
-        
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash;
-            if (hash.startsWith('#/site/')) {
-                const username = hash.split('/')[2];
-                renderPublicSite(username);
-                document.getElementById('app').style.display = 'block';
-                document.querySelector('.main-app').style.display = 'none';
-            } else {
-                document.getElementById('app').style.display = 'none';
-                document.querySelector('.main-app').style.display = 'flex';
-                if (currentUser) showDashboard();
-                else showPage('login');
-            }
-        });
-        
-        // Expose functions globally
-        window.handleSignup = handleSignup;
-        window.handleLogin = handleLogin;
-        window.handleLogout = handleLogout;
-        window.openCreateModal = openCreateModal;
-        window.closeCreateModal = closeCreateModal;
-        window.createSite = createSite;
-        window.editSite = editSite;
-        window.deleteSite = deleteSite;
-        window.publishSite = publishSite;
-        window.viewSite = viewSite;
-        
-        // Initial render
-        showPage('login');
-    </script>
-    
     <style>
         * {
             margin: 0;
@@ -573,22 +24,22 @@
             color: #1a1a2e;
         }
         
-        .main-app {
-            display: flex;
-            min-height: 100vh;
+        /* Pages */
+        .page {
+            display: none;
         }
         
-        .hidden {
-            display: none !important;
+        .page.active {
+            display: block;
         }
         
-        /* Login/Register Pages */
+        /* Auth Pages */
         .auth-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
         }
         
@@ -598,7 +49,7 @@
             padding: 48px;
             width: 100%;
             max-width: 480px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
         .auth-header {
@@ -626,11 +77,11 @@
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
             color: #4a5568;
         }
         
-        .input-group input {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid #e2e8f0;
@@ -639,7 +90,7 @@
             transition: all 0.3s;
         }
         
-        .input-group input:focus {
+        .input-group input:focus, .input-group select:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
@@ -663,18 +114,13 @@
             box-shadow: 0 10px 20px rgba(102,126,234,0.3);
         }
         
-        .btn-outline {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid #e2e8f0;
+        .btn-secondary {
+            padding: 10px 20px;
+            background: #e2e8f0;
+            border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .btn-outline:hover {
-            border-color: #667eea;
-            color: #667eea;
+            font-weight: 500;
         }
         
         .auth-switch {
@@ -687,12 +133,12 @@
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
+            cursor: pointer;
         }
         
         /* Dashboard */
-        .dashboard {
+        .dashboard-layout {
             display: flex;
-            width: 100%;
             min-height: 100vh;
         }
         
@@ -731,9 +177,10 @@
             text-decoration: none;
             border-radius: 12px;
             transition: all 0.2s;
+            cursor: pointer;
         }
         
-        .sidebar-menu a:hover, .sidebar-menu a.active {
+        .sidebar-menu a:hover {
             background: #f7fafc;
             color: #667eea;
         }
@@ -745,13 +192,6 @@
             right: 24px;
             padding-top: 24px;
             border-top: 1px solid #e2e8f0;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
         }
         
         .main-content {
@@ -820,6 +260,21 @@
             gap: 12px;
         }
         
+        .btn-outline {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .btn-outline:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
         .btn-danger {
             padding: 8px 12px;
             background: #fed7d7;
@@ -855,6 +310,10 @@
             max-width: 500px;
         }
         
+        .modal-content h2 {
+            margin-bottom: 24px;
+        }
+        
         /* Toast */
         .toast {
             position: fixed;
@@ -875,66 +334,21 @@
         .toast.success { background: #48bb78; }
         .toast.error { background: #f56565; }
         
-        /* Editor */
-        .editor {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-        }
-        
-        .editor-sidebar {
-            width: 400px;
-            background: white;
-            border-right: 1px solid #e2e8f0;
-            padding: 24px;
-            overflow-y: auto;
-        }
-        
-        .editor-preview {
-            flex: 1;
-            background: #f7fafc;
-            padding: 24px;
-            overflow-y: auto;
-        }
-        
-        .editor-field {
-            margin-bottom: 24px;
-        }
-        
-        .editor-field label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .editor-field input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-        }
-        
-        /* Public site styles */
-        .watermark {
+        /* Loading */
+        .loading {
             text-align: center;
-            padding: 20px;
-            background: #f7fafc;
-            color: #a0aec0;
-            font-size: 13px;
+            padding: 40px;
         }
         
-        .full-portfolio .full-hero {
-            height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .full-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .empty-state {
+            text-align: center;
             padding: 60px 20px;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #cbd5e0;
+            margin-bottom: 20px;
         }
         
         @media (max-width: 768px) {
@@ -948,46 +362,20 @@
                 margin-left: 0;
                 padding: 20px;
             }
-            
-            .editor-sidebar {
-                width: 100%;
-            }
-            
-            .editor {
-                flex-direction: column;
-            }
-        }
-        
-        .empty-state, .error-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .empty-state i {
-            font-size: 64px;
-            color: #cbd5e0;
-            margin-bottom: 20px;
-        }
-        
-        .loading-spinner {
-            text-align: center;
-            padding: 40px;
         }
     </style>
 </head>
 <body>
-    <div id="app"></div>
-    
-    <div class="main-app">
-        <!-- Login Page -->
-        <div id="loginPage" class="page auth-page">
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="auth-page">
             <div class="auth-container">
                 <div class="auth-header">
                     <div class="logo"><i class="fas fa-rocket"></i></div>
                     <h1>WebCraft</h1>
                     <p>Crie websites profissionais em minutos</p>
                 </div>
-                <form onsubmit="handleLogin(event)">
+                <form id="loginForm">
                     <div class="input-group">
                         <label>Email</label>
                         <input type="email" id="loginEmail" required placeholder="seu@email.com">
@@ -999,56 +387,60 @@
                     <button type="submit" class="btn-primary">Entrar</button>
                 </form>
                 <p class="auth-switch">
-                    Não tem conta? <a href="#" onclick="showPage('register')">Criar conta gratuita</a>
+                    Não tem conta? <a onclick="showRegister()">Criar conta gratuita</a>
                 </p>
             </div>
         </div>
-        
-        <!-- Register Page -->
-        <div id="registerPage" class="page auth-page hidden">
+    </div>
+    
+    <!-- Register Page -->
+    <div id="registerPage" class="page">
+        <div class="auth-page">
             <div class="auth-container">
                 <div class="auth-header">
                     <div class="logo"><i class="fas fa-rocket"></i></div>
                     <h1>Criar Conta</h1>
                     <p>Comece a criar sites profissionais</p>
                 </div>
-                <form onsubmit="handleSignup(event)">
+                <form id="registerForm">
                     <div class="input-group">
                         <label>Nome completo</label>
-                        <input type="text" id="signupName" required placeholder="João Silva">
+                        <input type="text" id="registerName" required placeholder="João Silva">
                     </div>
                     <div class="input-group">
                         <label>Email</label>
-                        <input type="email" id="signupEmail" required placeholder="joao@email.com">
+                        <input type="email" id="registerEmail" required placeholder="joao@email.com">
                     </div>
                     <div class="input-group">
                         <label>Senha</label>
-                        <input type="password" id="signupPassword" required placeholder="mínimo 6 caracteres">
+                        <input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres">
                     </div>
                     <button type="submit" class="btn-primary">Criar conta gratuita</button>
                 </form>
                 <p class="auth-switch">
-                    Já tem conta? <a href="#" onclick="showPage('login')">Fazer login</a>
+                    Já tem conta? <a onclick="showLogin()">Fazer login</a>
                 </p>
             </div>
         </div>
-        
-        <!-- Dashboard -->
-        <div id="dashboardPage" class="page dashboard">
+    </div>
+    
+    <!-- Dashboard -->
+    <div id="dashboardPage" class="page">
+        <div class="dashboard-layout">
             <aside class="sidebar">
                 <div class="sidebar-logo">
                     <i class="fas fa-rocket"></i> WebCraft
                 </div>
                 <ul class="sidebar-menu">
-                    <li><a href="#" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li>
-                    <li><a href="#" onclick="openCreateModal()"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
+                    <li><a onclick="loadDashboard()"><i class="fas fa-th-large"></i> Meus Sites</a></li>
+                    <li><a onclick="openCreateModal()"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
                 </ul>
                 <div class="sidebar-footer">
-                    <div class="user-info">
+                    <div class="user-info" id="userInfo">
                         <i class="fas fa-user-circle"></i>
-                        <span id="userName">Usuário</span>
+                        <span>Carregando...</span>
                     </div>
-                    <button onclick="handleLogout()" class="btn-outline" style="width: 100%;">
+                    <button onclick="handleLogout()" class="btn-outline" style="width: 100%; margin-top: 16px;">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
                 </div>
@@ -1060,26 +452,10 @@
                         <i class="fas fa-plus"></i> Criar novo site
                     </button>
                 </div>
-                <div id="sitesGrid" class="sites-grid"></div>
+                <div id="sitesGrid">
+                    <div class="loading">Carregando sites...</div>
+                </div>
             </main>
-        </div>
-        
-        <!-- Editor -->
-        <div id="editorPage" class="page editor hidden">
-            <div class="editor-sidebar">
-                <h2 id="editorTitle"></h2>
-                <div id="editorFields"></div>
-                <button class="btn-primary" onclick="publishSite()" style="margin-top: 20px;">
-                    <i class="fas fa-globe"></i> Publicar Site
-                </button>
-                <button class="btn-outline" onclick="showDashboard()" style="margin-top: 10px; width: 100%;">
-                    <i class="fas fa-arrow-left"></i> Voltar
-                </button>
-            </div>
-            <div class="editor-preview">
-                <h3><i class="fas fa-eye"></i> Pré-visualização</h3>
-                <div id="livePreview"></div>
-            </div>
         </div>
     </div>
     
@@ -1094,21 +470,303 @@
             <div class="input-group">
                 <label>Username (URL)</label>
                 <input type="text" id="siteUsername" placeholder="seudominio">
-                <small>Seu site estará em: seudominio.webcraft.app</small>
+                <small style="color: #718096;">Seu site estará em: seudominio.webcraft.app</small>
             </div>
             <div class="input-group">
                 <label>Template</label>
-                <select id="siteTemplate" class="input-group">
+                <select id="siteTemplate">
                     <option value="portfolio">🎨 Portfólio Criativo</option>
                     <option value="business">🏢 Empresa Moderna</option>
                     <option value="linkhub">🔗 Link Hub</option>
                 </select>
             </div>
             <button class="btn-primary" onclick="createSite()">Criar Site</button>
-            <button class="btn-outline" onclick="closeCreateModal()" style="margin-top: 10px;">Cancelar</button>
+            <button class="btn-outline" onclick="closeCreateModal()" style="margin-top: 10px; width: 100%;">Cancelar</button>
         </div>
     </div>
     
     <div id="toast" class="toast"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
+            authDomain: "resu-1f787.firebaseapp.com",
+            databaseURL: "https://resu-1f787-default-rtdb.firebaseio.com",
+            projectId: "resu-1f787",
+            storageBucket: "resu-1f787.firebasestorage.app",
+            messagingSenderId: "343435423875",
+            appId: "1:343435423875:web:2434d6713644e165376bb6",
+            measurementId: "G-KEKY6WGP7J"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        let currentUser = null;
+        
+        // Templates
+        const templates = {
+            portfolio: {
+                name: "Portfólio Criativo",
+                structure: {
+                    heroTitle: "Meu Portfólio",
+                    heroSubtitle: "Designer & Desenvolvedor",
+                    bio: "Criativo apaixonado por design e tecnologia.",
+                    projects: ["Projeto 1", "Projeto 2"]
+                }
+            },
+            business: {
+                name: "Empresa Moderna",
+                structure: {
+                    companyName: "Minha Empresa",
+                    tagline: "Excelência em serviços",
+                    description: "Oferecemos as melhores soluções para seu negócio.",
+                    services: ["Consultoria", "Desenvolvimento", "Marketing"]
+                }
+            },
+            linkhub: {
+                name: "Link Hub",
+                structure: {
+                    name: "Meus Links",
+                    bio: "Conecte-se comigo",
+                    avatar: "https://ui-avatars.com/api/?background=667eea&color=fff&size=100",
+                    links: [
+                        { title: "Instagram", url: "#" },
+                        { title: "LinkedIn", url: "#" }
+                    ]
+                }
+            }
+        };
+        
+        // UI Functions
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        function showLogin() {
+            document.getElementById('loginPage').classList.add('active');
+            document.getElementById('registerPage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.remove('active');
+        }
+        
+        function showRegister() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('registerPage').classList.add('active');
+            document.getElementById('dashboardPage').classList.remove('active');
+        }
+        
+        function showDashboard() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('registerPage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.add('active');
+            loadDashboard();
+        }
+        
+        // Auth Functions
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                currentUser = userCredential.user;
+                showToast('Login realizado com sucesso!', 'success');
+                showDashboard();
+            } catch (error) {
+                showToast('Erro: ' + error.message, 'error');
+            }
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, { displayName: name });
+                currentUser = userCredential.user;
+                showToast('Conta criada com sucesso!', 'success');
+                showDashboard();
+            } catch (error) {
+                showToast('Erro: ' + error.message, 'error');
+            }
+        });
+        
+        window.handleLogout = async () => {
+            await signOut(auth);
+            currentUser = null;
+            showLogin();
+            showToast('Logout realizado', 'success');
+        };
+        
+        // Dashboard Functions
+        window.loadDashboard = async () => {
+            if (!currentUser) return;
+            
+            const sitesGrid = document.getElementById('sitesGrid');
+            sitesGrid.innerHTML = '<div class="loading">Carregando sites...</div>';
+            
+            try {
+                // Try with index first, if fails, use simple query
+                let snapshot;
+                try {
+                    const sitesRef = collection(db, 'sites');
+                    const q = query(sitesRef, where('userId', '==', currentUser.uid), orderBy('createdAt', 'desc'));
+                    snapshot = await getDocs(q);
+                } catch (indexError) {
+                    // If index missing, just get without ordering
+                    const sitesRef = collection(db, 'sites');
+                    const q = query(sitesRef, where('userId', '==', currentUser.uid));
+                    snapshot = await getDocs(q);
+                    showToast('Para melhor performance, crie o índice clicando no link do erro', 'info');
+                }
+                
+                document.getElementById('userInfo').innerHTML = `
+                    <i class="fas fa-user-circle"></i>
+                    <span>${currentUser.displayName || currentUser.email}</span>
+                `;
+                
+                if (snapshot.empty) {
+                    sitesGrid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-globe"></i>
+                            <h3>Você ainda não tem sites</h3>
+                            <p>Crie seu primeiro site profissional agora mesmo</p>
+                            <button class="btn-primary" onclick="openCreateModal()">
+                                <i class="fas fa-plus"></i> Criar meu primeiro site
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                sitesGrid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const site = doc.data();
+                    sitesGrid.innerHTML += `
+                        <div class="site-card">
+                            <div class="site-card-header">
+                                <div class="site-icon"><i class="fas ${site.template === 'portfolio' ? 'fa-palette' : site.template === 'business' ? 'fa-building' : 'fa-link'}"></i></div>
+                                <div class="site-info">
+                                    <h3>${site.title || 'Sem título'}</h3>
+                                    <p>${site.username}.webcraft.app</p>
+                                </div>
+                            </div>
+                            <div class="site-card-actions">
+                                <button class="btn-outline" onclick="editSite('${doc.id}')">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn-outline" onclick="viewSite('${site.username}')">
+                                    <i class="fas fa-eye"></i> Ver
+                                </button>
+                                <button class="btn-danger" onclick="deleteSite('${doc.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading sites:', error);
+                sitesGrid.innerHTML = `<div class="empty-state">Erro ao carregar sites: ${error.message}</div>`;
+            }
+        };
+        
+        window.openCreateModal = () => {
+            document.getElementById('createModal').classList.add('active');
+        };
+        
+        window.closeCreateModal = () => {
+            document.getElementById('createModal').classList.remove('active');
+            document.getElementById('siteTitle').value = '';
+            document.getElementById('siteUsername').value = '';
+        };
+        
+        window.createSite = async () => {
+            const title = document.getElementById('siteTitle').value;
+            const username = document.getElementById('siteUsername').value;
+            const template = document.getElementById('siteTemplate').value;
+            
+            if (!title || !username) {
+                showToast('Preencha todos os campos', 'error');
+                return;
+            }
+            
+            // Check if username exists
+            try {
+                const sitesRef = collection(db, 'sites');
+                const q = query(sitesRef, where('username', '==', username));
+                const existing = await getDocs(q);
+                
+                if (!existing.empty) {
+                    showToast('Username já está em uso', 'error');
+                    return;
+                }
+                
+                const siteData = {
+                    title: title,
+                    username: username,
+                    template: template,
+                    content: templates[template].structure,
+                    userId: currentUser.uid,
+                    createdAt: new Date().toISOString(),
+                    published: true
+                };
+                
+                const docRef = await addDoc(collection(db, 'sites'), siteData);
+                showToast('Site criado com sucesso!', 'success');
+                closeCreateModal();
+                loadDashboard();
+            } catch (error) {
+                console.error('Error creating site:', error);
+                showToast('Erro ao criar site: ' + error.message, 'error');
+            }
+        };
+        
+        window.editSite = async (siteId) => {
+            showToast('Editor em desenvolvimento em breve!', 'info');
+        };
+        
+        window.viewSite = (username) => {
+            window.open(`/#/site/${username}`, '_blank');
+        };
+        
+        window.deleteSite = async (siteId) => {
+            if (!confirm('Tem certeza que deseja excluir este site permanentemente?')) return;
+            
+            try {
+                await deleteDoc(doc(db, 'sites', siteId));
+                showToast('Site excluído com sucesso', 'success');
+                loadDashboard();
+            } catch (error) {
+                showToast('Erro ao excluir site', 'error');
+            }
+        };
+        
+        // Auth state listener
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        });
+        
+        // Make functions global
+        window.showLogin = showLogin;
+        window.showRegister = showRegister;
+    </script>
 </body>
 </html>
