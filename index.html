@@ -114,7 +114,7 @@
         .user-info i { font-size: 32px; color: #6366f1; }
         .user-name { font-weight: 600; color: #0f172a; }
         .user-plan { font-size: 12px; color: #64748b; }
-        .pro-badge { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; margin-left: 8px; }
+        .pro-badge { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; margin-left: 8px; display: inline-block; }
         .mobile-sidebar-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 25px; color: white; font-size: 24px; cursor: pointer; z-index: 101; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .main-content { flex: 1; margin-left: 280px; padding: 32px 48px; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
@@ -325,9 +325,10 @@
                     currentUserPlan = userDoc.data();
                 } else {
                     // Criar documento do usuário se não existir
-                    await setDoc(userDocRef, { isPro: false, createdAt: new Date().toISOString() });
+                    await setDoc(userDocRef, { isPro: false, createdAt: new Date().toISOString(), email: currentUser.email, name: currentUser.displayName || '' });
                     currentUserPlan = { isPro: false };
                 }
+                console.log('Plano do usuário:', currentUserPlan);
             } catch (error) {
                 console.error('Erro ao carregar plano:', error);
                 currentUserPlan = { isPro: false };
@@ -371,7 +372,7 @@
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
                 <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
                 <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
-                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="plansLink"><i class="fas fa-crown"></i> Planos <span style="background:#f59e0b; color:white; padding:2px 8px; border-radius:20px; font-size:10px; margin-left:8px;">PRO</span></a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan" id="userPlanDisplay">Plano Grátis</div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
+                <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="plansLink"><i class="fas fa-crown"></i> Planos <span style="background:#f59e0b; color:white; padding:2px 8px; border-radius:20px; font-size:10px; margin-left:8px;">PRO</span></a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan" id="userPlanDisplay"></div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
                 <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
@@ -406,8 +407,13 @@
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
                     await updateProfile(userCredential.user, { displayName: name });
                     // Criar documento do usuário no Firestore
-                    await setDoc(doc(db, 'users', userCredential.user.uid), { isPro: false, createdAt: new Date().toISOString() });
-                    showToast('Conta criada!', 'success'); 
+                    await setDoc(doc(db, 'users', userCredential.user.uid), { 
+                        isPro: false, 
+                        createdAt: new Date().toISOString(),
+                        email: email,
+                        name: name
+                    });
+                    showToast('Conta criada com sucesso!', 'success'); 
                 } 
                 catch (error) { showToast(error.message, 'error'); }
             });
@@ -497,7 +503,9 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
             const targetPage = document.getElementById(pageId);
             if (targetPage) targetPage.classList.add('active');
-            if (pageId === 'dashboardPage' && currentUser) { loadUserPlan(); loadDashboard(); }
+            if (pageId === 'dashboardPage' && currentUser) { 
+                loadUserPlan().then(() => loadDashboard()); 
+            }
         }
         
         function showToast(message, type) { 
@@ -526,7 +534,7 @@
                     if (currentUserPlan.isPro) {
                         userPlanSpan.innerHTML = 'Plano Pro <span class="pro-badge">PRO</span>';
                     } else {
-                        userPlanSpan.innerHTML = 'Plano Grátis';
+                        userPlanSpan.innerHTML = 'Plano Grátis <span style="font-size:10px; color:#f59e0b;">(Limite: 2 sites)</span>';
                     }
                 }
                 
@@ -796,32 +804,24 @@
         
         function openCreateModal() { 
             // Verificar limite de sites para usuários Free
-            if (!currentUserPlan.isPro) {
-                // Verificar quantos sites o usuário já tem
-                const checkSites = async () => {
-                    const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
-                    const snapshot = await getDocs(q);
-                    if (snapshot.size >= 2) {
-                        showToast('⚠️ Plano Grátis permite apenas 2 sites. Adquira o Plano Pro para criar sites ilimitados!', 'error');
-                        openPlansModal();
-                        return false;
-                    }
-                    return true;
-                };
-                checkSites().then(canCreate => {
-                    if (canCreate) {
-                        const modal = document.getElementById('createModal');
-                        if (modal) modal.classList.add('active');
-                        const firstCard = document.querySelector('.template-card');
-                        if (firstCard) firstCard.classList.add('selected');
-                    }
-                });
-            } else {
-                const modal = document.getElementById('createModal');
-                if (modal) modal.classList.add('active');
-                const firstCard = document.querySelector('.template-card');
-                if (firstCard) firstCard.classList.add('selected');
-            }
+            const checkSites = async () => {
+                const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
+                const snapshot = await getDocs(q);
+                if (!currentUserPlan.isPro && snapshot.size >= 2) {
+                    showToast('⚠️ Plano Grátis permite apenas 2 sites. Adquira o Plano Pro para criar sites ilimitados!', 'error');
+                    openPlansModal();
+                    return false;
+                }
+                return true;
+            };
+            checkSites().then(canCreate => {
+                if (canCreate) {
+                    const modal = document.getElementById('createModal');
+                    if (modal) modal.classList.add('active');
+                    const firstCard = document.querySelector('.template-card');
+                    if (firstCard) firstCard.classList.add('selected');
+                }
+            });
         }
         
         function closeCreateModal() { 
@@ -840,15 +840,13 @@
             if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } 
             
             // Verificar limite novamente antes de criar
-            if (!currentUserPlan.isPro) {
-                const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
-                const snapshot = await getDocs(q);
-                if (snapshot.size >= 2) {
-                    showToast('⚠️ Limite de 2 sites atingido. Adquira o Plano Pro!', 'error');
-                    closeCreateModal();
-                    openPlansModal();
-                    return;
-                }
+            const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
+            const snapshot = await getDocs(q);
+            if (!currentUserPlan.isPro && snapshot.size >= 2) {
+                showToast('⚠️ Limite de 2 sites atingido. Adquira o Plano Pro!', 'error');
+                closeCreateModal();
+                openPlansModal();
+                return;
             }
             
             try { 
