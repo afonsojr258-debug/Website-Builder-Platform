@@ -399,7 +399,7 @@
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
                 <!-- Modal para editar Botão normal -->
-                <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-services">Após os Cards de Serviços</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
+                <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição do Botão</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Posição entre Cards de Serviços</label><select id="editBtnServicePosition"><option value="none">Não posicionar entre cards</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para editar Card/Serviço -->
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
@@ -466,7 +466,6 @@
         function openPlansModal() { 
             const modal = document.getElementById('plansModal');
             if (modal) modal.classList.add('active');
-            // Atualizar o botão do modal baseado no status atual
             const payBtn = document.getElementById('payWhatsappBtn');
             if (payBtn && currentUserPlan.isPro) {
                 payBtn.outerHTML = `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>`;
@@ -500,6 +499,18 @@
         window.openButtonModal = (index) => {
             currentEditingButtonIndex = index;
             const btn = currentEditingSite.content.buttons[index];
+            const services = currentEditingSite.content.services || [];
+            
+            // Atualizar o select de posição entre cards
+            const servicePositionSelect = document.getElementById('editBtnServicePosition');
+            if (servicePositionSelect) {
+                let options = '<option value="none">Não posicionar entre cards</option>';
+                services.forEach((service, idx) => {
+                    options += `<option value="service_${idx}" ${btn.servicePosition === `service_${idx}` ? 'selected' : ''}>Após o card "${service.name || `Serviço ${idx + 1}`}"</option>`;
+                });
+                servicePositionSelect.innerHTML = options;
+            }
+            
             document.getElementById('editBtnText').value = btn.text || '';
             document.getElementById('editBtnUrl').value = btn.url || '#';
             document.getElementById('editBtnType').value = btn.type || 'primary';
@@ -613,7 +624,6 @@
                 const docSnap = await getDoc(docRef); 
                 if (docSnap.exists()) { 
                     currentEditingSite = { id: docSnap.id, ...docSnap.data() };
-                    // Garantir que floatButton existe
                     if (!currentEditingSite.content.floatButton) {
                         currentEditingSite.content.floatButton = { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                     }
@@ -638,8 +648,6 @@
             showPage('editorPage');
             
             const content = currentEditingSite.content;
-            
-            // Verificar se é PRO para liberar o float button
             const isPro = currentUserPlan.isPro;
             
             let html = `
@@ -664,7 +672,7 @@
                 <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4>
                     <div id="buttonsList" class="items-list"></div>
                     <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:12px;"><i class="fas fa-plus"></i> Adicionar Botão</button>
-                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no botão para editar suas propriedades</p>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no botão para editar suas propriedades (posição entre cards específicos)</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4>
                     <div id="servicesList" class="items-list"></div>
@@ -676,7 +684,6 @@
                 </div>
             `;
             
-            // Seção do Botão Flutuante (apenas para PRO)
             if (isPro) {
                 const floatBtn = content.floatButton || { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                 html += `
@@ -721,13 +728,23 @@
                     if (buttons.length === 0) {
                         container.innerHTML = '<div style="text-align:center; padding:20px; background:#f8fafc; border-radius:16px; color:#64748b;">Nenhum botão adicionado. Clique em "+ Adicionar Botão"</div>';
                     } else {
-                        container.innerHTML = buttons.map((btn, idx) => `
+                        container.innerHTML = buttons.map((btn, idx) => {
+                            let positionText = '';
+                            if (btn.position === 'hero') positionText = 'No Hero';
+                            else if (btn.position === 'after-about') positionText = 'Após o texto Sobre';
+                            else if (btn.servicePosition && btn.servicePosition !== 'none') {
+                                const serviceIndex = parseInt(btn.servicePosition.split('_')[1]);
+                                const serviceName = services[serviceIndex]?.name || `Serviço ${serviceIndex + 1}`;
+                                positionText = `Após o card "${serviceName}"`;
+                            } else positionText = 'Posição não definida';
+                            
+                            return `
                             <div class="item-preview">
                                 <div class="item-info">
                                     <div class="item-icon"><i class="fas fa-link"></i></div>
                                     <div class="item-details">
                                         <div class="item-name">${escapeHtml(btn.text || 'Botão')}</div>
-                                        <div class="item-desc">${escapeHtml(btn.url || '#')} | ${btn.position || 'hero'} | ${btn.shape || 'rounded'} | Alinhamento: ${btn.align || 'center'}</div>
+                                        <div class="item-desc">${escapeHtml(btn.url || '#')} | ${positionText} | ${btn.shape || 'rounded'} | Alinhamento: ${btn.align || 'center'}</div>
                                     </div>
                                 </div>
                                 <div class="item-actions">
@@ -735,7 +752,7 @@
                                     <button class="btn-icon" onclick="window.removeButton(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
-                        `).join('');
+                        `}).join('');
                     }
                 }
             };
@@ -771,7 +788,7 @@
             const addButtonBtn = document.getElementById('addButtonBtn');
             if (addButtonBtn) {
                 addButtonBtn.addEventListener('click', () => { 
-                    buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', shape: 'rounded', align: 'center' }); 
+                    buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', servicePosition: 'none', shape: 'rounded', align: 'center' }); 
                     renderButtonsList(); 
                     updateSiteContent(); 
                     showToast('Botão adicionado!', 'success'); 
@@ -794,6 +811,7 @@
                     btn.url = document.getElementById('editBtnUrl').value;
                     btn.type = document.getElementById('editBtnType').value;
                     btn.position = document.getElementById('editBtnPosition').value;
+                    btn.servicePosition = document.getElementById('editBtnServicePosition').value;
                     btn.shape = document.getElementById('editBtnShape').value;
                     btn.align = document.getElementById('editBtnAlign').value;
                     renderButtonsList();
@@ -835,7 +853,6 @@
                 currentEditingSite.content.floatButton = floatBtn;
                 updateSiteContent();
                 closeFloatModal();
-                // Atualizar a visualização do botão flutuante no editor
                 const floatInfoDiv = document.getElementById('floatButtonInfo');
                 if (floatInfoDiv) {
                     floatInfoDiv.innerHTML = `
@@ -864,7 +881,6 @@
             const colorTexts = ['primaryColorText', 'secondaryColorText'];
             colorTexts.forEach(ct => { const el = document.getElementById(ct); if (el) { el.addEventListener('change', (e) => { const colorField = ct.replace('Text', ''); const colorEl = document.getElementById(colorField); if (colorEl) colorEl.value = e.target.value; updateSiteContent(); }); } });
             
-            // Atualizar cores do float button
             const floatColor = document.getElementById('floatColor');
             const floatColorText = document.getElementById('floatColorText');
             if (floatColor && floatColorText) {
@@ -920,8 +936,11 @@
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
-            const afterServicesButtons = (c.buttons || []).filter(b => b.position === 'after-services');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
+            
+            // Organizar botões que ficam entre cards
+            const serviceButtons = (c.buttons || []).filter(b => b.servicePosition && b.servicePosition !== 'none');
+            
             const getStyle = (btn) => { 
                 if (btn.shape === 'pill') return '40px';
                 if (btn.shape === 'square') return '12px';
@@ -933,11 +952,34 @@
                 return 'flex-end';
             };
             
-            // Renderizar botão flutuante se estiver ativado e for PRO
             let floatButtonHtml = '';
             if (currentUserPlan.isPro && c.floatButton && c.floatButton.enabled && c.floatButton.link) {
                 const floatPos = c.floatButton.position === 'right' ? 'float-right' : 'float-left';
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
+            }
+            
+            // Construir o HTML dos serviços com botões entre eles
+            let servicesHtml = '';
+            if (c.services && c.services.length > 0) {
+                servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
+                c.services.forEach((service, idx) => {
+                    servicesHtml += `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;">
+                        <i class="fas ${service.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i>
+                        <h3 style="margin-bottom:12px; font-size:22px;">${service.name}</h3>
+                        <p style="color:#64748b;">${service.description || ''}</p>
+                    </div>`;
+                    
+                    // Verificar se existe botão para colocar depois deste card
+                    const buttonAfterThisCard = serviceButtons.find(b => b.servicePosition === `service_${idx}`);
+                    if (buttonAfterThisCard) {
+                        servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
+                            <a href="${buttonAfterThisCard.url}" style="padding:12px 28px; background:${buttonAfterThisCard.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(buttonAfterThisCard)}; text-decoration:none; color:${buttonAfterThisCard.type === 'primary' ? 'white' : primary}; font-weight:600; display:inline-block;">
+                                ${buttonAfterThisCard.text}
+                            </a>
+                        </div>`;
+                    }
+                });
+                servicesHtml += '</div>';
             }
             
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
@@ -954,16 +996,9 @@
                     </div>
                 </div>
                 <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
-                    ${c.services && c.services.length > 0 ? `
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">
-                            ${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}
-                        </div>
-                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">
-                            ${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
-                        </div>
-                    ` : ''}
-                    ${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
-                    <div style="display:flex; gap:16px; justify-content:${afterAboutButtons.length > 0 ? 'center' : 'flex-start'}; flex-wrap:wrap;">
+                    ${servicesHtml}
+                    ${c.aboutText ? `<div style="text-align:center; margin:40px 0;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
+                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
                         ${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
                     </div>
                 </div>
@@ -1044,7 +1079,6 @@
                     return; 
                 } 
                 const site = snapshot.docs[0].data(); 
-                // Para visualização pública, precisamos verificar se o dono do site é PRO para mostrar o float button
                 const siteOwnerId = snapshot.docs[0].data().userId;
                 let isOwnerPro = false;
                 if (siteOwnerId) {
@@ -1065,18 +1099,46 @@
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
-            const afterServicesButtons = (c.buttons || []).filter(b => b.position === 'after-services');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
+            const serviceButtons = (c.buttons || []).filter(b => b.servicePosition && b.servicePosition !== 'none');
+            
             const getStyle = (btn) => { 
                 if (btn.shape === 'pill') return '40px';
                 if (btn.shape === 'square') return '12px';
                 return '50px';
+            };
+            const getAlign = (align) => {
+                if (align === 'center') return 'center';
+                if (align === 'left') return 'flex-start';
+                return 'flex-end';
             };
             
             let floatButtonHtml = '';
             if (isOwnerPro && c.floatButton && c.floatButton.enabled && c.floatButton.link) {
                 const floatPos = c.floatButton.position === 'right' ? 'float-right' : 'float-left';
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
+            }
+            
+            let servicesHtml = '';
+            if (c.services && c.services.length > 0) {
+                servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
+                c.services.forEach((service, idx) => {
+                    servicesHtml += `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;">
+                        <i class="fas ${service.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i>
+                        <h3 style="margin-bottom:12px; font-size:22px;">${service.name}</h3>
+                        <p style="color:#64748b;">${service.description || ''}</p>
+                    </div>`;
+                    
+                    const buttonAfterThisCard = serviceButtons.find(b => b.servicePosition === `service_${idx}`);
+                    if (buttonAfterThisCard) {
+                        servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
+                            <a href="${buttonAfterThisCard.url}" style="padding:12px 28px; background:${buttonAfterThisCard.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(buttonAfterThisCard)}; text-decoration:none; color:${buttonAfterThisCard.type === 'primary' ? 'white' : primary}; font-weight:600; display:inline-block;">
+                                ${buttonAfterThisCard.text}
+                            </a>
+                        </div>`;
+                    }
+                });
+                servicesHtml += '</div>';
             }
             
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
@@ -1093,15 +1155,8 @@
                     </div>
                 </div>
                 <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
-                    ${c.services && c.services.length > 0 ? `
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">
-                            ${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}
-                        </div>
-                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">
-                            ${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
-                        </div>
-                    ` : ''}
-                    ${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
+                    ${servicesHtml}
+                    ${c.aboutText ? `<div style="text-align:center; margin:40px 0;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}
                     <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
                         ${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}
                     </div>
