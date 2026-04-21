@@ -26,10 +26,7 @@
         .logo-img { height: 45px; width: auto; border-radius: 10px; }
         .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Menu de navegação */
-        .main-nav { display: flex; gap: 32px; }
-        .main-nav a { text-decoration: none; color: #475569; font-weight: 500; transition: color 0.2s; cursor: pointer; }
-        .main-nav a:hover { color: #6366f1; }
+        .main-nav { display: none; }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
         .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; z-index: 999; }
         .mobile-nav.open { display: flex; }
@@ -241,8 +238,6 @@
         
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
-            .main-nav { display: none; }
-            .mobile-menu-btn { display: block; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
             .hero-content p { font-size: 16px; }
@@ -385,22 +380,22 @@
         
         function renderPrivacyPolicy() {
             return `
-                <div class="main-header" style="position: relative;">
+                <div class="main-header">
                     <div class="header-container">
                         <div class="logo-area" onclick="window.showLandingPage()">
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav">
-                            <a onclick="window.showLandingPage()">Início</a>
-                            <a onclick="window.showPrivacyPolicy()">Política</a>
-                            <a onclick="window.showTerms()">Termos</a>
-                        </div>
+                        <div class="main-nav"></div>
                         <button class="mobile-menu-btn" id="mobileMenuBtnPolicy"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                         </div>
+                    </div>
+                    <div class="mobile-nav" id="mobileNavPolicy">
+                        ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                     </div>
                 </div>
                 <div class="legal-content">
@@ -453,22 +448,22 @@
         
         function renderTerms() {
             return `
-                <div class="main-header" style="position: relative;">
+                <div class="main-header">
                     <div class="header-container">
                         <div class="logo-area" onclick="window.showLandingPage()">
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav">
-                            <a onclick="window.showLandingPage()">Início</a>
-                            <a onclick="window.showPrivacyPolicy()">Política</a>
-                            <a onclick="window.showTerms()">Termos</a>
-                        </div>
+                        <div class="main-nav"></div>
                         <button class="mobile-menu-btn" id="mobileMenuBtnTerms"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                             <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                         </div>
+                    </div>
+                    <div class="mobile-nav" id="mobileNavTerms">
+                        ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
                     </div>
                 </div>
                 <div class="legal-content">
@@ -534,11 +529,7 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav">
-                            <a onclick="window.showLandingPage()">Início</a>
-                            <a onclick="window.showPrivacyPolicy()">Política</a>
-                            <a onclick="window.showTerms()">Termos</a>
-                        </div>
+                        <div class="main-nav"></div>
                         <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
@@ -546,10 +537,6 @@
                         </div>
                     </div>
                     <div class="mobile-nav" id="mobileNav">
-                        <a onclick="window.showLandingPage()" style="padding: 8px 0;">Início</a>
-                        <a onclick="window.showPrivacyPolicy()" style="padding: 8px 0;">Política</a>
-                        <a onclick="window.showTerms()" style="padding: 8px 0;">Termos</a>
-                        <hr>
                         <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
                         <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                     </div>
@@ -596,7 +583,7 @@
                 <div id="editPhotoModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Foto de Perfil</h3><button class="close-modal" onclick="closePhotoModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="photoUrl" placeholder="https://exemplo.com/minha-foto.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="photoShape"><option value="circle">Redondo (Círculo)</option><option value="rounded">Arredondado (Bordas suaves)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="photoBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="photoBorderColor" value="#6366f1"><input type="text" id="photoBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="photoSize"><option value="100">Pequeno (100px)</option><option value="150" selected>Médio (150px)</option><option value="200">Grande (200px)</option><option value="250">Extra Grande (250px)</option></select></div><div class="input-group"><label>Posição no Hero</label><select id="photoPosition"><option value="hero">No Hero (Junto com título)</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closePhotoModal()">Cancelar</button><button class="btn-primary" id="savePhotoChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="window.showTerms()" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a></p></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -608,7 +595,12 @@
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
-                try { await signInWithEmailAndPassword(auth, email, password); showToast('Login realizado!', 'success'); } 
+                try { 
+                    await signInWithEmailAndPassword(auth, email, password); 
+                    showToast('Login realizado!', 'success');
+                    showPage('dashboardPage');
+                    loadDashboard();
+                } 
                 catch (error) { showToast(error.message, 'error'); }
             });
             document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
@@ -625,7 +617,9 @@
                         email: email,
                         name: name
                     });
-                    showToast('Conta criada com sucesso!', 'success'); 
+                    showToast('Conta criada com sucesso!', 'success');
+                    showPage('dashboardPage');
+                    loadDashboard();
                 } 
                 catch (error) { showToast(error.message, 'error'); }
             });
@@ -652,11 +646,14 @@
             
             const mobileMenuBtnPolicy = document.getElementById('mobileMenuBtnPolicy'); 
             if (mobileMenuBtnPolicy) {
-                const mobileNavPolicy = document.createElement('div');
-                mobileNavPolicy.className = 'mobile-nav';
-                mobileNavPolicy.id = 'mobileNavPolicy';
-                document.querySelector('#privacyPage .main-header')?.appendChild(mobileNavPolicy);
-                mobileMenuBtnPolicy.addEventListener('click', () => mobileNavPolicy.classList.toggle('open'));
+                const mobileNavPolicy = document.getElementById('mobileNavPolicy');
+                if (mobileNavPolicy) mobileMenuBtnPolicy.addEventListener('click', () => mobileNavPolicy.classList.toggle('open'));
+            }
+            
+            const mobileMenuBtnTerms = document.getElementById('mobileMenuBtnTerms'); 
+            if (mobileMenuBtnTerms) {
+                const mobileNavTerms = document.getElementById('mobileNavTerms');
+                if (mobileNavTerms) mobileMenuBtnTerms.addEventListener('click', () => mobileNavTerms.classList.toggle('open'));
             }
         }
         
@@ -684,10 +681,6 @@
         function openPlansModal() { 
             const modal = document.getElementById('plansModal');
             if (modal) modal.classList.add('active');
-            const payBtn = document.getElementById('payWhatsappBtn');
-            if (payBtn && currentUserPlan.isPro) {
-                payBtn.outerHTML = `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>`;
-            }
         }
         function closePlansModal() { document.getElementById('plansModal').classList.remove('active'); }
         
@@ -1247,7 +1240,6 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            // Foto de perfil
             const photo = c.profilePhoto || {};
             let photoHtml = '';
             if (photo.url && photo.url.trim() !== '') {
