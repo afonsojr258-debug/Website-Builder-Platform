@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Website Builder Platform | Crie seu site profissional</title>
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
+            authDomain: "resu-1f787.firebaseapp.com",
+            databaseURL: "https://resu-1f787-default-rtdb.firebaseio.com",
+            projectId: "resu-1f787",
+            storageBucket: "resu-1f787.firebasestorage.app",
+            messagingSenderId: "343435423875",
+            appId: "1:343435423875:web:2434d6713644e165376bb6",
+            measurementId: "G-KEKY6WGP7J"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.appState = { auth, db };
+        
+        // Template definitions
+        const templates = {
+            portfolio: {
+                name: "Portfólio Profissional",
+                icon: "🎨",
+                structure: {
+                    title: "Meu Portfólio",
+                    subtitle: "Designer & Desenvolvedor",
+                    bio: "Criativo apaixonado por transformar ideias em experiências digitais incríveis.",
+                    coverImage: "https://picsum.photos/1200/600",
+                    socialLinks: {
+                        instagram: "https://instagram.com",
+                        linkedin: "https://linkedin.com",
+                        github: "https://github.com"
+                    },
+                    projects: [
+                        { name: "Projeto 1", description: "Descrição do projeto" }
+                    ]
+                }
+            },
+            business: {
+                name: "Negócio Local",
+                icon: "🏢",
+                structure: {
+                    companyName: "Minha Empresa",
+                    tagline: "Excelência em serviços",
+                    description: "Atendimento de qualidade com profissionais especializados.",
+                    whatsapp: "5511999999999",
+                    services: [
+                        "Consultoria",
+                        "Treinamentos",
+                        "Suporte 24/7"
+                    ],
+                    email: "contato@empresa.com"
+                }
+            },
+            linkhub: {
+                name: "Link Hub",
+                icon: "🔗",
+                structure: {
+                    name: "Meus Links",
+                    bio: "Todos meus links importantes em um só lugar",
+                    avatar: "https://picsum.photos/200/200",
+                    links: [
+                        { title: "Instagram", url: "https://instagram.com" },
+                        { title: "YouTube", url: "https://youtube.com" },
+                        { title: "Portfólio", url: "https://meusite.com" }
+                    ]
+                }
+            }
+        };
+        
+        window.templates = templates;
+        
+        // App Router
+        function navigateTo(page, params = {}) {
+            window.location.hash = page;
+            renderPage(page, params);
+        }
+        
+        function renderPage(page, params = {}) {
+            const app = document.getElementById('app');
+            const user = auth.currentUser;
+            
+            if (page === 'login' || page === 'register') {
+                if (user) navigateTo('dashboard');
+                else renderAuthPage(page);
+            } else if (page === 'dashboard') {
+                if (!user) navigateTo('login');
+                else renderDashboard();
+            } else if (page === 'editor') {
+                if (!user) navigateTo('login');
+                else renderEditor(params.siteId);
+            } else if (page === 'public') {
+                renderPublicSite(params.username);
+            } else {
+                if (user) navigateTo('dashboard');
+                else navigateTo('login');
+            }
+        }
+        
+        function renderAuthPage(type) {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h1>🚀 Website Builder</h1>
+                            <p>Crie seu site profissional em minutos</p>
+                        </div>
+                        <form id="authForm">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" required placeholder="seu@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Senha</label>
+                                <input type="password" id="password" required placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="btn-primary">${type === 'login' ? 'Entrar' : 'Criar Conta'}</button>
+                        </form>
+                        <p class="auth-switch">
+                            ${type === 'login' ? 'Não tem conta?' : 'Já tem conta?'}
+                            <a href="#" onclick="window.navigateTo('${type === 'login' ? 'register' : 'login'}')">
+                                ${type === 'login' ? 'Criar conta' : 'Fazer login'}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('authForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                try {
+                    if (type === 'login') {
+                        await signInWithEmailAndPassword(auth, email, password);
+                    } else {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                    }
+                    navigateTo('dashboard');
+                } catch (error) {
+                    alert('Erro: ' + error.message);
+                }
+            });
+        }
+        
+        async function renderDashboard() {
+            const user = auth.currentUser;
+            const app = document.getElementById('app');
+            
+            app.innerHTML = `
+                <div class="dashboard-layout">
+                    <aside class="sidebar">
+                        <div class="sidebar-header">
+                            <h2>🚀 MeuSite</h2>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <a href="#" class="nav-item active" onclick="navigateTo('dashboard')">
+                                📊 Meus Sites
+                            </a>
+                            <a href="#" class="nav-item" onclick="showCreateSite()">
+                                ➕ Criar Site
+                            </a>
+                        </nav>
+                        <div class="sidebar-footer">
+                            <div class="user-info">
+                                <span>👤 ${user.email}</span>
+                            </div>
+                            <button onclick="logout()" class="btn-logout">Sair</button>
+                        </div>
+                    </aside>
+                    <main class="dashboard-main">
+                        <div class="dashboard-header">
+                            <h1>Meus Sites</h1>
+                            <button class="btn-primary" onclick="showCreateSite()">➕ Criar novo site</button>
+                        </div>
+                        <div id="sitesList" class="sites-grid">
+                            <div class="loading">Carregando...</div>
+                        </div>
+                    </main>
+                </div>
+            `;
+            
+            await loadUserSites();
+        }
+        
+        async function loadUserSites() {
+            const user = auth.currentUser;
+            const sitesList = document.getElementById('sitesList');
+            
+            try {
+                const sitesRef = collection(db, 'users', user.uid, 'sites');
+                const q = query(sitesRef, orderBy('createdAt', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    sitesList.innerHTML = `
+                        <div class="empty-state">
+                            <p>✨ Você ainda não tem sites</p>
+                            <button class="btn-primary" onclick="showCreateSite()">Criar meu primeiro site</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                sitesList.innerHTML = '';
+                querySnapshot.forEach(doc => {
+                    const site = doc.data();
+                    sitesList.innerHTML += `
+                        <div class="site-card">
+                            <div class="site-card-header">
+                                <h3>${site.title || 'Site sem título'}</h3>
+                                <span class="site-date">${new Date(site.createdAt).toLocaleDateString()}</span>
+                            </div>
+                            <div class="site-card-actions">
+                                <button class="btn-icon" onclick="navigateTo('editor', {siteId: '${doc.id}'})">✏️ Editar</button>
+                                <button class="btn-icon" onclick="viewSite('${doc.id}')">👁️ Ver</button>
+                                <button class="btn-icon delete" onclick="deleteSite('${doc.id}')">🗑️ Apagar</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                sitesList.innerHTML = '<div class="error">Erro ao carregar sites</div>';
+            }
+        }
+        
+        async function showCreateSite() {
+            const templateChoice = prompt(
+                'Escolha um template:\n1 - Portfólio\n2 - Negócio\n3 - Link Hub',
+                '1'
+            );
+            
+            let template = 'portfolio';
+            if (templateChoice === '2') template = 'business';
+            if (templateChoice === '3') template = 'linkhub';
+            
+            const siteName = prompt('Nome do seu site:', 'Meu Site');
+            if (!siteName) return;
+            
+            const username = prompt('Username (será usado na URL):', siteName.toLowerCase().replace(/[^a-z0-9]/g, ''));
+            if (!username) return;
+            
+            const user = auth.currentUser;
+            const siteId = Date.now().toString();
+            const siteData = {
+                id: siteId,
+                title: siteName,
+                username: username,
+                template: template,
+                content: templates[template].structure,
+                createdAt: new Date().toISOString(),
+                userId: user.uid
+            };
+            
+            try {
+                await setDoc(doc(db, 'users', user.uid, 'sites', siteId), siteData);
+                alert('Site criado com sucesso!');
+                loadUserSites();
+            } catch (error) {
+                alert('Erro ao criar site: ' + error.message);
+            }
+        }
+        
+        async function deleteSite(siteId) {
+            if (!confirm('Tem certeza que deseja apagar este site?')) return;
+            
+            const user = auth.currentUser;
+            try {
+                await deleteDoc(doc(db, 'users', user.uid, 'sites', siteId));
+                loadUserSites();
+            } catch (error) {
+                alert('Erro ao apagar site: ' + error.message);
+            }
+        }
+        
+        async function viewSite(siteId) {
+            const user = auth.currentUser;
+            const siteDoc = await getDoc(doc(db, 'users', user.uid, 'sites', siteId));
+            if (siteDoc.exists()) {
+                const site = siteDoc.data();
+                window.open(`/#/site/${site.username}`, '_blank');
+            }
+        }
+        
+        async function renderEditor(siteId) {
+            const user = auth.currentUser;
+            const siteDoc = await getDoc(doc(db, 'users', user.uid, 'sites', siteId));
+            
+            if (!siteDoc.exists()) {
+                navigateTo('dashboard');
+                return;
+            }
+            
+            const site = siteDoc.data();
+            const app = document.getElementById('app');
+            
+            app.innerHTML = `
+                <div class="editor-layout">
+                    <div class="editor-sidebar">
+                        <h3>Editor de Conteúdo</h3>
+                        <div class="editor-fields" id="editorFields"></div>
+                        <button class="btn-primary" onclick="saveSite('${siteId}')">💾 Salvar Alterações</button>
+                        <button class="btn-secondary" onclick="navigateTo('dashboard')">← Voltar</button>
+                    </div>
+                    <div class="editor-preview">
+                        <div class="preview-header">
+                            <h3>Pré-visualização</h3>
+                            <span>Template: ${templates[site.template].name}</span>
+                        </div>
+                        <div id="livePreview" class="site-preview"></div>
+                    </div>
+                </div>
+            `;
+            
+            renderEditorFields(site);
+            updatePreview(site);
+        }
+        
+        function renderEditorFields(site) {
+            const fieldsContainer = document.getElementById('editorFields');
+            const content = site.content;
+            
+            let html = '';
+            for (let [key, value] of Object.entries(content)) {
+                if (typeof value === 'string') {
+                    html += `
+                        <div class="editor-field">
+                            <label>${key}</label>
+                            <input type="text" id="field_${key}" value="${value.replace(/"/g, '&quot;')}" 
+                                   onchange="updateSiteContent('${site.id}', '${key}', this.value)">
+                        </div>
+                    `;
+                } else if (typeof value === 'object' && !Array.isArray(value)) {
+                    for (let [subKey, subValue] of Object.entries(value)) {
+                        if (typeof subValue === 'string') {
+                            html += `
+                                <div class="editor-field">
+                                    <label>${key}.${subKey}</label>
+                                    <input type="text" id="field_${key}_${subKey}" value="${subValue.replace(/"/g, '&quot;')}"
+                                           onchange="updateSiteContentNested('${site.id}', '${key}', '${subKey}', this.value)">
+                                </div>
+                            `;
+                        }
+                    }
+                }
+            }
+            
+            fieldsContainer.innerHTML = html;
+        }
+        
+        window.updateSiteContent = async function(siteId, field, value) {
+            const user = auth.currentUser;
+            const siteRef = doc(db, 'users', user.uid, 'sites', siteId);
+            const siteDoc = await getDoc(siteRef);
+            
+            if (siteDoc.exists()) {
+                const site = siteDoc.data();
+                site.content[field] = value;
+                await updateDoc(siteRef, { content: site.content });
+                updatePreview(site);
+            }
+        };
+        
+        window.updateSiteContentNested = async function(siteId, parent, child, value) {
+            const user = auth.currentUser;
+            const siteRef = doc(db, 'users', user.uid, 'sites', siteId);
+            const siteDoc = await getDoc(siteRef);
+            
+            if (siteDoc.exists()) {
+                const site = siteDoc.data();
+                site.content[parent][child] = value;
+                await updateDoc(siteRef, { content: site.content });
+                updatePreview(site);
+            }
+        };
+        
+        function updatePreview(site) {
+            const preview = document.getElementById('livePreview');
+            if (!preview) return;
+            
+            preview.innerHTML = renderSiteContent(site.content, site.template);
+        }
+        
+        async function saveSite(siteId) {
+            alert('Site salvo com sucesso!');
+        }
+        
+        async function renderPublicSite(username) {
+            const app = document.getElementById('app');
+            app.innerHTML = '<div class="loading">Carregando site...</div>';
+            
+            try {
+                // Search for site by username across all users
+                const usersRef = collection(db, 'users');
+                const usersSnapshot = await getDocs(usersRef);
+                let foundSite = null;
+                
+                for (const userDoc of usersSnapshot.docs) {
+                    const sitesRef = collection(db, 'users', userDoc.id, 'sites');
+                    const q = query(sitesRef, where('username', '==', username));
+                    const sitesSnapshot = await getDocs(q);
+                    
+                    if (!sitesSnapshot.empty) {
+                        foundSite = { id: sitesSnapshot.docs[0].id, ...sitesSnapshot.docs[0].data() };
+                        break;
+                    }
+                }
+                
+                if (foundSite) {
+                    app.innerHTML = renderSiteContent(foundSite.content, foundSite.template);
+                    // Add footer watermark
+                    app.innerHTML += `
+                        <div class="site-footer-watermark">
+                            <p>Criado com MeuSite</p>
+                        </div>
+                    `;
+                } else {
+                    app.innerHTML = `
+                        <div class="error-page">
+                            <h1>404</h1>
+                            <p>Site não encontrado</p>
+                            <a href="/" class="btn-primary">Criar meu site</a>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                app.innerHTML = '<div class="error">Erro ao carregar site</div>';
+            }
+        }
+        
+        function renderSiteContent(content, templateType) {
+            if (templateType === 'portfolio') {
+                return `
+                    <div class="public-site portfolio-template">
+                        <div class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${content.coverImage || 'https://picsum.photos/1200/600'}')">
+                            <div class="hero-content">
+                                <h1>${content.title || 'Meu Portfólio'}</h1>
+                                <p>${content.subtitle || 'Designer & Desenvolvedor'}</p>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <section class="bio-section">
+                                <h2>Sobre mim</h2>
+                                <p>${content.bio || 'Criativo apaixonado por transformar ideias em experiências digitais incríveis.'}</p>
+                            </section>
+                            <section class="social-links">
+                                ${content.socialLinks?.instagram ? `<a href="${content.socialLinks.instagram}" target="_blank" class="social-btn">📷 Instagram</a>` : ''}
+                                ${content.socialLinks?.linkedin ? `<a href="${content.socialLinks.linkedin}" target="_blank" class="social-btn">🔗 LinkedIn</a>` : ''}
+                                ${content.socialLinks?.github ? `<a href="${content.socialLinks.github}" target="_blank" class="social-btn">💻 GitHub</a>` : ''}
+                            </section>
+                        </div>
+                    </div>
+                `;
+            } else if (templateType === 'business') {
+                return `
+                    <div class="public-site business-template">
+                        <div class="business-header">
+                            <h1>${content.companyName || 'Minha Empresa'}</h1>
+                            <p class="tagline">${content.tagline || 'Excelência em serviços'}</p>
+                        </div>
+                        <div class="container">
+                            <section class="about-section">
+                                <p>${content.description || 'Atendimento de qualidade com profissionais especializados.'}</p>
+                            </section>
+                            <section class="services-section">
+                                <h2>Nossos Serviços</h2>
+                                <div class="services-grid">
+                                    ${content.services?.map(service => `<div class="service-card">${service}</div>`).join('') || '<div class="service-card">Consultoria</div>'}
+                                </div>
+                            </section>
+                            <div class="contact-buttons">
+                                ${content.whatsapp ? `<a href="https://wa.me/${content.whatsapp}" class="whatsapp-btn" target="_blank">📱 WhatsApp</a>` : ''}
+                                ${content.email ? `<a href="mailto:${content.email}" class="email-btn">✉️ Email</a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="public-site linkhub-template">
+                        <div class="linkhub-container">
+                            ${content.avatar ? `<img src="${content.avatar}" alt="Avatar" class="avatar">` : '<div class="avatar-placeholder">👤</div>'}
+                            <h1>${content.name || 'Meus Links'}</h1>
+                            <p class="bio">${content.bio || 'Todos meus links importantes em um só lugar'}</p>
+                            <div class="links-list">
+                                ${content.links?.map(link => `<a href="${link.url}" class="link-button" target="_blank">${link.title}</a>`).join('') || '<a href="#" class="link-button">Instagram</a>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        window.logout = async function() {
+            await signOut(auth);
+            navigateTo('login');
+        };
+        
+        window.navigateTo = navigateTo;
+        window.showCreateSite = showCreateSite;
+        window.deleteSite = deleteSite;
+        window.viewSite = viewSite;
+        window.saveSite = saveSite;
+        
+        // Router
+        function handleRoute() {
+            const hash = window.location.hash.slice(1) || 'dashboard';
+            if (hash.startsWith('site/')) {
+                const username = hash.split('/')[1];
+                renderPublicSite(username);
+            } else {
+                renderPage(hash);
+            }
+        }
+        
+        onAuthStateChanged(auth, (user) => {
+            handleRoute();
+        });
+        
+        window.addEventListener('hashchange', handleRoute);
+        handleRoute();
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fa;
+            color: #1a202c;
+        }
+        
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar-header {
+            padding: 30px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 12px;
+            margin-bottom: 8px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .nav-item:hover {
+            background: #f7fafc;
+            color: #667eea;
+        }
+        
+        .dashboard-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        
+        .site-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .editor-layout {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .editor-sidebar {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .editor-preview {
+            flex: 1;
+            background: #f5f7fa;
+            overflow-y: auto;
+        }
+        
+        .preview-header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+        }
+        
+        .editor-field {
+            margin-bottom: 20px;
+        }
+        
+        .editor-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .editor-field input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .public-site {
+            min-height: 100vh;
+        }
+        
+        .portfolio-template .hero {
+            height: 60vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .site-footer-watermark {
+            text-align: center;
+            padding: 20px;
+            background: #f7fafc;
+            color: #a0aec0;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 1000;
+            }
+            
+            .dashboard-main {
+                margin-left: 0;
+            }
+            
+            .editor-layout {
+                flex-direction: column;
+            }
+            
+            .editor-sidebar {
+                width: 100%;
+                max-height: 50vh;
+            }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 10px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: #fc8181;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
