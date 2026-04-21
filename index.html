@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebCraft Pro | Plataforma de Websites Profissionais</title>
+    <title>WebCraft Pro | Crie websites profissionais</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -24,6 +24,7 @@
             color: #0f172a;
         }
         
+        /* Pages */
         .page {
             display: none;
         }
@@ -32,117 +33,240 @@
             display: block;
         }
         
+        /* Header com menu principal */
+        .main-header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 48px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .main-nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .main-nav a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .main-nav a:hover {
+            color: #6366f1;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn-nav {
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-nav-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+        
+        .btn-nav-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
+        
+        .btn-nav-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+        }
+        
+        .btn-nav-outline:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 80px 48px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 80px 48px;
+            background: #f8fafc;
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 32px;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 40px;
+            color: #6366f1;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: #64748b;
+        }
+        
+        /* Templates Showcase */
+        .templates-section {
+            padding: 80px 48px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .templates-showcase {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .template-showcase-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .template-showcase-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .template-preview {
+            height: 200px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .template-preview i {
+            font-size: 64px;
+        }
+        
+        .template-info {
+            padding: 24px;
+        }
+        
         /* Auth Pages */
         .auth-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             padding: 20px;
-            position: relative;
         }
         
         .auth-container {
-            background: rgba(255,255,255,0.98);
+            background: white;
             border-radius: 32px;
             padding: 48px;
             width: 100%;
             max-width: 480px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-        }
-        
-        .auth-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .auth-header .logo {
-            font-size: 56px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .auth-header h1 {
-            font-size: 36px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #334155;
-        }
-        
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
-        }
-        
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(99,102,241,0.4);
-        }
-        
-        .btn-outline {
-            padding: 10px 20px;
-            background: #f1f5f9;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .btn-outline:hover {
-            background: #e2e8f0;
-            transform: translateY(-2px);
-        }
-        
-        .auth-switch {
-            text-align: center;
-            margin-top: 24px;
-            color: #64748b;
-        }
-        
-        .auth-switch a {
-            color: #6366f1;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
         }
         
         /* Dashboard */
@@ -163,15 +287,22 @@
         }
         
         .sidebar-logo {
-            font-size: 28px;
-            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 48px;
+        }
+        
+        .sidebar-logo img {
+            height: 40px;
+        }
+        
+        .sidebar-logo span {
+            font-size: 20px;
+            font-weight: 800;
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .sidebar-menu {
@@ -215,116 +346,6 @@
             padding: 32px 48px;
         }
         
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-        
-        .dashboard-header h1 {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .sites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 24px;
-        }
-        
-        .site-card {
-            background: white;
-            border-radius: 20px;
-            padding: 24px;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .site-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
-        }
-        
-        .site-card-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .site-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-        }
-        
-        .site-info h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .site-info p {
-            color: #64748b;
-            font-size: 13px;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #e0e7ff;
-            color: #4f46e5;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        
-        .site-card-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-        
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 32px;
-            padding: 40px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        
         /* Editor */
         .editor-layout {
             display: flex;
@@ -358,9 +379,6 @@
             font-weight: 600;
             margin-bottom: 20px;
             color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .editor-field {
@@ -381,13 +399,6 @@
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
-            transition: all 0.2s;
-        }
-        
-        .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
         }
         
         .color-input-group {
@@ -399,35 +410,20 @@
         .color-input-group input[type="color"] {
             width: 60px;
             height: 50px;
-            padding: 4px;
-            cursor: pointer;
+        }
+        
+        .btn-card {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
-        }
-        
-        .icon-selector {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            margin-top: 8px;
-        }
-        
-        .icon-option {
-            padding: 8px;
-            text-align: center;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
-        .icon-option:hover, .icon-option.selected {
-            border-color: #6366f1;
+        .btn-card:hover {
             background: #eef2ff;
-        }
-        
-        .icon-option i {
-            font-size: 20px;
-            color: #6366f1;
+            border-color: #6366f1;
         }
         
         /* Toast */
@@ -442,7 +438,6 @@
             transition: transform 0.3s;
             z-index: 2000;
             font-weight: 500;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
         
         .toast.show {
@@ -452,20 +447,85 @@
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
         
-        .loading {
-            text-align: center;
-            padding: 60px;
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
+        .site-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
         }
         
-        .empty-state i {
-            font-size: 80px;
-            color: #cbd5e0;
-            margin-bottom: 24px;
+        .site-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
+        }
+        
+        .site-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .site-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .site-card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .btn-outline {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         
         .template-card {
@@ -479,11 +539,22 @@
         
         .template-card:hover, .template-card.selected {
             border-color: #6366f1;
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
-            transform: translateX(8px);
+            background: #eef2ff;
         }
         
         @media (max-width: 768px) {
+            .main-header {
+                padding: 16px 20px;
+            }
+            .main-nav {
+                display: none;
+            }
+            .hero-section, .features-section, .templates-section {
+                padding: 40px 20px;
+            }
+            .hero-content h1 {
+                font-size: 36px;
+            }
             .sidebar {
                 transform: translateX(-100%);
                 position: fixed;
@@ -528,16 +599,13 @@
         let currentUser = null;
         let currentEditingSite = null;
         
-        // Available fonts
         const fontOptions = [
-            { value: 'Inter', label: 'Inter', category: 'Modern Sans' },
-            { value: 'Poppins', label: 'Poppins', category: 'Geometric Sans' },
-            { value: 'Montserrat', label: 'Montserrat', category: 'Urban Sans' },
-            { value: 'Roboto', label: 'Roboto', category: 'Neutral Sans' },
-            { value: 'Playfair Display', label: 'Playfair Display', category: 'Elegant Serif' }
+            { value: 'Inter', label: 'Inter' },
+            { value: 'Poppins', label: 'Poppins' },
+            { value: 'Montserrat', label: 'Montserrat' },
+            { value: 'Playfair Display', label: 'Playfair Display' }
         ];
         
-        // Available icons for services
         const iconOptions = [
             'fa-paintbrush', 'fa-code', 'fa-chart-line', 'fa-mobile-alt',
             'fa-camera', 'fa-video', 'fa-music', 'fa-book', 'fa-graduation-cap',
@@ -545,31 +613,31 @@
             'fa-headset', 'fa-shield-alt', 'fa-cloud', 'fa-database', 'fa-rocket'
         ];
         
-        // Professional Templates
         const templates = {
             modern: {
                 id: 'modern',
                 name: 'Modern Studio',
                 icon: 'fa-star',
-                description: 'Design minimalista para criativos e agências',
+                description: 'Design minimalista para criativos',
                 structure: {
                     heroTitle: 'Creative Studio',
                     heroSubtitle: 'Transformando ideias em realidade',
-                    heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600',
                     primaryColor: '#6366f1',
                     secondaryColor: '#8b5cf6',
                     fontFamily: 'Inter',
-                    aboutTitle: 'About Us',
-                    aboutText: 'We are a creative agency focused on delivering innovative solutions that connect brands to people.',
+                    aboutText: 'We are a creative agency focused on delivering innovative solutions.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Hello! I came through your website',
+                    whatsappMessage: 'Hello!',
                     showEmail: true,
                     emailAddress: 'contact@studio.com',
+                    buttons: [
+                        { text: 'Get Started', url: '#', type: 'primary' },
+                        { text: 'Learn More', url: '#', type: 'secondary' }
+                    ],
                     services: [
                         { name: 'Design', description: 'Unique visual identity', icon: 'fa-paintbrush' },
-                        { name: 'Development', description: 'Modern websites and apps', icon: 'fa-code' },
-                        { name: 'Marketing', description: 'Digital strategies', icon: 'fa-chart-line' }
+                        { name: 'Development', description: 'Modern websites', icon: 'fa-code' }
                     ]
                 }
             },
@@ -577,80 +645,144 @@
                 id: 'corporate',
                 name: 'Corporate Elite',
                 icon: 'fa-building',
-                description: 'Sofisticado para empresas e negócios',
+                description: 'Sofisticado para empresas',
                 structure: {
                     companyName: 'Elite Corp',
                     tagline: 'Excellence in results',
-                    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600',
                     primaryColor: '#2563eb',
                     secondaryColor: '#06b6d4',
                     fontFamily: 'Poppins',
-                    description: 'We lead the market with innovative solutions and personalized service.',
+                    description: 'We lead the market with innovative solutions.',
                     showWhatsapp: true,
                     whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Hello! I am interested in your services',
+                    whatsappMessage: 'Hello!',
                     showEmail: true,
                     emailAddress: 'contact@elitecorp.com',
-                    showPhone: true,
-                    phoneNumber: '+55 11 99999-9999',
+                    buttons: [
+                        { text: 'Contact Us', url: '#', type: 'primary' },
+                        { text: 'Our Services', url: '#', type: 'secondary' }
+                    ],
                     services: [
                         { name: 'Consulting', description: 'Business strategy', icon: 'fa-chart-simple' },
-                        { name: 'Technology', description: 'Digital solutions', icon: 'fa-microchip' },
-                        { name: 'Support', description: '24/7 assistance', icon: 'fa-headset' }
-                    ]
-                }
-            },
-            personal: {
-                id: 'personal',
-                name: 'Personal Brand',
-                icon: 'fa-user-astronaut',
-                description: 'Portfólio profissional impactante',
-                structure: {
-                    name: 'Ana Silva',
-                    title: 'Designer & Creative Director',
-                    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
-                    bio: 'Specialist in creating memorable digital experiences with over 8 years of experience.',
-                    primaryColor: '#ea580c',
-                    secondaryColor: '#dc2626',
-                    fontFamily: 'Playfair Display',
-                    showWhatsapp: true,
-                    whatsappNumber: '5511999999999',
-                    whatsappMessage: 'Hello! I liked your work',
-                    showEmail: true,
-                    emailAddress: 'ana@studio.com',
-                    projects: [
-                        { name: 'Brand Revolution', description: 'Complete rebranding', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600' },
-                        { name: 'Digital Experience', description: 'Interactive platform', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600' }
+                        { name: 'Technology', description: 'Digital solutions', icon: 'fa-microchip' }
                     ]
                 }
             }
         };
         
+        function renderLandingPage() {
+            return `
+                <div class="main-header">
+                    <div class="header-container">
+                        <div class="logo-area">
+                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="WebCraft Pro" class="logo-img">
+                            <span class="logo-text">WebCraft Pro</span>
+                        </div>
+                        <div class="main-nav">
+                            <a href="#">Home</a>
+                            <a href="#">Templates</a>
+                            <a href="#">Features</a>
+                            <a href="#">Pricing</a>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Sign In</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Start Free</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1>Create Professional Websites<br>In Minutes</h1>
+                        <p>No coding required. Choose from beautiful templates, customize everything, and publish instantly.</p>
+                        <div class="hero-buttons">
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Get Started Free</button>
+                            <button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white; border-color:rgba(255,255,255,0.3);">View Templates</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-section">
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                            <h3>Beautiful Templates</h3>
+                            <p>Choose from professionally designed templates for any industry</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h3>Fully Responsive</h3>
+                            <p>Your site looks perfect on all devices - desktop, tablet, and mobile</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
+                            <h3>WhatsApp Integration</h3>
+                            <p>Connect with your customers directly through WhatsApp</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-link"></i></div>
+                            <h3>Custom Buttons</h3>
+                            <p>Add unlimited buttons linking to anywhere you want</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="templates-section">
+                    <h2 class="section-title">Professional Templates</h2>
+                    <div class="templates-showcase">
+                        <div class="template-showcase-card">
+                            <div class="template-preview"><i class="fas fa-star"></i></div>
+                            <div class="template-info">
+                                <h3>Modern Studio</h3>
+                                <p>Perfect for creative professionals and agencies</p>
+                            </div>
+                        </div>
+                        <div class="template-showcase-card">
+                            <div class="template-preview"><i class="fas fa-building"></i></div>
+                            <div class="template-info">
+                                <h3>Corporate Elite</h3>
+                                <p>Ideal for businesses and corporations</p>
+                            </div>
+                        </div>
+                        <div class="template-showcase-card">
+                            <div class="template-preview"><i class="fas fa-user-astronaut"></i></div>
+                            <div class="template-info">
+                                <h3>Personal Brand</h3>
+                                <p>Great for portfolios and personal brands</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
         function renderApp() {
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
+                <div id="landingPage" class="page">
+                    ${renderLandingPage()}
+                </div>
+                
                 <div id="loginPage" class="page">
                     <div class="auth-page">
                         <div class="auth-container">
-                            <div class="auth-header">
-                                <div class="logo"><i class="fas fa-crown"></i></div>
-                                <h1>WebCraft Pro</h1>
-                                <p style="color:#64748b;">Create professional websites in minutes</p>
+                            <div class="auth-header" style="text-align:center; margin-bottom:40px;">
+                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo" style="height:50px; margin-bottom:16px;">
+                                <h1 style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Welcome Back</h1>
+                                <p style="color:#64748b;">Sign in to your account</p>
                             </div>
                             <form id="loginForm">
                                 <div class="input-group">
                                     <label>Email</label>
-                                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                                    <input type="email" id="loginEmail" required>
                                 </div>
                                 <div class="input-group">
                                     <label>Password</label>
-                                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                                    <input type="password" id="loginPassword" required>
                                 </div>
                                 <button type="submit" class="btn-primary">Sign In</button>
                             </form>
-                            <p class="auth-switch">
-                                No account? <a id="showRegisterBtn">Create free account</a>
-                            </p>
+                            <p class="auth-switch">No account? <a id="showRegisterBtn">Create free account</a></p>
                         </div>
                     </div>
                 </div>
@@ -658,29 +790,27 @@
                 <div id="registerPage" class="page">
                     <div class="auth-page">
                         <div class="auth-container">
-                            <div class="auth-header">
-                                <div class="logo"><i class="fas fa-crown"></i></div>
-                                <h1>Create Account</h1>
-                                <p style="color:#64748b;">Start your digital journey</p>
+                            <div class="auth-header" style="text-align:center; margin-bottom:40px;">
+                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo" style="height:50px; margin-bottom:16px;">
+                                <h1 style="background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Create Account</h1>
+                                <p style="color:#64748b;">Start building your website today</p>
                             </div>
                             <form id="registerForm">
                                 <div class="input-group">
                                     <label>Full Name</label>
-                                    <input type="text" id="registerName" placeholder="John Doe" required>
+                                    <input type="text" id="registerName" required>
                                 </div>
                                 <div class="input-group">
                                     <label>Email</label>
-                                    <input type="email" id="registerEmail" placeholder="john@email.com" required>
+                                    <input type="email" id="registerEmail" required>
                                 </div>
                                 <div class="input-group">
                                     <label>Password</label>
-                                    <input type="password" id="registerPassword" placeholder="minimum 6 characters" required>
+                                    <input type="password" id="registerPassword" required>
                                 </div>
                                 <button type="submit" class="btn-primary">Create Account</button>
                             </form>
-                            <p class="auth-switch">
-                                Already have an account? <a id="showLoginBtn">Sign In</a>
-                            </p>
+                            <p class="auth-switch">Already have an account? <a id="showLoginBtn">Sign In</a></p>
                         </div>
                     </div>
                 </div>
@@ -689,7 +819,8 @@
                     <div class="dashboard-layout">
                         <aside class="sidebar">
                             <div class="sidebar-logo">
-                                <i class="fas fa-crown"></i> WebCraft Pro
+                                <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" alt="Logo">
+                                <span>WebCraft Pro</span>
                             </div>
                             <ul class="sidebar-menu">
                                 <li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> My Sites</a></li>
@@ -698,16 +829,13 @@
                             <div class="sidebar-footer">
                                 <div class="user-info" style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                                     <i class="fas fa-user-circle" style="font-size:32px; color:#6366f1;"></i>
-                                    <div>
-                                        <div style="font-weight:600;" id="userName"></div>
-                                        <div style="font-size:12px; color:#64748b;">Free Plan</div>
-                                    </div>
+                                    <div><div style="font-weight:600;" id="userName"></div><div style="font-size:12px;">Free Plan</div></div>
                                 </div>
                                 <button id="logoutBtn" class="btn-outline" style="width:100%;">Sign Out</button>
                             </div>
                         </aside>
                         <main class="main-content">
-                            <div class="dashboard-header">
+                            <div class="dashboard-header" style="display:flex; justify-content:space-between; margin-bottom:32px;">
                                 <h1>My Websites</h1>
                                 <button id="createSiteBtn" class="btn-primary">+ New Site</button>
                             </div>
@@ -719,13 +847,13 @@
                 <div id="editorPage" class="page">
                     <div class="editor-layout">
                         <div class="editor-sidebar">
-                            <h3 id="editorTitle" style="margin-bottom:24px;"></h3>
+                            <h3 id="editorTitle"></h3>
                             <div id="editorFields"></div>
                             <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Save Changes</button>
-                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">← Back</button>
+                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px;">← Back</button>
                         </div>
                         <div class="editor-preview">
-                            <h3 style="margin-bottom:20px;">Live Preview</h3>
+                            <h3>Live Preview</h3>
                             <div id="livePreview"></div>
                         </div>
                     </div>
@@ -733,7 +861,7 @@
                 
                 <div id="createModal" class="modal">
                     <div class="modal-content">
-                        <h2 style="margin-bottom:24px;">Create New Website</h2>
+                        <h2>Create New Website</h2>
                         <div class="input-group">
                             <label>Site Name</label>
                             <input type="text" id="siteTitle" placeholder="My Portfolio">
@@ -741,20 +869,14 @@
                         <div class="input-group">
                             <label>Site Slug (URL)</label>
                             <input type="text" id="siteSlug" placeholder="myportfolio">
-                            <small style="color:#64748b;">Your site will be at: <strong id="slugPreview" style="color:#6366f1;">myportfolio</strong></small>
                         </div>
                         <div class="input-group">
-                            <label>Choose a Template</label>
+                            <label>Choose Template</label>
                             <input type="hidden" id="selectedTemplate" value="modern">
                             ${Object.entries(templates).map(([id, t]) => `
                                 <div class="template-card" data-template="${id}">
-                                    <div style="display:flex; align-items:center; gap:12px;">
-                                        <i class="fas ${t.icon}" style="font-size:24px; color:#6366f1;"></i>
-                                        <div style="flex:1;">
-                                            <h3 style="margin-bottom:4px;">${t.name}</h3>
-                                            <p style="color:#64748b; font-size:13px;">${t.description}</p>
-                                        </div>
-                                    </div>
+                                    <i class="fas ${t.icon}"></i> ${t.name}
+                                    <p style="font-size:13px; color:#64748b;">${t.description}</p>
                                 </div>
                             `).join('')}
                         </div>
@@ -789,7 +911,7 @@
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     await updateProfile(userCredential.user, { displayName: name });
-                    showToast('Account created successfully!', 'success');
+                    showToast('Account created!', 'success');
                 } catch (error) {
                     showToast(error.message, 'error');
                 }
@@ -822,6 +944,9 @@
             });
         }
         
+        window.showLoginPage = () => showPage('loginPage');
+        window.showRegisterPage = () => showPage('registerPage');
+        
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -838,7 +963,7 @@
             if (!currentUser) return;
             
             const sitesGrid = document.getElementById('sitesGrid');
-            sitesGrid.innerHTML = '<div class="loading">Loading your sites...</div>';
+            sitesGrid.innerHTML = '<div class="loading">Loading...</div>';
             
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
@@ -847,14 +972,7 @@
                 document.getElementById('userName').innerHTML = currentUser.displayName || currentUser.email;
                 
                 if (snapshot.empty) {
-                    sitesGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-crown"></i>
-                            <h3>Create your first website</h3>
-                            <p style="color:#64748b; margin-bottom:24px;">Choose from professional templates and start now</p>
-                            <button class="btn-primary" id="emptyCreateBtn">Create Website</button>
-                        </div>
-                    `;
+                    sitesGrid.innerHTML = `<div class="empty-state"><h3>Create your first website</h3><button class="btn-primary" id="emptyCreateBtn">Create Website</button></div>`;
                     document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal());
                     return;
                 }
@@ -866,258 +984,148 @@
                         <div class="site-card">
                             <div class="site-card-header">
                                 <div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div>
-                                <div class="site-info">
-                                    <h3>${escapeHtml(site.title)}</h3>
-                                    <p>/${site.slug}</p>
-                                    <span class="badge">${templates[site.template]?.name || 'Template'}</span>
-                                </div>
+                                <div><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p></div>
                             </div>
                             <div class="site-card-actions">
                                 <button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Edit</button>
                                 <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">View</button>
-                                <button class="btn-outline" style="border-color:#fee2e2; color:#dc2626;" onclick="window.deleteSiteById('${doc.id}')">Delete</button>
+                                <button class="btn-outline" style="color:#dc2626;" onclick="window.deleteSiteById('${doc.id}')">Delete</button>
                             </div>
                         </div>
                     `;
                 });
             } catch (error) {
-                sitesGrid.innerHTML = `<div class="empty-state">Error: ${error.message}</div>`;
+                sitesGrid.innerHTML = `<div>Error: ${error.message}</div>`;
             }
         }
         
         window.editSiteById = async (siteId) => {
-            try {
-                const docRef = doc(db, 'sites', siteId);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    currentEditingSite = { id: docSnap.id, ...docSnap.data() };
-                    showEditor();
-                } else {
-                    showToast('Site not found', 'error');
-                }
-            } catch (error) {
-                showToast('Error loading site: ' + error.message, 'error');
+            const docRef = doc(db, 'sites', siteId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                currentEditingSite = { id: docSnap.id, ...docSnap.data() };
+                showEditor();
             }
         };
         
         window.deleteSiteById = async (siteId) => {
-            if (!confirm('Are you sure? This action cannot be undone.')) return;
-            try {
-                await deleteDoc(doc(db, 'sites', siteId));
-                showToast('Site deleted successfully', 'success');
-                loadDashboard();
-            } catch (error) {
-                showToast('Error deleting site', 'error');
-            }
+            if (!confirm('Are you sure?')) return;
+            await deleteDoc(doc(db, 'sites', siteId));
+            showToast('Site deleted', 'success');
+            loadDashboard();
         };
         
         function showEditor() {
             showPage('editorPage');
-            document.getElementById('editorTitle').innerHTML = `Editing: ${currentEditingSite.title}`;
-            
-            let html = '';
             const content = currentEditingSite.content;
             
-            // Basic Information Section
-            html += `<div class="editor-section"><h4>Basic Information</h4>`;
-            const basicFields = ['heroTitle', 'heroSubtitle', 'companyName', 'tagline', 'name', 'title', 'aboutTitle', 'aboutText', 'description', 'bio'];
-            for (let field of basicFields) {
-                if (content[field] !== undefined) {
-                    html += `
-                        <div class="editor-field">
-                            <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
-                            <input type="text" id="field_${field}" value="${escapeHtml(content[field])}">
-                        </div>
-                    `;
-                }
-            }
-            html += `</div>`;
-            
-            // Colors Section
-            html += `<div class="editor-section"><h4>Colors</h4>`;
-            const colorFields = ['primaryColor', 'secondaryColor'];
-            for (let field of colorFields) {
-                if (content[field] !== undefined) {
-                    html += `
-                        <div class="editor-field">
-                            <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
-                            <div class="color-input-group">
-                                <input type="color" id="field_${field}" value="${content[field]}">
-                                <input type="text" value="${content[field]}" style="flex:1;" id="field_${field}_text" onchange="document.getElementById('field_${field}').value = this.value; document.getElementById('field_${field}').dispatchEvent(new Event('change'))">
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-            html += `</div>`;
-            
-            // Font Section
-            html += `<div class="editor-section"><h4>Typography</h4>`;
-            html += `
-                <div class="editor-field">
-                    <label>Font Family</label>
-                    <select id="field_fontFamily">
-                        ${fontOptions.map(font => `<option value="${font.value}" ${content.fontFamily === font.value ? 'selected' : ''}>${font.label} (${font.category})</option>`).join('')}
-                    </select>
+            let html = `
+                <div class="editor-section"><h4>Hero Section</h4>
+                    <div class="editor-field"><label>Title</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || content.companyName || '')}"></div>
+                    <div class="editor-field"><label>Subtitle</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || content.tagline || '')}"></div>
+                </div>
+                <div class="editor-section"><h4>Colors</h4>
+                    <div class="editor-field"><label>Primary Color</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}"></div></div>
+                    <div class="editor-field"><label>Secondary Color</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}"></div></div>
+                </div>
+                <div class="editor-section"><h4>Typography</h4>
+                    <div class="editor-field"><label>Font</label><select id="fontFamily">${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}</select></div>
+                </div>
+                <div class="editor-section"><h4>WhatsApp & Contact</h4>
+                    <div class="editor-field"><label><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Enable WhatsApp Button</label></div>
+                    <div class="editor-field"><label>WhatsApp Number</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}"></div>
+                    <div class="editor-field"><label>WhatsApp Message</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}"></div>
+                    <div class="editor-field"><label><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Enable Email Button</label></div>
+                    <div class="editor-field"><label>Email Address</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}"></div>
+                </div>
+                <div class="editor-section"><h4>Custom Buttons</h4>
+                    <div id="buttonsContainer"></div>
+                    <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:8px;">+ Add Button</button>
                 </div>
             `;
-            html += `</div>`;
-            
-            // Contact Section
-            html += `<div class="editor-section"><h4>Contact & WhatsApp</h4>`;
-            const contactFields = ['showWhatsapp', 'whatsappNumber', 'whatsappMessage', 'showEmail', 'emailAddress', 'showPhone', 'phoneNumber'];
-            for (let field of contactFields) {
-                if (content[field] !== undefined) {
-                    if (typeof content[field] === 'boolean') {
-                        html += `
-                            <div class="editor-field">
-                                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-                                    <input type="checkbox" id="field_${field}" ${content[field] ? 'checked' : ''}> Enable ${field.replace('show', '').replace(/([A-Z])/g, ' $1')}
-                                </label>
-                            </div>
-                        `;
-                    } else {
-                        html += `
-                            <div class="editor-field">
-                                <label>${field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</label>
-                                <input type="text" id="field_${field}" value="${escapeHtml(content[field])}" placeholder="Enter ${field}">
-                            </div>
-                        `;
-                    }
-                }
-            }
-            html += `</div>`;
-            
-            // Services Section with Icon Selector
-            if (content.services && Array.isArray(content.services)) {
-                html += `<div class="editor-section"><h4>Services</h4>`;
-                content.services.forEach((service, index) => {
-                    html += `
-                        <div style="border:1px solid #e2e8f0; border-radius:16px; padding:16px; margin-bottom:16px;">
-                            <div class="editor-field">
-                                <label>Service Name</label>
-                                <input type="text" id="service_name_${index}" value="${escapeHtml(service.name)}">
-                            </div>
-                            <div class="editor-field">
-                                <label>Description</label>
-                                <input type="text" id="service_desc_${index}" value="${escapeHtml(service.description)}">
-                            </div>
-                            <div class="editor-field">
-                                <label>Icon</label>
-                                <div class="icon-selector" id="icon_selector_${index}">
-                                    ${iconOptions.map(icon => `
-                                        <div class="icon-option ${service.icon === icon ? 'selected' : ''}" data-icon="${icon}">
-                                            <i class="fas ${icon}"></i>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <input type="hidden" id="service_icon_${index}" value="${service.icon || 'fa-star'}">
-                            </div>
-                        </div>
-                    `;
-                });
-                html += `<button class="btn-outline" id="addServiceBtn" style="width:100%;">+ Add Service</button>`;
-                html += `</div>`;
-            }
             
             document.getElementById('editorFields').innerHTML = html;
             
-            // Attach event listeners for all fields
-            for (let [key, value] of Object.entries(content)) {
-                const field = document.getElementById(`field_${key}`);
-                if (field) {
-                    if (field.type === 'checkbox') {
-                        field.addEventListener('change', async (e) => {
-                            content[key] = e.target.checked;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                            showToast('Saved!', 'success');
-                            updatePreview();
-                        });
-                    } else if (field.type === 'select-one') {
-                        field.addEventListener('change', async (e) => {
-                            content[key] = e.target.value;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                            showToast('Saved!', 'success');
-                            updatePreview();
-                        });
-                    } else {
-                        field.addEventListener('change', async (e) => {
-                            content[key] = e.target.value;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                            showToast('Saved!', 'success');
-                            updatePreview();
-                        });
-                    }
-                }
+            // Load buttons
+            const buttons = content.buttons || [];
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            function renderButtons() {
+                buttonsContainer.innerHTML = buttons.map((btn, idx) => `
+                    <div class="btn-card">
+                        <input type="text" placeholder="Button Text" value="${escapeHtml(btn.text)}" data-btn-index="${idx}" data-btn-field="text" style="width:100%; margin-bottom:8px;">
+                        <input type="text" placeholder="Button URL" value="${escapeHtml(btn.url)}" data-btn-index="${idx}" data-btn-field="url" style="width:100%; margin-bottom:8px;">
+                        <select data-btn-index="${idx}" data-btn-field="type" style="width:100%; margin-bottom:8px;">
+                            <option value="primary" ${btn.type === 'primary' ? 'selected' : ''}>Primary Button</option>
+                            <option value="secondary" ${btn.type === 'secondary' ? 'selected' : ''}>Secondary Button</option>
+                        </select>
+                        <button class="btn-outline remove-btn" data-btn-index="${idx}" style="width:100%; background:#fee2e2; color:#dc2626;">Remove</button>
+                    </div>
+                `).join('');
+                
+                document.querySelectorAll('[data-btn-field]').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const idx = parseInt(e.target.dataset.btnIndex);
+                        const field = e.target.dataset.btnField;
+                        buttons[idx][field] = e.target.value;
+                        updateSiteContent();
+                    });
+                });
+                
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = parseInt(e.target.dataset.btnIndex);
+                        buttons.splice(idx, 1);
+                        renderButtons();
+                        updateSiteContent();
+                    });
+                });
             }
+            renderButtons();
             
-            // Color text fields
-            for (let field of colorFields) {
-                const textField = document.getElementById(`field_${field}_text`);
-                if (textField) {
-                    textField.addEventListener('change', async (e) => {
-                        content[field] = e.target.value;
-                        const colorField = document.getElementById(`field_${field}`);
-                        if (colorField) colorField.value = e.target.value;
-                        await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                        showToast('Saved!', 'success');
-                        updatePreview();
+            document.getElementById('addButtonBtn')?.addEventListener('click', () => {
+                buttons.push({ text: 'New Button', url: '#', type: 'primary' });
+                renderButtons();
+                updateSiteContent();
+            });
+            
+            // Attach all change events
+            const fields = ['heroTitle', 'heroSubtitle', 'primaryColor', 'secondaryColor', 'fontFamily', 'whatsappNumber', 'whatsappMessage', 'emailAddress'];
+            fields.forEach(field => {
+                const el = document.getElementById(field);
+                if (el) el.addEventListener('change', () => updateSiteContent());
+            });
+            
+            document.getElementById('showWhatsapp')?.addEventListener('change', () => updateSiteContent());
+            document.getElementById('showEmail')?.addEventListener('change', () => updateSiteContent());
+            
+            const colorTexts = ['primaryColorText', 'secondaryColorText'];
+            colorTexts.forEach(ct => {
+                const el = document.getElementById(ct);
+                if (el) {
+                    el.addEventListener('change', (e) => {
+                        const colorField = ct.replace('Text', '');
+                        document.getElementById(colorField).value = e.target.value;
+                        updateSiteContent();
                     });
                 }
-            }
+            });
             
-            // Service fields
-            if (content.services) {
-                for (let i = 0; i < content.services.length; i++) {
-                    const nameField = document.getElementById(`service_name_${i}`);
-                    const descField = document.getElementById(`service_desc_${i}`);
-                    const iconField = document.getElementById(`service_icon_${i}`);
-                    
-                    if (nameField) {
-                        nameField.addEventListener('change', async (e) => {
-                            content.services[i].name = e.target.value;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                            showToast('Saved!', 'success');
-                            updatePreview();
-                        });
-                    }
-                    if (descField) {
-                        descField.addEventListener('change', async (e) => {
-                            content.services[i].description = e.target.value;
-                            await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                            showToast('Saved!', 'success');
-                            updatePreview();
-                        });
-                    }
-                    
-                    // Icon selector
-                    const selector = document.getElementById(`icon_selector_${i}`);
-                    if (selector) {
-                        selector.querySelectorAll('.icon-option').forEach(opt => {
-                            opt.addEventListener('click', () => {
-                                selector.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
-                                opt.classList.add('selected');
-                                const icon = opt.dataset.icon;
-                                content.services[i].icon = icon;
-                                if (iconField) iconField.value = icon;
-                                updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                                showToast('Icon updated!', 'success');
-                                updatePreview();
-                            });
-                        });
-                    }
-                }
-            }
-            
-            // Add service button
-            const addBtn = document.getElementById('addServiceBtn');
-            if (addBtn) {
-                addBtn.addEventListener('click', async () => {
-                    content.services.push({ name: 'New Service', description: 'Service description', icon: 'fa-star' });
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: content });
-                    showToast('Service added!', 'success');
-                    showEditor(); // Refresh editor
-                });
+            async function updateSiteContent() {
+                currentEditingSite.content.heroTitle = document.getElementById('heroTitle')?.value || '';
+                currentEditingSite.content.heroSubtitle = document.getElementById('heroSubtitle')?.value || '';
+                currentEditingSite.content.primaryColor = document.getElementById('primaryColor')?.value || '#6366f1';
+                currentEditingSite.content.secondaryColor = document.getElementById('secondaryColor')?.value || '#8b5cf6';
+                currentEditingSite.content.fontFamily = document.getElementById('fontFamily')?.value || 'Inter';
+                currentEditingSite.content.showWhatsapp = document.getElementById('showWhatsapp')?.checked || false;
+                currentEditingSite.content.whatsappNumber = document.getElementById('whatsappNumber')?.value || '';
+                currentEditingSite.content.whatsappMessage = document.getElementById('whatsappMessage')?.value || '';
+                currentEditingSite.content.showEmail = document.getElementById('showEmail')?.checked || false;
+                currentEditingSite.content.emailAddress = document.getElementById('emailAddress')?.value || '';
+                currentEditingSite.content.buttons = buttons;
+                
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                updatePreview();
+                showToast('Auto-saved', 'success');
             }
             
             updatePreview();
@@ -1132,53 +1140,32 @@
         
         function renderSitePreview(site) {
             const c = site.content;
-            
-            let fontFamily = 'Inter, sans-serif';
-            if (c.fontFamily === 'Playfair Display') fontFamily = "'Playfair Display', serif";
-            else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
-            else if (c.fontFamily === 'Montserrat') fontFamily = "'Montserrat', sans-serif";
-            else if (c.fontFamily === 'Roboto') fontFamily = "'Roboto', sans-serif";
-            
-            const primaryColor = c.primaryColor || '#6366f1';
-            const secondaryColor = c.secondaryColor || '#8b5cf6';
+            const fontFamily = c.fontFamily === 'Playfair Display' ? "'Playfair Display', serif" : c.fontFamily === 'Poppins' ? "'Poppins', sans-serif" : 'Inter, sans-serif';
+            const primary = c.primaryColor || '#6366f1';
+            const secondary = c.secondaryColor || '#8b5cf6';
             
             return `
                 <div style="font-family:${fontFamily};">
-                    <div style="min-height:60vh; background:linear-gradient(135deg, ${primaryColor}, ${secondaryColor}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:40px 20px;">
-                        <div style="max-width:800px;">
-                            <h1 style="font-size:48px; margin-bottom:16px; font-weight:800;">${c.heroTitle || c.companyName || c.name || 'My Website'}</h1>
-                            <p style="font-size:20px; opacity:0.95;">${c.heroSubtitle || c.tagline || c.title || 'Welcome'}</p>
+                    <div style="min-height:50vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:40px;">
+                        <div>
+                            <h1 style="font-size:48px; margin-bottom:16px;">${c.heroTitle || c.companyName || 'My Website'}</h1>
+                            <p style="font-size:20px;">${c.heroSubtitle || c.tagline || 'Welcome'}</p>
                             <div style="margin-top:32px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Hello!')}" target="_blank" style="padding:12px 28px; background:white; border-radius:50px; text-decoration:none; color:${primaryColor}; font-weight:600; transition:transform 0.2s;">WhatsApp</a>` : ''}
+                                ${c.buttons?.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:50px; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}
+                                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Hello!')}" target="_blank" style="padding:12px 28px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
                                 ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:12px 28px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                                ${c.showPhone ? `<a href="tel:${c.phoneNumber}" style="padding:12px 28px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Call Us</a>` : ''}
                             </div>
                         </div>
                     </div>
-                    <div style="max-width:1200px; margin:0 auto; padding:60px 20px;">
-                        ${c.aboutText ? `
-                            <div style="text-align:center; margin-bottom:60px;">
-                                <h2 style="font-size:36px; margin-bottom:20px;">${c.aboutTitle || 'About Us'}</h2>
-                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p>
-                            </div>
-                        ` : ''}
-                        ${c.bio ? `
-                            <div style="text-align:center; margin-bottom:60px;">
-                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.bio}</p>
-                            </div>
-                        ` : ''}
-                        ${c.description ? `
-                            <div style="text-align:center; margin-bottom:60px;">
-                                <p style="font-size:18px; color:#475569; max-width:800px; margin:0 auto;">${c.description}</p>
-                            </div>
-                        ` : ''}
+                    <div style="max-width:1000px; margin:0 auto; padding:60px 20px;">
+                        <p style="text-align:center; font-size:18px; color:#475569;">${c.aboutText || c.description || ''}</p>
                         ${c.services && c.services.length > 0 ? `
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px;">
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:30px; margin-top:60px;">
                                 ${c.services.map(s => `
-                                    <div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;">
-                                        <i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primaryColor}; margin-bottom:20px;"></i>
-                                        <h3 style="margin-bottom:10px; font-size:22px;">${s.name}</h3>
-                                        <p style="color:#64748b;">${s.description || ''}</p>
+                                    <div style="text-align:center; padding:30px; background:white; border-radius:20px;">
+                                        <i class="fas ${s.icon}" style="font-size:48px; color:${primary}; margin-bottom:16px;"></i>
+                                        <h3>${s.name}</h3>
+                                        <p style="color:#64748b;">${s.description}</p>
                                     </div>
                                 `).join('')}
                             </div>
@@ -1190,15 +1177,8 @@
         
         async function saveSite() {
             if (currentEditingSite) {
-                try {
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
-                        content: currentEditingSite.content,
-                        updatedAt: new Date().toISOString()
-                    });
-                    showToast('Website saved successfully!', 'success');
-                } catch (error) {
-                    showToast('Error saving: ' + error.message, 'error');
-                }
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { updatedAt: new Date().toISOString() });
+                showToast('Saved!', 'success');
             }
         }
         
@@ -1210,8 +1190,6 @@
         
         function openCreateModal() {
             document.getElementById('createModal').classList.add('active');
-            const firstCard = document.querySelector('.template-card');
-            if (firstCard) firstCard.classList.add('selected');
         }
         
         function closeCreateModal() {
@@ -1226,61 +1204,45 @@
             const templateId = document.getElementById('selectedTemplate').value;
             
             if (!title || !slug) {
-                showToast('Please fill all fields', 'error');
+                showToast('Fill all fields', 'error');
                 return;
             }
             
             try {
-                const siteData = {
-                    title: title,
-                    slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
+                await addDoc(collection(db, 'sites'), {
+                    title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
                     template: templateId,
                     content: JSON.parse(JSON.stringify(templates[templateId].structure)),
                     userId: currentUser.uid,
                     createdAt: new Date().toISOString(),
                     published: true
-                };
-                
-                await addDoc(collection(db, 'sites'), siteData);
-                showToast('Website created successfully!', 'success');
+                });
+                showToast('Site created!', 'success');
                 closeCreateModal();
                 loadDashboard();
             } catch (error) {
-                showToast('Error: ' + error.message, 'error');
+                showToast(error.message, 'error');
             }
         }
         
         function escapeHtml(str) {
             if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
+            return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
         }
         
         async function viewPublicSite(slug) {
             try {
                 const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true));
                 const snapshot = await getDocs(q);
-                
                 if (snapshot.empty) {
-                    document.getElementById('app').innerHTML = `
-                        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
-                            <i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i>
-                            <h2>Website Not Found</h2>
-                            <a href="/" style="color:#6366f1;">← Back to WebCraft Pro</a>
-                        </div>
-                    `;
+                    document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center;"><h2>Site not found</h2></div>`;
                     return;
                 }
-                
                 const site = snapshot.docs[0].data();
                 document.getElementById('app').innerHTML = renderSitePreview({ content: site.content });
-                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Created with WebCraft Pro</footer>`;
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:20px;">Created with WebCraft Pro</footer>`;
             } catch (error) {
-                document.getElementById('app').innerHTML = `<div style="padding:40px;">Error: ${error.message}</div>`;
+                document.getElementById('app').innerHTML = `<div>Error: ${error.message}</div>`;
             }
         }
         
@@ -1296,7 +1258,7 @@
                     showPage('dashboardPage');
                     loadDashboard();
                 } else {
-                    showPage('loginPage');
+                    showPage('landingPage');
                 }
             });
         }
