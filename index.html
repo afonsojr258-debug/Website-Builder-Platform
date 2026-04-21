@@ -279,6 +279,7 @@
         let currentEditingSite = null;
         let currentEditingButtonIndex = null;
         let currentEditingServiceIndex = null;
+        let currentEditingImageIndex = null;
         let currentUserPlan = { isPro: false };
         
         const fontOptions = [
@@ -322,7 +323,7 @@
                         { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
                     ],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '300', position: 'hero' }
+                    customImages: []
                 }
             },
             corporate: {
@@ -339,7 +340,7 @@
                         { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' }
                     ],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#2563eb', size: '300', position: 'hero' }
+                    customImages: []
                 }
             },
             personal: {
@@ -352,7 +353,7 @@
                     showEmail: true, emailAddress: 'ana@studio.com',
                     buttons: [], services: [],
                     floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
-                    customImage: { url: '', shape: 'rounded', border: false, borderColor: '#ea580c', size: '300', position: 'hero' }
+                    customImages: []
                 }
             }
         };
@@ -549,16 +550,16 @@
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
                 <!-- Modal para editar Botão normal -->
-                <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição do Botão</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Posição entre Cards de Serviços</label><select id="editBtnServicePosition"><option value="none">Não posicionar entre cards</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
+                <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição do Botão</label><select id="editBtnPosition"><option value="none">Nenhuma (não exibir)</option><option value="hero">No Hero (Topo do site)</option><option value="after-about">Após o texto Sobre</option><option value="between-cards">Entre cards de serviços</option></select></div><div class="input-group" id="btnCardSelectGroup" style="display:none;"><label>Posicionar após qual card?</label><select id="editBtnCardIndex"><option value="">Selecione um card</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para editar Card/Serviço -->
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
                 
+                <!-- Modal para editar Imagem -->
+                <div id="editImageModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Imagem</h3><button class="close-modal" onclick="closeImageModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="imageUrl" placeholder="https://exemplo.com/imagem.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="imageShape"><option value="rounded">Arredondado (Bordas suaves)</option><option value="circle">Redondo (Círculo)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="imageBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="imageBorderColor" value="#6366f1"><input type="text" id="imageBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="imageSize"><option value="100">Pequeno (100px)</option><option value="150">Médio Pequeno (150px)</option><option value="200">Médio (200px)</option><option value="250" selected>Médio Grande (250px)</option><option value="300">Grande (300px)</option><option value="400">Extra Grande (400px)</option></select></div><div class="input-group"><label>Posição da Imagem</label><select id="imagePosition"><option value="hero">No Hero (Topo do site)</option><option value="after-title">Após o título</option><option value="before-title">Antes do título</option><option value="between-cards">Entre cards de serviços</option></select></div><div class="input-group" id="imageCardSelectGroup" style="display:none;"><label>Posicionar após qual card?</label><select id="imageCardIndex"><option value="">Selecione um card</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeImageModal()">Cancelar</button><button class="btn-primary" id="saveImageChangesBtn">Salvar Alterações</button></div></div></div>
+                
                 <!-- Modal para editar Botão Flutuante (Apenas PRO) -->
                 <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..."></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon">${floatIconOptions.map(opt => `<option value="${opt.icon}">${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
-                
-                <!-- Modal para editar Imagem Personalizada -->
-                <div id="editImageModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Imagem Personalizada</h3><button class="close-modal" onclick="closeImageModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="imageUrl" placeholder="https://exemplo.com/minha-imagem.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="imageShape"><option value="rounded">Arredondado (Bordas suaves)</option><option value="circle">Redondo (Círculo)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="imageBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="imageBorderColor" value="#6366f1"><input type="text" id="imageBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="imageSize"><option value="150">Pequeno (150px)</option><option value="250" selected>Médio (250px)</option><option value="350">Grande (350px)</option><option value="450">Extra Grande (450px)</option></select></div><div class="input-group"><label>Posição</label><select id="imagePosition"><option value="hero">No Hero (Junto com título)</option><option value="above-title">Acima do título</option><option value="below-title">Abaixo do título</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeImageModal()">Cancelar</button><button class="btn-primary" id="saveImageChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
                 <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
@@ -620,6 +621,24 @@
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
             
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
+            
+            // Mostrar/esconder select de card para botão
+            const btnPositionSelect = document.getElementById('editBtnPosition');
+            const btnCardSelectGroup = document.getElementById('btnCardSelectGroup');
+            if (btnPositionSelect && btnCardSelectGroup) {
+                btnPositionSelect.addEventListener('change', () => {
+                    btnCardSelectGroup.style.display = btnPositionSelect.value === 'between-cards' ? 'block' : 'none';
+                });
+            }
+            
+            // Mostrar/esconder select de card para imagem
+            const imgPositionSelect = document.getElementById('imagePosition');
+            const imgCardSelectGroup = document.getElementById('imageCardSelectGroup');
+            if (imgPositionSelect && imgCardSelectGroup) {
+                imgPositionSelect.addEventListener('change', () => {
+                    imgCardSelectGroup.style.display = imgPositionSelect.value === 'between-cards' ? 'block' : 'none';
+                });
+            }
         }
         
         window.showPrivacyPolicy = () => {
@@ -670,8 +689,22 @@
             document.getElementById('editFloatModal').classList.remove('active');
         };
         
-        window.openImageModal = () => {
-            const image = currentEditingSite.content.customImage || { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero' };
+        window.openImageModal = (index) => {
+            currentEditingImageIndex = index;
+            const images = currentEditingSite.content.customImages || [];
+            const image = images[index] || { url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero', cardIndex: null };
+            
+            // Atualizar select de cards
+            const services = currentEditingSite.content.services || [];
+            const cardSelect = document.getElementById('imageCardIndex');
+            if (cardSelect) {
+                let options = '<option value="">Selecione um card</option>';
+                services.forEach((service, idx) => {
+                    options += `<option value="${idx}" ${image.cardIndex == idx ? 'selected' : ''}>Após o card "${service.name || `Serviço ${idx + 1}`}"</option>`;
+                });
+                cardSelect.innerHTML = options;
+            }
+            
             document.getElementById('imageUrl').value = image.url || '';
             document.getElementById('imageShape').value = image.shape || 'rounded';
             document.getElementById('imageBorder').checked = image.border || false;
@@ -679,11 +712,34 @@
             document.getElementById('imageBorderColorText').value = image.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
             document.getElementById('imageSize').value = image.size || '250';
             document.getElementById('imagePosition').value = image.position || 'hero';
+            
+            const imgCardSelectGroup = document.getElementById('imageCardSelectGroup');
+            if (imgCardSelectGroup) {
+                imgCardSelectGroup.style.display = image.position === 'between-cards' ? 'block' : 'none';
+            }
+            
             document.getElementById('editImageModal').classList.add('active');
         };
         
         window.closeImageModal = () => {
             document.getElementById('editImageModal').classList.remove('active');
+            currentEditingImageIndex = null;
+        };
+        
+        window.addImage = () => {
+            const images = currentEditingSite.content.customImages || [];
+            images.push({ url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero', cardIndex: null });
+            currentEditingSite.content.customImages = images;
+            renderImagesList();
+            updateSiteContent();
+            showToast('Imagem adicionada!', 'success');
+        };
+        
+        window.removeImage = (idx) => {
+            currentEditingSite.content.customImages.splice(idx, 1);
+            renderImagesList();
+            updateSiteContent();
+            showToast('Imagem removida', 'success');
         };
         
         window.openButtonModal = (index) => {
@@ -691,21 +747,28 @@
             const btn = currentEditingSite.content.buttons[index];
             const services = currentEditingSite.content.services || [];
             
-            const servicePositionSelect = document.getElementById('editBtnServicePosition');
-            if (servicePositionSelect) {
-                let options = '<option value="none">Não posicionar entre cards</option>';
+            // Atualizar select de cards
+            const cardSelect = document.getElementById('editBtnCardIndex');
+            if (cardSelect) {
+                let options = '<option value="">Selecione um card</option>';
                 services.forEach((service, idx) => {
-                    options += `<option value="service_${idx}" ${btn.servicePosition === `service_${idx}` ? 'selected' : ''}>Após o card "${service.name || `Serviço ${idx + 1}`}"</option>`;
+                    options += `<option value="${idx}" ${btn.cardIndex == idx ? 'selected' : ''}>Após o card "${service.name || `Serviço ${idx + 1}`}"</option>`;
                 });
-                servicePositionSelect.innerHTML = options;
+                cardSelect.innerHTML = options;
             }
             
             document.getElementById('editBtnText').value = btn.text || '';
             document.getElementById('editBtnUrl').value = btn.url || '#';
             document.getElementById('editBtnType').value = btn.type || 'primary';
-            document.getElementById('editBtnPosition').value = btn.position || 'hero';
+            document.getElementById('editBtnPosition').value = btn.position || 'none';
             document.getElementById('editBtnShape').value = btn.shape || 'rounded';
             document.getElementById('editBtnAlign').value = btn.align || 'center';
+            
+            const btnCardSelectGroup = document.getElementById('btnCardSelectGroup');
+            if (btnCardSelectGroup) {
+                btnCardSelectGroup.style.display = btn.position === 'between-cards' ? 'block' : 'none';
+            }
+            
             document.getElementById('editButtonModal').classList.add('active');
         };
         
@@ -745,6 +808,19 @@
         window.removeService = (idx) => {
             currentEditingSite.content.services.splice(idx, 1);
             renderServicesList();
+            // Atualizar referências de imagens e botões que usam cards
+            if (currentEditingSite.content.customImages) {
+                currentEditingSite.content.customImages.forEach(img => {
+                    if (img.cardIndex > idx) img.cardIndex--;
+                    else if (img.cardIndex === idx) img.cardIndex = null;
+                });
+            }
+            if (currentEditingSite.content.buttons) {
+                currentEditingSite.content.buttons.forEach(btn => {
+                    if (btn.cardIndex > idx) btn.cardIndex--;
+                    else if (btn.cardIndex === idx) btn.cardIndex = null;
+                });
+            }
             updateSiteContent();
             showToast('Serviço removido', 'success');
         };
@@ -823,8 +899,8 @@
                     if (!currentEditingSite.content.floatButton) {
                         currentEditingSite.content.floatButton = { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                     }
-                    if (!currentEditingSite.content.customImage) {
-                        currentEditingSite.content.customImage = { url: '', shape: 'rounded', border: false, borderColor: currentEditingSite.content.primaryColor || '#6366f1', size: '250', position: 'hero' };
+                    if (!currentEditingSite.content.customImages) {
+                        currentEditingSite.content.customImages = [];
                     }
                     showEditor(); 
                 } else { 
@@ -841,7 +917,7 @@
             catch (error) { showToast('Erro ao excluir', 'error'); } 
         };
         
-        let renderButtonsList, renderServicesList, updateSiteContent;
+        let renderButtonsList, renderServicesList, renderImagesList, updateSiteContent;
         
         function showEditor() {
             showPage('editorPage');
@@ -853,21 +929,6 @@
                 <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
                     <div class="editor-field"><label>Título Principal</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}" placeholder="Título do seu site"></div>
                     <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}" placeholder="Subtítulo"></div>
-                </div>
-                <div class="editor-section"><h4><i class="fas fa-image"></i> Imagem Personalizada</h4>
-                    <div id="imageInfo" class="item-preview" style="cursor:pointer;" onclick="window.openImageModal()">
-                        <div class="item-info">
-                            <div class="item-icon"><i class="fas fa-image"></i></div>
-                            <div class="item-details">
-                                <div class="item-name">${content.customImage?.url ? 'Imagem configurada' : 'Nenhuma imagem'}</div>
-                                <div class="item-desc">Formato: ${content.customImage?.shape === 'circle' ? 'Redondo' : content.customImage?.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${content.customImage?.size || '250'}px</div>
-                            </div>
-                        </div>
-                        <div class="item-actions">
-                            <button class="btn-icon" onclick="event.stopPropagation(); window.openImageModal()"><i class="fas fa-edit"></i> Editar</button>
-                        </div>
-                    </div>
-                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Adicione uma imagem usando link direto (ex: logo, foto, ilustração)</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
                     <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1"></div></div>
@@ -886,7 +947,12 @@
                 <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4>
                     <div id="buttonsList" class="items-list"></div>
                     <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:12px;"><i class="fas fa-plus"></i> Adicionar Botão</button>
-                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no botão para editar suas propriedades (posição entre cards específicos)</p>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no botão para editar (posição: Hero, Após texto, ou entre cards)</p>
+                </div>
+                <div class="editor-section"><h4><i class="fas fa-image"></i> Imagens Personalizadas</h4>
+                    <div id="imagesList" class="items-list"></div>
+                    <button class="btn-outline" id="addImageBtn" style="width:100%; margin-top:12px;"><i class="fas fa-plus"></i> Adicionar Imagem</button>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Adicione imagens com link direto e posicione onde quiser (entre cards também!)</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4>
                     <div id="servicesList" class="items-list"></div>
@@ -935,6 +1001,7 @@
             
             const buttons = content.buttons || [];
             const services = content.services || [];
+            const images = content.customImages || [];
             
             renderButtonsList = () => {
                 const container = document.getElementById('buttonsList');
@@ -944,13 +1011,12 @@
                     } else {
                         container.innerHTML = buttons.map((btn, idx) => {
                             let positionText = '';
-                            if (btn.position === 'hero') positionText = 'No Hero';
+                            if (btn.position === 'none') positionText = 'Não exibir';
+                            else if (btn.position === 'hero') positionText = 'No Hero';
                             else if (btn.position === 'after-about') positionText = 'Após o texto Sobre';
-                            else if (btn.servicePosition && btn.servicePosition !== 'none') {
-                                const serviceIndex = parseInt(btn.servicePosition.split('_')[1]);
-                                const serviceName = services[serviceIndex]?.name || `Serviço ${serviceIndex + 1}`;
-                                positionText = `Após o card "${serviceName}"`;
-                            } else positionText = 'Posição não definida';
+                            else if (btn.position === 'between-cards' && btn.cardIndex !== undefined && services[btn.cardIndex]) {
+                                positionText = `Após o card "${services[btn.cardIndex]?.name || `Serviço ${btn.cardIndex + 1}`}"`;
+                            } else positionText = btn.position || 'Não definido';
                             
                             return `
                             <div class="item-preview">
@@ -996,13 +1062,48 @@
                 }
             };
             
+            renderImagesList = () => {
+                const container = document.getElementById('imagesList');
+                if (container) {
+                    if (images.length === 0) {
+                        container.innerHTML = '<div style="text-align:center; padding:20px; background:#f8fafc; border-radius:16px; color:#64748b;">Nenhuma imagem adicionada. Clique em "+ Adicionar Imagem"</div>';
+                    } else {
+                        container.innerHTML = images.map((img, idx) => {
+                            let positionText = '';
+                            if (img.position === 'hero') positionText = 'No Hero';
+                            else if (img.position === 'after-title') positionText = 'Após o título';
+                            else if (img.position === 'before-title') positionText = 'Antes do título';
+                            else if (img.position === 'between-cards' && img.cardIndex !== undefined && services[img.cardIndex]) {
+                                positionText = `Após o card "${services[img.cardIndex]?.name || `Serviço ${img.cardIndex + 1}`}"`;
+                            } else positionText = img.position || 'Não definido';
+                            
+                            return `
+                            <div class="item-preview">
+                                <div class="item-info">
+                                    <div class="item-icon"><i class="fas fa-image"></i></div>
+                                    <div class="item-details">
+                                        <div class="item-name">${img.url ? 'Imagem configurada' : 'Sem URL'}</div>
+                                        <div class="item-desc">Formato: ${img.shape === 'circle' ? 'Redondo' : img.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | ${positionText}</div>
+                                    </div>
+                                </div>
+                                <div class="item-actions">
+                                    <button class="btn-icon" onclick="window.openImageModal(${idx})"><i class="fas fa-edit"></i> Editar</button>
+                                    <button class="btn-icon" onclick="window.removeImage(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        `}).join('');
+                    }
+                }
+            };
+            
             renderButtonsList();
             renderServicesList();
+            renderImagesList();
             
             const addButtonBtn = document.getElementById('addButtonBtn');
             if (addButtonBtn) {
                 addButtonBtn.addEventListener('click', () => { 
-                    buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'hero', servicePosition: 'none', shape: 'rounded', align: 'center' }); 
+                    buttons.push({ text: 'Novo Botão', url: '#', type: 'primary', position: 'none', cardIndex: null, shape: 'rounded', align: 'center' }); 
                     renderButtonsList(); 
                     updateSiteContent(); 
                     showToast('Botão adicionado!', 'success'); 
@@ -1017,6 +1118,15 @@
                     showToast('Serviço adicionado!', 'success'); 
                 });
             }
+            const addImageBtn = document.getElementById('addImageBtn');
+            if (addImageBtn) {
+                addImageBtn.addEventListener('click', () => { 
+                    images.push({ url: '', shape: 'rounded', border: false, borderColor: '#6366f1', size: '250', position: 'hero', cardIndex: null }); 
+                    renderImagesList(); 
+                    updateSiteContent(); 
+                    showToast('Imagem adicionada!', 'success'); 
+                });
+            }
             
             document.getElementById('saveButtonChangesBtn')?.addEventListener('click', () => {
                 if (currentEditingButtonIndex !== null) {
@@ -1025,7 +1135,11 @@
                     btn.url = document.getElementById('editBtnUrl').value;
                     btn.type = document.getElementById('editBtnType').value;
                     btn.position = document.getElementById('editBtnPosition').value;
-                    btn.servicePosition = document.getElementById('editBtnServicePosition').value;
+                    if (btn.position === 'between-cards') {
+                        btn.cardIndex = parseInt(document.getElementById('editBtnCardIndex').value);
+                    } else {
+                        btn.cardIndex = null;
+                    }
                     btn.shape = document.getElementById('editBtnShape').value;
                     btn.align = document.getElementById('editBtnAlign').value;
                     renderButtonsList();
@@ -1050,33 +1164,24 @@
             });
             
             document.getElementById('saveImageChangesBtn')?.addEventListener('click', () => {
-                const image = {
-                    url: document.getElementById('imageUrl').value,
-                    shape: document.getElementById('imageShape').value,
-                    border: document.getElementById('imageBorder').checked,
-                    borderColor: document.getElementById('imageBorderColor').value,
-                    size: document.getElementById('imageSize').value,
-                    position: document.getElementById('imagePosition').value
-                };
-                currentEditingSite.content.customImage = image;
-                updateSiteContent();
-                closeImageModal();
-                const imageInfoDiv = document.getElementById('imageInfo');
-                if (imageInfoDiv) {
-                    imageInfoDiv.innerHTML = `
-                        <div class="item-info">
-                            <div class="item-icon"><i class="fas fa-image"></i></div>
-                            <div class="item-details">
-                                <div class="item-name">${image.url ? 'Imagem configurada' : 'Nenhuma imagem'}</div>
-                                <div class="item-desc">Formato: ${image.shape === 'circle' ? 'Redondo' : image.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${image.size}px</div>
-                            </div>
-                        </div>
-                        <div class="item-actions">
-                            <button class="btn-icon" onclick="event.stopPropagation(); window.openImageModal()"><i class="fas fa-edit"></i> Editar</button>
-                        </div>
-                    `;
+                if (currentEditingImageIndex !== null) {
+                    const image = images[currentEditingImageIndex];
+                    image.url = document.getElementById('imageUrl').value;
+                    image.shape = document.getElementById('imageShape').value;
+                    image.border = document.getElementById('imageBorder').checked;
+                    image.borderColor = document.getElementById('imageBorderColor').value;
+                    image.size = document.getElementById('imageSize').value;
+                    image.position = document.getElementById('imagePosition').value;
+                    if (image.position === 'between-cards') {
+                        image.cardIndex = parseInt(document.getElementById('imageCardIndex').value);
+                    } else {
+                        image.cardIndex = null;
+                    }
+                    renderImagesList();
+                    updateSiteContent();
+                    closeImageModal();
+                    showToast('Imagem atualizada!', 'success');
                 }
-                showToast('Imagem atualizada!', 'success');
             });
             
             document.getElementById('saveFloatChangesBtn')?.addEventListener('click', () => {
@@ -1171,6 +1276,7 @@
                 currentEditingSite.content.aboutText = aboutTextEl?.value || '';
                 currentEditingSite.content.buttons = buttons;
                 currentEditingSite.content.services = services;
+                currentEditingSite.content.customImages = images;
                 try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content }); updatePreview(); } 
                 catch (error) { console.error('Erro:', error); }
             };
@@ -1191,9 +1297,17 @@
             else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
+            
+            // Filtrar botões por posição
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
-            const serviceButtons = (c.buttons || []).filter(b => b.servicePosition && b.servicePosition !== 'none');
+            
+            // Botões entre cards específicos
+            const betweenCardsButtons = (c.buttons || []).filter(b => b.position === 'between-cards' && b.cardIndex !== undefined && b.cardIndex !== null);
+            
+            // Imagens
+            const heroImages = (c.customImages || []).filter(img => img.position === 'hero' || img.position === 'after-title' || img.position === 'before-title');
+            const betweenCardsImages = (c.customImages || []).filter(img => img.position === 'between-cards' && img.cardIndex !== undefined && img.cardIndex !== null);
             
             const getStyle = (btn) => { 
                 if (btn.shape === 'pill') return '40px';
@@ -1212,23 +1326,30 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            const image = c.customImage || {};
-            let imageHtml = '';
-            if (image.url && image.url.trim() !== '') {
-                const shapeClass = image.shape === 'circle' ? 'img-circle' : (image.shape === 'rounded' ? 'img-rounded' : 'img-square');
-                const borderStyle = image.border ? `border: 3px solid ${image.borderColor || primary};` : '';
-                const imagePosition = image.position || 'hero';
-                let imageContainerHtml = '';
-                if (imagePosition === 'hero') {
-                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 30px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                } else if (imagePosition === 'above-title') {
-                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                } else if (imagePosition === 'below-title') {
-                    imageContainerHtml = `<div style="text-align:center; margin-top: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                }
-                imageHtml = imageContainerHtml;
-            }
+            // Renderizar imagens do hero
+            const renderHeroImage = (img) => {
+                const shapeClass = img.shape === 'circle' ? 'img-circle' : (img.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                const borderStyle = img.border ? `border: 3px solid ${img.borderColor || primary};` : '';
+                return `<div style="text-align:center; margin: 20px 0;"><img src="${img.url}" class="custom-image ${shapeClass}" style="width: ${img.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+            };
             
+            // Construir conteúdo do Hero
+            let heroContentHtml = '';
+            // Imagens antes do título
+            heroImages.filter(img => img.position === 'before-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>`;
+            // Imagens depois do título
+            heroImages.filter(img => img.position === 'after-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>`;
+            // Imagens no hero (padrão)
+            heroImages.filter(img => img.position === 'hero').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+            </div>`;
+            
+            // Construir serviços com imagens e botões entre eles
             let servicesHtml = '';
             if (c.services && c.services.length > 0) {
                 servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
@@ -1239,7 +1360,18 @@
                         <p style="color:#64748b;">${service.description || ''}</p>
                     </div>`;
                     
-                    const buttonAfterThisCard = serviceButtons.find(b => b.servicePosition === `service_${idx}`);
+                    // Verificar se existe imagem para colocar depois deste card
+                    const imageAfterThisCard = betweenCardsImages.find(img => img.cardIndex === idx);
+                    if (imageAfterThisCard) {
+                        const shapeClass = imageAfterThisCard.shape === 'circle' ? 'img-circle' : (imageAfterThisCard.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                        const borderStyle = imageAfterThisCard.border ? `border: 3px solid ${imageAfterThisCard.borderColor || primary};` : '';
+                        servicesHtml += `<div style="text-align:center; margin: 30px 0;">
+                            <img src="${imageAfterThisCard.url}" class="custom-image ${shapeClass}" style="width: ${imageAfterThisCard.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        </div>`;
+                    }
+                    
+                    // Verificar se existe botão para colocar depois deste card
+                    const buttonAfterThisCard = betweenCardsButtons.find(b => b.cardIndex === idx);
                     if (buttonAfterThisCard) {
                         servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
                             <a href="${buttonAfterThisCard.url}" style="padding:12px 28px; background:${buttonAfterThisCard.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(buttonAfterThisCard)}; text-decoration:none; color:${buttonAfterThisCard.type === 'primary' ? 'white' : primary}; font-weight:600; display:inline-block;">
@@ -1250,20 +1382,6 @@
                 });
                 servicesHtml += '</div>';
             }
-            
-            // Determinar onde colocar a imagem baseado na posição
-            let heroContentHtml = `
-                ${image.position === 'above-title' ? imageHtml : ''}
-                <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
-                ${image.position === 'hero' ? imageHtml : ''}
-                <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
-                ${image.position === 'below-title' ? imageHtml : ''}
-                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                    ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
-                    ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
-                    ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                </div>
-            `;
             
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
                 ${floatButtonHtml}
@@ -1375,9 +1493,13 @@
             else if (c.fontFamily === 'Poppins') fontFamily = "'Poppins', sans-serif";
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
+            
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
-            const serviceButtons = (c.buttons || []).filter(b => b.servicePosition && b.servicePosition !== 'none');
+            const betweenCardsButtons = (c.buttons || []).filter(b => b.position === 'between-cards' && b.cardIndex !== undefined && b.cardIndex !== null);
+            
+            const heroImages = (c.customImages || []).filter(img => img.position === 'hero' || img.position === 'after-title' || img.position === 'before-title');
+            const betweenCardsImages = (c.customImages || []).filter(img => img.position === 'between-cards' && img.cardIndex !== undefined && img.cardIndex !== null);
             
             const getStyle = (btn) => { 
                 if (btn.shape === 'pill') return '40px';
@@ -1396,22 +1518,23 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            const image = c.customImage || {};
-            let imageHtml = '';
-            if (image.url && image.url.trim() !== '') {
-                const shapeClass = image.shape === 'circle' ? 'img-circle' : (image.shape === 'rounded' ? 'img-rounded' : 'img-square');
-                const borderStyle = image.border ? `border: 3px solid ${image.borderColor || primary};` : '';
-                const imagePosition = image.position || 'hero';
-                let imageContainerHtml = '';
-                if (imagePosition === 'hero') {
-                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 30px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                } else if (imagePosition === 'above-title') {
-                    imageContainerHtml = `<div style="text-align:center; margin-bottom: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                } else if (imagePosition === 'below-title') {
-                    imageContainerHtml = `<div style="text-align:center; margin-top: 20px;"><img src="${image.url}" class="custom-image ${shapeClass}" style="width: ${image.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
-                }
-                imageHtml = imageContainerHtml;
-            }
+            const renderHeroImage = (img) => {
+                const shapeClass = img.shape === 'circle' ? 'img-circle' : (img.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                const borderStyle = img.border ? `border: 3px solid ${img.borderColor || primary};` : '';
+                return `<div style="text-align:center; margin: 20px 0;"><img src="${img.url}" class="custom-image ${shapeClass}" style="width: ${img.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
+            };
+            
+            let heroContentHtml = '';
+            heroImages.filter(img => img.position === 'before-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>`;
+            heroImages.filter(img => img.position === 'after-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>`;
+            heroImages.filter(img => img.position === 'hero').forEach(img => { heroContentHtml += renderHeroImage(img); });
+            heroContentHtml += `<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
+                ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
+                ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
+            </div>`;
             
             let servicesHtml = '';
             if (c.services && c.services.length > 0) {
@@ -1423,7 +1546,16 @@
                         <p style="color:#64748b;">${service.description || ''}</p>
                     </div>`;
                     
-                    const buttonAfterThisCard = serviceButtons.find(b => b.servicePosition === `service_${idx}`);
+                    const imageAfterThisCard = betweenCardsImages.find(img => img.cardIndex === idx);
+                    if (imageAfterThisCard) {
+                        const shapeClass = imageAfterThisCard.shape === 'circle' ? 'img-circle' : (imageAfterThisCard.shape === 'rounded' ? 'img-rounded' : 'img-square');
+                        const borderStyle = imageAfterThisCard.border ? `border: 3px solid ${imageAfterThisCard.borderColor || primary};` : '';
+                        servicesHtml += `<div style="text-align:center; margin: 30px 0;">
+                            <img src="${imageAfterThisCard.url}" class="custom-image ${shapeClass}" style="width: ${imageAfterThisCard.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        </div>`;
+                    }
+                    
+                    const buttonAfterThisCard = betweenCardsButtons.find(b => b.cardIndex === idx);
                     if (buttonAfterThisCard) {
                         servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
                             <a href="${buttonAfterThisCard.url}" style="padding:12px 28px; background:${buttonAfterThisCard.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(buttonAfterThisCard)}; text-decoration:none; color:${buttonAfterThisCard.type === 'primary' ? 'white' : primary}; font-weight:600; display:inline-block;">
@@ -1434,19 +1566,6 @@
                 });
                 servicesHtml += '</div>';
             }
-            
-            let heroContentHtml = `
-                ${image.position === 'above-title' ? imageHtml : ''}
-                <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
-                ${image.position === 'hero' ? imageHtml : ''}
-                <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
-                ${image.position === 'below-title' ? imageHtml : ''}
-                <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                    ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
-                    ${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}
-                    ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
-                </div>
-            `;
             
             return `<div style="font-family:${fontFamily}; position:relative; min-height:100vh;">
                 ${floatButtonHtml}
