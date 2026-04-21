@@ -47,11 +47,11 @@
         .btn-icon { background: #f1f5f9; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 14px; }
         .btn-icon:hover { background: #e2e8f0; transform: translateY(-2px); }
         
-        /* Hero */
-        .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; }
-        .hero-content { max-width: 800px; margin: 0 auto; }
-        .hero-content h1 { font-size: 64px; margin-bottom: 24px; font-weight: 800; }
-        .hero-content p { font-size: 20px; margin-bottom: 40px; }
+        /* Hero Section */
+        .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
+        .hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
+        .hero-content h1 { font-size: 64px; margin-bottom: 24px; font-weight: 800; line-height: 1.2; }
+        .hero-content p { font-size: 20px; margin-bottom: 40px; opacity: 0.9; }
         .hero-buttons { display: flex; gap: 20px; justify-content: center; }
         
         /* Features */
@@ -62,33 +62,39 @@
         .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1); }
         .feature-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
         .feature-icon i { font-size: 40px; color: #6366f1; }
+        .feature-card h3 { font-size: 22px; margin-bottom: 12px; }
+        .feature-card p { color: #64748b; line-height: 1.6; }
         
-        /* Templates */
+        /* Templates Showcase */
         .templates-section { padding: 100px 48px; background: white; }
         .templates-showcase { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
         .template-showcase-card { background: #f8fafc; border-radius: 28px; overflow: hidden; transition: all 0.3s; border: 1px solid #e2e8f0; }
-        .template-showcase-card:hover { transform: translateY(-8px); }
+        .template-showcase-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15); }
         .template-preview { height: 220px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; }
         .template-preview i { font-size: 64px; }
         .template-info { padding: 28px; }
+        .template-info h3 { font-size: 20px; margin-bottom: 8px; }
+        .template-info p { color: #64748b; }
         
         /* Footer */
-        .main-footer { background: #0f172a; color: #94a3b8; padding: 48px; text-align: center; }
+        .main-footer { background: #0f172a; color: #94a3b8; padding: 48px; text-align: center; border-top: 1px solid #1e293b; }
+        .footer-content p { margin: 8px 0; }
         
-        /* Auth */
+        /* Auth Pages */
         .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 20px; }
         .auth-container { background: white; border-radius: 32px; padding: 48px; width: 100%; max-width: 480px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); animation: fadeInUp 0.5s ease; }
         .auth-header { text-align: center; margin-bottom: 40px; }
         .auth-header img { height: 60px; margin-bottom: 16px; }
         .auth-header h1 { font-size: 32px; margin-bottom: 8px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .auth-header p { color: #64748b; }
         
         /* Inputs */
         .input-group { margin-bottom: 24px; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #334155; }
         .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 16px; font-family: inherit; }
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: #6366f1; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
         .auth-switch { text-align: center; margin-top: 24px; color: #64748b; }
-        .auth-switch a { color: #6366f1; cursor: pointer; }
+        .auth-switch a { color: #6366f1; cursor: pointer; text-decoration: none; font-weight: 600; }
         
         /* Dashboard */
         .dashboard-layout { display: flex; min-height: 100vh; background: #f8fafc; }
@@ -98,48 +104,52 @@
         .sidebar-logo span { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sidebar-menu { list-style: none; }
         .sidebar-menu li { margin-bottom: 8px; }
-        .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #475569; text-decoration: none; border-radius: 12px; cursor: pointer; font-weight: 500; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #475569; text-decoration: none; border-radius: 12px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
         .sidebar-menu a:hover, .sidebar-menu a.active { background: #eef2ff; color: #6366f1; }
         .sidebar-footer { position: absolute; bottom: 32px; left: 24px; right: 24px; padding-top: 24px; border-top: 1px solid #e2e8f0; }
         .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 16px; }
         .user-info i { font-size: 32px; color: #6366f1; }
+        .user-name { font-weight: 600; color: #0f172a; }
+        .user-plan { font-size: 12px; color: #64748b; }
         .mobile-sidebar-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 25px; color: white; font-size: 24px; cursor: pointer; z-index: 101; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .main-content { flex: 1; margin-left: 280px; padding: 32px 48px; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-        .dashboard-header h1 { font-size: 32px; font-weight: 700; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+        .dashboard-header h1 { font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #0f172a 0%, #334155 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sites-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
         .site-card { background: white; border-radius: 20px; padding: 24px; transition: all 0.3s; border: 1px solid #e2e8f0; }
-        .site-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+        .site-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); border-color: #cbd5e1; }
         .site-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
         .site-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; }
         .site-info h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
         .site-info p { color: #64748b; font-size: 13px; }
         .badge { display: inline-block; padding: 4px 12px; background: #e0e7ff; color: #4f46e5; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 8px; }
-        .site-card-actions { display: flex; gap: 12px; margin-top: 16px; }
+        .site-card-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
         
         /* Editor */
         .editor-layout { display: flex; height: 100vh; background: #f8fafc; }
         .editor-sidebar { width: 500px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
-        .editor-sidebar h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; }
+        .editor-sidebar h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; color: #0f172a; display: flex; align-items: center; gap: 8px; }
         .editor-preview { flex: 1; overflow-y: auto; padding: 32px; background: #f1f5f9; }
-        .editor-preview h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+        .editor-preview h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
         .editor-section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e2e8f0; }
-        .editor-section h4 { font-size: 18px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .editor-section:last-child { border-bottom: none; }
+        .editor-section h4 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
         .editor-section h4 i { color: #6366f1; }
         .editor-field { margin-bottom: 20px; }
         .editor-field label { display: block; margin-bottom: 8px; font-weight: 500; color: #475569; font-size: 14px; }
-        .editor-field input, .editor-field textarea, .editor-field select { width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; font-family: inherit; }
+        .editor-field input, .editor-field textarea, .editor-field select { width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; font-family: inherit; transition: all 0.2s; }
+        .editor-field input:focus, .editor-field textarea:focus, .editor-field select:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
         .color-input-group { display: flex; gap: 12px; align-items: center; }
-        .color-input-group input[type="color"] { width: 60px; height: 50px; }
+        .color-input-group input[type="color"] { width: 60px; height: 50px; padding: 4px; cursor: pointer; border-radius: 12px; }
         
-        /* Lista de Botões e Cards - Estilo simplificado */
-        .items-list { display: flex; flex-direction: column; gap: 12px; }
+        /* Lista de Itens */
+        .items-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
         .item-preview { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
         .item-preview:hover { background: #f1f5f9; border-color: #cbd5e1; }
         .item-info { display: flex; align-items: center; gap: 12px; flex: 1; }
         .item-icon { width: 40px; height: 40px; background: #eef2ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #6366f1; font-size: 20px; }
         .item-details { flex: 1; }
-        .item-name { font-weight: 600; margin-bottom: 4px; }
+        .item-name { font-weight: 600; margin-bottom: 4px; color: #0f172a; }
         .item-desc { font-size: 12px; color: #64748b; }
         .item-actions { display: flex; gap: 8px; }
         
@@ -148,8 +158,8 @@
         .modal-overlay.active { display: flex; }
         .edit-modal { background: white; border-radius: 32px; width: 90%; max-width: 550px; max-height: 85vh; overflow-y: auto; animation: popIn 0.3s ease; }
         .edit-modal-header { padding: 24px 28px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .edit-modal-header h3 { font-size: 20px; font-weight: 700; }
-        .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; color: #94a3b8; transition: all 0.2s; }
+        .edit-modal-header h3 { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .close-modal { background: none; border: none; font-size: 28px; cursor: pointer; color: #94a3b8; transition: all 0.2s; }
         .close-modal:hover { color: #ef4444; transform: scale(1.1); }
         .edit-modal-body { padding: 28px; }
         .edit-modal-footer { padding: 20px 28px; border-top: 1px solid #e2e8f0; display: flex; gap: 12px; justify-content: flex-end; }
@@ -158,27 +168,35 @@
         .icon-selector-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-top: 12px; background: #f8fafc; padding: 16px; border-radius: 16px; border: 1px solid #e2e8f0; max-height: 250px; overflow-y: auto; }
         .icon-option-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 5px; border-radius: 12px; cursor: pointer; transition: all 0.2s; background: white; border: 1px solid #e2e8f0; }
         .icon-option-card:hover { background: #eef2ff; border-color: #6366f1; transform: scale(1.05); }
-        .icon-option-card.selected { background: #eef2ff; border-color: #6366f1; }
+        .icon-option-card.selected { background: #eef2ff; border-color: #6366f1; box-shadow: 0 2px 8px rgba(99,102,241,0.2); }
         .icon-option-card i { font-size: 22px; color: #6366f1; }
         .icon-option-card span { font-size: 9px; color: #64748b; text-align: center; }
-        
-        /* Toast */
-        .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 28px; border-radius: 16px; color: white; transform: translateX(450px); transition: transform 0.3s; z-index: 2000; font-weight: 500; }
-        .toast.show { transform: translateX(0); }
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        
-        .loading { text-align: center; padding: 60px; }
-        .empty-state { text-align: center; padding: 80px 20px; }
-        .empty-state i { font-size: 80px; color: #cbd5e0; margin-bottom: 24px; }
-        .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         
         /* Modal de criação */
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 1000; }
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 32px; padding: 40px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; }
+        .modal-content { background: white; border-radius: 32px; padding: 40px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; animation: fadeInUp 0.3s ease; }
+        .modal-content h2 { font-size: 28px; margin-bottom: 24px; color: #0f172a; }
         .template-card { border: 2px solid #e2e8f0; border-radius: 20px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s; }
         .template-card:hover, .template-card.selected { border-color: #6366f1; background: #eef2ff; transform: translateX(8px); }
+        .template-card i { font-size: 24px; color: #6366f1; margin-right: 12px; }
+        .template-card strong { font-size: 18px; }
+        .template-card p { font-size: 13px; color: #64748b; margin-top: 8px; }
+        
+        /* Toast */
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 28px; border-radius: 16px; color: white; transform: translateX(450px); transition: transform 0.3s; z-index: 2000; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .toast.show { transform: translateX(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        
+        .loading { text-align: center; padding: 60px; font-size: 18px; color: #64748b; }
+        .loading i { font-size: 40px; margin-bottom: 16px; color: #6366f1; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .empty-state { text-align: center; padding: 80px 20px; }
+        .empty-state i { font-size: 80px; color: #cbd5e0; margin-bottom: 24px; }
+        .empty-state h3 { font-size: 24px; margin-bottom: 12px; color: #0f172a; }
+        .empty-state p { color: #64748b; margin-bottom: 24px; }
+        .live-preview-container { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
@@ -186,13 +204,15 @@
             .mobile-menu-btn { display: block; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
+            .hero-content p { font-size: 16px; }
             .sidebar { transform: translateX(-100%); position: fixed; z-index: 1000; }
             .sidebar.open { transform: translateX(0); }
             .mobile-sidebar-toggle { display: flex; align-items: center; justify-content: center; }
             .main-content { margin-left: 0; padding: 20px; }
             .editor-layout { flex-direction: column; }
             .editor-sidebar { width: 100%; max-height: 50vh; }
-            .dashboard-header { flex-direction: column; gap: 16px; }
+            .dashboard-header { flex-direction: column; align-items: flex-start; }
+            .sites-grid { grid-template-columns: 1fr; }
             .icon-selector-grid { grid-template-columns: repeat(5, 1fr); }
         }
     </style>
@@ -314,7 +334,7 @@
                 <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button></div></div></div>
                 <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>WhatsApp Integrado</h3><p>Conecte-se com clientes</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
-                <div class="main-footer"><div class="footer-content"><p>© 2024 WebCraft Pro. Todos os direitos reservados.</p></div></div>
+                <div class="main-footer"><div class="footer-content"><p>© 2024 WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
             `;
         }
         
@@ -322,11 +342,11 @@
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
-                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
-                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
+                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
+                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
                 <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan">Plano Grátis</div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
-                <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
-                <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small>Seu site estará em: <strong id="slugPreview">meuportfolio</strong></small></div><div class="input-group"><label>Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary">Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
+                <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
+                <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
                 
                 <!-- Modal para editar Botão -->
                 <div id="editButtonModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-link"></i> Editar Botão</h3><button class="close-modal" onclick="closeButtonModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Texto do Botão</label><input type="text" id="editBtnText" placeholder="Ex: Saiba Mais"></div><div class="input-group"><label>URL do Botão</label><input type="text" id="editBtnUrl" placeholder="https://..."></div><div class="input-group"><label>Tipo</label><select id="editBtnType"><option value="primary">Primário</option><option value="secondary">Secundário</option></select></div><div class="input-group"><label>Posição</label><select id="editBtnPosition"><option value="hero">No Hero (Topo do site)</option><option value="after-services">Após os Cards de Serviços</option><option value="after-about">Após o texto Sobre</option></select></div><div class="input-group"><label>Formato</label><select id="editBtnShape"><option value="rounded">Arredondado</option><option value="pill">Pílula</option><option value="square">Quadrado</option></select></div><div class="input-group"><label>Alinhamento</label><select id="editBtnAlign"><option value="center">Centralizado</option><option value="left">Esquerda</option><option value="right">Direita</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeButtonModal()">Cancelar</button><button class="btn-primary" id="saveButtonChangesBtn">Salvar Alterações</button></div></div></div>
@@ -372,6 +392,60 @@
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
         }
         
+        // Funções globais para os modais
+        window.openButtonModal = (index) => {
+            currentEditingButtonIndex = index;
+            const btn = currentEditingSite.content.buttons[index];
+            document.getElementById('editBtnText').value = btn.text || '';
+            document.getElementById('editBtnUrl').value = btn.url || '#';
+            document.getElementById('editBtnType').value = btn.type || 'primary';
+            document.getElementById('editBtnPosition').value = btn.position || 'hero';
+            document.getElementById('editBtnShape').value = btn.shape || 'rounded';
+            document.getElementById('editBtnAlign').value = btn.align || 'center';
+            document.getElementById('editButtonModal').classList.add('active');
+        };
+        
+        window.closeButtonModal = () => {
+            document.getElementById('editButtonModal').classList.remove('active');
+            currentEditingButtonIndex = null;
+        };
+        
+        window.openServiceModal = (index) => {
+            currentEditingServiceIndex = index;
+            const service = currentEditingSite.content.services[index];
+            document.getElementById('editServiceName').value = service.name || '';
+            document.getElementById('editServiceDesc').value = service.description || '';
+            // Render icon selector
+            const container = document.getElementById('serviceIconSelector');
+            container.innerHTML = iconOptions.map(icon => `<div class="icon-option-card ${service.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('');
+            container.querySelectorAll('.icon-option-card').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    container.querySelectorAll('.icon-option-card').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                });
+            });
+            document.getElementById('editServiceModal').classList.add('active');
+        };
+        
+        window.closeServiceModal = () => {
+            document.getElementById('editServiceModal').classList.remove('active');
+            currentEditingServiceIndex = null;
+        };
+        
+        window.removeButton = (idx) => {
+            currentEditingSite.content.buttons.splice(idx, 1);
+            renderButtonsList();
+            updateSiteContent();
+            showToast('Botão removido', 'success');
+        };
+        
+        window.removeService = (idx) => {
+            currentEditingSite.content.services.splice(idx, 1);
+            renderServicesList();
+            updateSiteContent();
+            showToast('Serviço removido', 'success');
+        };
+        
         window.showLandingPage = () => showPage('landingPage');
         window.showLoginPage = () => showPage('loginPage');
         window.showRegisterPage = () => showPage('registerPage');
@@ -396,14 +470,14 @@
             if (!currentUser) return;
             const sitesGrid = document.getElementById('sitesGrid');
             if (!sitesGrid) return;
-            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
+            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><br>Carregando seus sites...</div>';
             try {
                 const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
                 const userNameSpan = document.getElementById('userName');
                 if (userNameSpan) userNameSpan.innerHTML = currentUser.displayName || currentUser.email;
                 if (snapshot.empty) { 
-                    sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`; 
+                    sitesGrid.innerHTML = `<div class="empty-state"><i class="fas fa-crown"></i><h3>Crie seu primeiro site</h3><p>Escolha entre templates profissionais e comece agora</p><button class="btn-primary" id="emptyCreateBtn">Criar Site</button></div>`; 
                     const emptyBtn = document.getElementById('emptyCreateBtn');
                     if (emptyBtn) emptyBtn.addEventListener('click', () => openCreateModal());
                     return; 
@@ -411,7 +485,7 @@
                 sitesGrid.innerHTML = '';
                 snapshot.forEach(doc => { 
                     const site = doc.data(); 
-                    sitesGrid.innerHTML += `<div class="site-card"><div class="site-card-header"><div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div><div class="site-info"><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p><span class="badge">${templates[site.template]?.name || 'Template'}</span></div></div><div class="site-card-actions"><button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button><button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button><button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button></div></div>`; 
+                    sitesGrid.innerHTML += `<div class="site-card"><div class="site-card-header"><div class="site-icon"><i class="fas ${templates[site.template]?.icon || 'fa-globe'}"></i></div><div class="site-info"><h3>${escapeHtml(site.title)}</h3><p>/${site.slug}</p><span class="badge">${templates[site.template]?.name || 'Template'}</span></div></div><div class="site-card-actions"><button class="btn-outline" onclick="window.editSiteById('${doc.id}')"><i class="fas fa-edit"></i> Editar</button><button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')"><i class="fas fa-eye"></i> Ver</button><button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')"><i class="fas fa-trash"></i> Excluir</button></div></div>`; 
                 });
             } catch (error) { sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`; }
         }
@@ -432,52 +506,12 @@
         };
         
         window.deleteSiteById = async (siteId) => { 
-            if (!confirm('Tem certeza?')) return; 
-            try { await deleteDoc(doc(db, 'sites', siteId)); showToast('Site excluído', 'success'); loadDashboard(); } 
+            if (!confirm('Tem certeza? Esta ação não pode ser desfeita.')) return; 
+            try { await deleteDoc(doc(db, 'sites', siteId)); showToast('Site excluído com sucesso', 'success'); loadDashboard(); } 
             catch (error) { showToast('Erro ao excluir', 'error'); } 
         };
         
-        function openButtonModal(index) {
-            currentEditingButtonIndex = index;
-            const btn = currentEditingSite.content.buttons[index];
-            document.getElementById('editBtnText').value = btn.text || '';
-            document.getElementById('editBtnUrl').value = btn.url || '#';
-            document.getElementById('editBtnType').value = btn.type || 'primary';
-            document.getElementById('editBtnPosition').value = btn.position || 'hero';
-            document.getElementById('editBtnShape').value = btn.shape || 'rounded';
-            document.getElementById('editBtnAlign').value = btn.align || 'center';
-            document.getElementById('editButtonModal').classList.add('active');
-        }
-        
-        function closeButtonModal() {
-            document.getElementById('editButtonModal').classList.remove('active');
-            currentEditingButtonIndex = null;
-        }
-        
-        function openServiceModal(index) {
-            currentEditingServiceIndex = index;
-            const service = currentEditingSite.content.services[index];
-            document.getElementById('editServiceName').value = service.name || '';
-            document.getElementById('editServiceDesc').value = service.description || '';
-            // Render icon selector
-            const container = document.getElementById('serviceIconSelector');
-            container.innerHTML = iconOptions.map(icon => `<div class="icon-option-card ${service.icon === icon.icon ? 'selected' : ''}" data-icon="${icon.icon}"><i class="fas ${icon.icon}"></i><span>${icon.name}</span></div>`).join('');
-            container.querySelectorAll('.icon-option-card').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    container.querySelectorAll('.icon-option-card').forEach(o => o.classList.remove('selected'));
-                    opt.classList.add('selected');
-                });
-            });
-            document.getElementById('editServiceModal').classList.add('active');
-        }
-        
-        function closeServiceModal() {
-            document.getElementById('editServiceModal').classList.remove('active');
-            currentEditingServiceIndex = null;
-        }
-        
-        window.closeButtonModal = closeButtonModal;
-        window.closeServiceModal = closeServiceModal;
+        let renderButtonsList, renderServicesList, updateSiteContent;
         
         function showEditor() {
             showPage('editorPage');
@@ -488,32 +522,36 @@
             
             let html = `
                 <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
-                    <div class="editor-field"><label>Título</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}"></div>
-                    <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}"></div>
+                    <div class="editor-field"><label>Título Principal</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}" placeholder="Título do seu site"></div>
+                    <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}" placeholder="Subtítulo"></div>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
-                    <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}"></div></div>
-                    <div class="editor-field"><label>Cor Secundária</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}"></div></div>
+                    <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1"></div></div>
+                    <div class="editor-field"><label>Cor Secundária</label><div class="color-input-group"><input type="color" id="secondaryColor" value="${content.secondaryColor || '#8b5cf6'}"><input type="text" id="secondaryColorText" value="${content.secondaryColor || '#8b5cf6'}" placeholder="#8b5cf6"></div></div>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-font"></i> Tipografia</h4>
                     <div class="editor-field"><label>Fonte</label><select id="fontFamily">${fontOptions.map(f => `<option value="${f.value}" ${content.fontFamily === f.value ? 'selected' : ''}>${f.label}</option>`).join('')}</select></div>
                 </div>
                 <div class="editor-section"><h4><i class="fab fa-whatsapp"></i> WhatsApp & Contato</h4>
-                    <div class="editor-field"><label><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar WhatsApp</label></div>
-                    <div class="editor-field"><label>Número</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}"></div>
-                    <div class="editor-field"><label>Mensagem</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}"></div>
-                    <div class="editor-field"><label><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Email</label></div>
-                    <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}"></div>
+                    <div class="editor-field"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="showWhatsapp" ${content.showWhatsapp ? 'checked' : ''}> Ativar Botão WhatsApp</label></div>
+                    <div class="editor-field"><label>Número do WhatsApp</label><input type="text" id="whatsappNumber" value="${escapeHtml(content.whatsappNumber || '')}" placeholder="5511999999999"></div>
+                    <div class="editor-field"><label>Mensagem do WhatsApp</label><input type="text" id="whatsappMessage" value="${escapeHtml(content.whatsappMessage || '')}" placeholder="Olá! Vim pelo seu site"></div>
+                    <div class="editor-field"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="showEmail" ${content.showEmail ? 'checked' : ''}> Ativar Botão Email</label></div>
+                    <div class="editor-field"><label>Email</label><input type="email" id="emailAddress" value="${escapeHtml(content.emailAddress || '')}" placeholder="contato@email.com"></div>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-link"></i> Botões Personalizados</h4>
                     <div id="buttonsList" class="items-list"></div>
-                    <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:12px;">+ Adicionar Botão</button>
+                    <button class="btn-outline" id="addButtonBtn" style="width:100%; margin-top:12px;"><i class="fas fa-plus"></i> Adicionar Botão</button>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no botão para editar suas propriedades</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-server"></i> Cards de Serviços</h4>
                     <div id="servicesList" class="items-list"></div>
-                    <button class="btn-outline" id="addServiceBtn" style="width:100%; margin-top:12px;">+ Adicionar Serviço</button>
+                    <button class="btn-outline" id="addServiceBtn" style="width:100%; margin-top:12px;"><i class="fas fa-plus"></i> Adicionar Serviço</button>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Clique no card para editar nome, descrição e ícone</p>
                 </div>
-                <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre</h4><div class="editor-field"><textarea id="aboutText" rows="4">${escapeHtml(content.aboutText || '')}</textarea></div></div>
+                <div class="editor-section"><h4><i class="fas fa-align-left"></i> Sobre / Descrição</h4>
+                    <div class="editor-field"><textarea id="aboutText" rows="4" placeholder="Sobre você ou sua empresa...">${escapeHtml(content.aboutText || '')}</textarea></div>
+                </div>
             `;
             
             const editorFields = document.getElementById('editorFields');
@@ -522,11 +560,11 @@
             const buttons = content.buttons || [];
             const services = content.services || [];
             
-            function renderButtonsList() {
+            renderButtonsList = () => {
                 const container = document.getElementById('buttonsList');
                 if (container) {
                     if (buttons.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">Nenhum botão adicionado. Clique em "+ Adicionar Botão"</div>';
+                        container.innerHTML = '<div style="text-align:center; padding:20px; background:#f8fafc; border-radius:16px; color:#64748b;">Nenhum botão adicionado. Clique em "+ Adicionar Botão"</div>';
                     } else {
                         container.innerHTML = buttons.map((btn, idx) => `
                             <div class="item-preview">
@@ -538,20 +576,20 @@
                                     </div>
                                 </div>
                                 <div class="item-actions">
-                                    <button class="btn-icon" onclick="openButtonModal(${idx})"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-icon" onclick="removeButton(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
+                                    <button class="btn-icon" onclick="window.openButtonModal(${idx})"><i class="fas fa-edit"></i> Editar</button>
+                                    <button class="btn-icon" onclick="window.removeButton(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
                         `).join('');
                     }
                 }
-            }
+            };
             
-            function renderServicesList() {
+            renderServicesList = () => {
                 const container = document.getElementById('servicesList');
                 if (container) {
                     if (services.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">Nenhum serviço adicionado. Clique em "+ Adicionar Serviço"</div>';
+                        container.innerHTML = '<div style="text-align:center; padding:20px; background:#f8fafc; border-radius:16px; color:#64748b;">Nenhum serviço adicionado. Clique em "+ Adicionar Serviço"</div>';
                     } else {
                         container.innerHTML = services.map((srv, idx) => `
                             <div class="item-preview">
@@ -563,17 +601,14 @@
                                     </div>
                                 </div>
                                 <div class="item-actions">
-                                    <button class="btn-icon" onclick="openServiceModal(${idx})"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-icon" onclick="removeService(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
+                                    <button class="btn-icon" onclick="window.openServiceModal(${idx})"><i class="fas fa-edit"></i> Editar</button>
+                                    <button class="btn-icon" onclick="window.removeService(${idx})" style="color:#dc2626;"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
                         `).join('');
                     }
                 }
-            }
-            
-            window.removeButton = (idx) => { buttons.splice(idx, 1); renderButtonsList(); updateSiteContent(); showToast('Botão removido', 'success'); };
-            window.removeService = (idx) => { services.splice(idx, 1); renderServicesList(); updateSiteContent(); showToast('Serviço removido', 'success'); };
+            };
             
             renderButtonsList();
             renderServicesList();
@@ -639,7 +674,7 @@
             const colorTexts = ['primaryColorText', 'secondaryColorText'];
             colorTexts.forEach(ct => { const el = document.getElementById(ct); if (el) { el.addEventListener('change', (e) => { const colorField = ct.replace('Text', ''); const colorEl = document.getElementById(colorField); if (colorEl) colorEl.value = e.target.value; updateSiteContent(); }); } });
             
-            async function updateSiteContent() {
+            updateSiteContent = async () => {
                 if (!currentEditingSite) return;
                 const heroTitleEl = document.getElementById('heroTitle');
                 const heroSubtitleEl = document.getElementById('heroSubtitle');
@@ -668,7 +703,7 @@
                 currentEditingSite.content.services = services;
                 try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content }); updatePreview(); } 
                 catch (error) { console.error('Erro:', error); }
-            }
+            };
             updatePreview();
         }
         
@@ -694,28 +729,25 @@
                 if (btn.shape === 'square') return '12px';
                 return '50px';
             };
-            const getAlign = (btn) => {
-                if (btn.align === 'left') return 'flex-start';
-                if (btn.align === 'right') return 'flex-end';
-                return 'center';
-            };
-            return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div><h1 style="font-size:56px; margin-bottom:20px;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px; background:white; border-radius:24px;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3>${s.name}</h3><p>${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<p style="text-align:center; font-size:18px;">${c.aboutText}</p>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:40px;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary};">${btn.text}</a>`).join('')}</div></div></div>`;
+            return `<div style="font-family:${fontFamily};"><div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;"><div><h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1><p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}${c.showWhatsapp ? `<a href="https://wa.me/${c.whatsappNumber}?text=${encodeURIComponent(c.whatsappMessage || 'Olá!')}" target="_blank" style="padding:14px 32px; background:white; border-radius:50px; text-decoration:none; color:${primary}; font-weight:600;">WhatsApp</a>` : ''}${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}</div></div></div><div style="max-width:1200px; margin:0 auto; padding:60px 20px;">${c.services && c.services.length > 0 ? `<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:60px;">${c.services.map(s => `<div style="text-align:center; padding:40px 30px; background:white; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:transform 0.3s;"><i class="fas ${s.icon || 'fa-star'}" style="font-size:48px; color:${primary}; margin-bottom:20px;"></i><h3 style="margin-bottom:12px; font-size:22px;">${s.name}</h3><p style="color:#64748b;">${s.description || ''}</p></div>`).join('')}</div><div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:60px;">${afterServicesButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}</div>` : ''}${c.aboutText ? `<div style="text-align:center; margin-bottom:40px;"><p style="font-size:18px; line-height:1.8; color:#475569; max-width:800px; margin:0 auto;">${c.aboutText}</p></div>` : ''}<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">${afterAboutButtons.map(btn => `<a href="${btn.url}" style="padding:12px 28px; background:${btn.type === 'primary' ? primary : 'transparent'}; border:2px solid ${primary}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? 'white' : primary}; font-weight:600;">${btn.text}</a>`).join('')}</div></div></div>`;
         }
         
         async function saveSite() { 
             if (currentEditingSite) { 
-                try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content, updatedAt: new Date().toISOString() }); showToast('Site salvo!', 'success'); } 
-                catch (error) { showToast('Erro: ' + error.message, 'error'); } 
+                try { await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content, updatedAt: new Date().toISOString() }); showToast('Site salvo com sucesso!', 'success'); } 
+                catch (error) { showToast('Erro ao salvar: ' + error.message, 'error'); } 
             } 
         }
         
         function closeEditor() { currentEditingSite = null; showPage('dashboardPage'); loadDashboard(); }
+        
         function openCreateModal() { 
             const modal = document.getElementById('createModal');
             if (modal) modal.classList.add('active');
             const firstCard = document.querySelector('.template-card');
             if (firstCard) firstCard.classList.add('selected');
         }
+        
         function closeCreateModal() { 
             const modal = document.getElementById('createModal');
             if (modal) modal.classList.remove('active');
@@ -730,15 +762,24 @@
             const slug = document.getElementById('siteSlug')?.value || ''; 
             const templateId = document.getElementById('selectedTemplate')?.value || 'modern'; 
             if (!title || !slug) { showToast('Preencha todos os campos', 'error'); return; } 
-            try { await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); showToast('Site criado!', 'success'); closeCreateModal(); loadDashboard(); } 
+            try { await addDoc(collection(db, 'sites'), { title, slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''), template: templateId, content: JSON.parse(JSON.stringify(templates[templateId].structure)), userId: currentUser.uid, createdAt: new Date().toISOString(), published: true }); showToast('Site criado com sucesso!', 'success'); closeCreateModal(); loadDashboard(); } 
             catch (error) { showToast('Erro: ' + error.message, 'error'); } 
         }
         
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
         
         async function viewPublicSite(slug) {
-            try { const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true)); const snapshot = await getDocs(q); if (snapshot.empty) { document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center;"><h2>Site não encontrado</h2><a href="/">Voltar</a></div>`; return; } const site = snapshot.docs[0].data(); document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px;">Criado com WebCraft Pro</footer>`; } 
-            catch (error) { document.getElementById('app').innerHTML = `<div>Erro: ${error.message}</div>`; }
+            try { 
+                const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true)); 
+                const snapshot = await getDocs(q); 
+                if (snapshot.empty) { 
+                    document.getElementById('app').innerHTML = `<div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;"><i class="fas fa-search" style="font-size:64px; color:#cbd5e0;"></i><h2>Site não encontrado</h2><a href="/" style="color:#6366f1;">← Voltar para WebCraft Pro</a></div>`; 
+                    return; 
+                } 
+                const site = snapshot.docs[0].data(); 
+                document.getElementById('app').innerHTML = renderSitePreview({ content: site.content }); 
+                document.getElementById('app').innerHTML += `<footer style="text-align:center; padding:24px; background:#f8fafc; color:#94a3b8; font-size:14px;">Criado com <i class="fas fa-heart" style="color:#ef4444;"></i> WebCraft Pro</footer>`; 
+            } catch (error) { document.getElementById('app').innerHTML = `<div style="padding:40px;">Erro: ${error.message}</div>`; }
         }
         
         renderApp();
