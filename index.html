@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -220,7 +220,6 @@
             border-radius: 16px;
             padding: 20px;
             transition: all 0.3s;
-            cursor: pointer;
         }
         
         .site-card:hover {
@@ -354,11 +353,6 @@
             font-size: 14px;
         }
         
-        .editor-field input:focus, .editor-field textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
         /* Toast */
         .toast {
             position: fixed;
@@ -378,7 +372,6 @@
         
         .toast.success { background: #48bb78; }
         .toast.error { background: #f56565; }
-        .toast.info { background: #4299e1; }
         
         .loading {
             text-align: center;
@@ -396,7 +389,6 @@
             margin-bottom: 20px;
         }
         
-        /* Template Preview Cards */
         .template-card {
             border: 2px solid #e2e8f0;
             border-radius: 16px;
@@ -411,31 +403,19 @@
             background: #f7fafc;
         }
         
-        .template-card h3 {
-            margin-bottom: 8px;
-        }
-        
-        .template-card p {
-            color: #718096;
-            font-size: 14px;
-        }
-        
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
                 position: fixed;
                 z-index: 100;
             }
-            
             .main-content {
                 margin-left: 0;
                 padding: 20px;
             }
-            
             .editor-layout {
                 flex-direction: column;
             }
-            
             .editor-sidebar {
                 width: 100%;
                 max-height: 50vh;
@@ -444,155 +424,15 @@
     </style>
 </head>
 <body>
-    <!-- Login Page -->
-    <div id="loginPage" class="page">
-        <div class="auth-page">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <div class="logo"><i class="fas fa-rocket"></i></div>
-                    <h1>WebCraft</h1>
-                    <p>Crie websites profissionais em minutos</p>
-                </div>
-                <form id="loginForm">
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="loginEmail" required placeholder="seu@email.com">
-                    </div>
-                    <div class="input-group">
-                        <label>Senha</label>
-                        <input type="password" id="loginPassword" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" class="btn-primary">Entrar</button>
-                </form>
-                <p class="auth-switch">
-                    Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a>
-                </p>
-            </div>
-        </div>
+    <div id="app">
+        <!-- App content will be rendered here -->
+        <div class="loading">Carregando...</div>
     </div>
-    
-    <!-- Register Page -->
-    <div id="registerPage" class="page">
-        <div class="auth-page">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <div class="logo"><i class="fas fa-rocket"></i></div>
-                    <h1>Criar Conta</h1>
-                    <p>Comece gratuitamente</p>
-                </div>
-                <form id="registerForm">
-                    <div class="input-group">
-                        <label>Nome completo</label>
-                        <input type="text" id="registerName" required placeholder="João Silva">
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="registerEmail" required placeholder="joao@email.com">
-                    </div>
-                    <div class="input-group">
-                        <label>Senha</label>
-                        <input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres">
-                    </div>
-                    <button type="submit" class="btn-primary">Criar conta gratuita</button>
-                </form>
-                <p class="auth-switch">
-                    Já tem conta? <a id="showLoginBtn">Fazer login</a>
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Dashboard -->
-    <div id="dashboardPage" class="page">
-        <div class="dashboard-layout">
-            <aside class="sidebar">
-                <div class="sidebar-logo">
-                    <i class="fas fa-rocket"></i> WebCraft
-                </div>
-                <ul class="sidebar-menu">
-                    <li><a class="active" id="dashboardLink"><i class="fas fa-th-large"></i> Meus Sites</a></li>
-                    <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
-                </ul>
-                <div class="sidebar-footer">
-                    <div class="user-info">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="userName">Carregando...</span>
-                    </div>
-                    <button id="logoutBtn" class="btn-outline" style="width: 100%; margin-top: 16px;">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
-                </div>
-            </aside>
-            <main class="main-content">
-                <div class="dashboard-header">
-                    <h1>Meus Sites</h1>
-                    <button id="createSiteBtn" class="btn-primary">
-                        <i class="fas fa-plus"></i> Criar novo site
-                    </button>
-                </div>
-                <div id="sitesGrid">
-                    <div class="loading">Carregando sites...</div>
-                </div>
-            </main>
-        </div>
-    </div>
-    
-    <!-- Editor Page -->
-    <div id="editorPage" class="page">
-        <div class="editor-layout">
-            <div class="editor-sidebar">
-                <h3 id="editorTitle">Editando site</h3>
-                <div id="editorFields"></div>
-                <button id="saveSiteBtn" class="btn-primary" style="margin-top: 20px;">Salvar e Publicar</button>
-                <button id="closeEditorBtn" class="btn-outline" style="margin-top: 10px; width: 100%;">Voltar ao Dashboard</button>
-            </div>
-            <div class="editor-preview">
-                <h3 style="margin-bottom: 20px;"><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3>
-                <div id="livePreview"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Create Modal -->
-    <div id="createModal" class="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 24px;">Criar novo site</h2>
-            <div class="input-group">
-                <label>Nome do site</label>
-                <input type="text" id="siteTitle" placeholder="Ex: Meu Portfólio">
-            </div>
-            <div class="input-group">
-                <label>Endereço do site</label>
-                <input type="text" id="siteSlug" placeholder="exemplo">
-                <small>Seu site estará em: <span id="slugPreview">exemplo</span></small>
-            </div>
-            <div class="input-group">
-                <label>Escolha um template</label>
-                <input type="hidden" id="selectedTemplate" value="portfolio">
-                <div class="template-card" data-template="portfolio">
-                    <h3><i class="fas fa-palette"></i> Portfólio Criativo</h3>
-                    <p>Ideal para designers, artistas e fotógrafos</p>
-                </div>
-                <div class="template-card" data-template="business">
-                    <h3><i class="fas fa-building"></i> Empresa Moderna</h3>
-                    <p>Perfeito para negócios e startups</p>
-                </div>
-                <div class="template-card" data-template="linkhub">
-                    <h3><i class="fas fa-link"></i> Link Hub</h3>
-                    <p>Centralize todos seus links</p>
-                </div>
-            </div>
-            <button id="confirmCreateBtn" class="btn-primary">Criar Site</button>
-            <button id="cancelCreateBtn" class="btn-outline" style="margin-top: 10px;">Cancelar</button>
-        </div>
-    </div>
-    
-    <div id="toast" class="toast"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, collection, query, where, getDocs, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyDSKrHg49hDKa5Cq7L43lh02PQErUEzh30",
@@ -611,64 +451,248 @@
         let currentUser = null;
         let currentEditingSite = null;
         
-        // Templates
         const templates = {
             portfolio: {
-                id: 'portfolio',
                 name: 'Portfólio Criativo',
                 icon: 'fa-palette',
                 structure: {
                     heroTitle: 'Meu Portfólio',
                     heroSubtitle: 'Criativo & Inovador',
                     heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200',
-                    aboutTitle: 'Sobre Mim',
-                    aboutText: 'Sou um profissional apaixonado por criar experiências digitais únicas e memoráveis.',
-                    projects: [
-                        { name: 'Projeto Destaque', description: 'Descrição do projeto', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600' }
-                    ]
+                    aboutText: 'Sou um profissional apaixonado por criar experiências digitais únicas.',
+                    projects: [{ name: 'Projeto 1', description: 'Descrição do projeto' }]
                 }
             },
             business: {
-                id: 'business',
                 name: 'Empresa Moderna',
                 icon: 'fa-building',
                 structure: {
-                    companyName: 'Nexus Corp',
+                    companyName: 'Minha Empresa',
                     tagline: 'Inovação que Transforma',
-                    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200',
-                    description: 'Oferecemos soluções integradas para impulsionar seu negócio ao próximo nível.',
-                    services: [
-                        { name: 'Consultoria', description: 'Estratégias personalizadas', icon: 'fa-chart-line' },
-                        { name: 'Desenvolvimento', description: 'Soluções tecnológicas', icon: 'fa-code' },
-                        { name: 'Marketing', description: 'Growth e resultados', icon: 'fa-megaphone' }
-                    ],
+                    description: 'Oferecemos soluções integradas para seu negócio.',
+                    services: ['Consultoria', 'Desenvolvimento', 'Marketing'],
                     whatsapp: '5511999999999',
                     email: 'contato@empresa.com'
                 }
             },
             linkhub: {
-                id: 'linkhub',
                 name: 'Link Hub',
                 icon: 'fa-link',
                 structure: {
-                    name: 'João Silva',
-                    bio: 'Criador de Conteúdo | Empreendedor',
+                    name: 'Meus Links',
+                    bio: 'Conecte-se comigo',
                     avatar: 'https://ui-avatars.com/api/?background=667eea&color=fff&size=200',
                     links: [
-                        { title: 'Instagram', url: '#', icon: 'fa-instagram' },
-                        { title: 'YouTube', url: '#', icon: 'fa-youtube' },
-                        { title: 'LinkedIn', url: '#', icon: 'fa-linkedin' }
+                        { title: 'Instagram', url: '#' },
+                        { title: 'LinkedIn', url: '#' }
                     ]
                 }
             }
         };
         
-        // Helper Functions
+        // Render functions
+        function renderApp() {
+            const appDiv = document.getElementById('app');
+            appDiv.innerHTML = `
+                <!-- Login Page -->
+                <div id="loginPage" class="page">
+                    <div class="auth-page">
+                        <div class="auth-container">
+                            <div class="auth-header">
+                                <div class="logo"><i class="fas fa-rocket"></i></div>
+                                <h1>WebCraft</h1>
+                                <p>Crie websites profissionais em minutos</p>
+                            </div>
+                            <form id="loginForm">
+                                <div class="input-group">
+                                    <label>Email</label>
+                                    <input type="email" id="loginEmail" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Senha</label>
+                                    <input type="password" id="loginPassword" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Entrar</button>
+                            </form>
+                            <p class="auth-switch">
+                                Não tem conta? <a id="showRegisterBtn">Criar conta gratuita</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Register Page -->
+                <div id="registerPage" class="page">
+                    <div class="auth-page">
+                        <div class="auth-container">
+                            <div class="auth-header">
+                                <div class="logo"><i class="fas fa-rocket"></i></div>
+                                <h1>Criar Conta</h1>
+                                <p>Comece gratuitamente</p>
+                            </div>
+                            <form id="registerForm">
+                                <div class="input-group">
+                                    <label>Nome</label>
+                                    <input type="text" id="registerName" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Email</label>
+                                    <input type="email" id="registerEmail" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Senha</label>
+                                    <input type="password" id="registerPassword" required>
+                                </div>
+                                <button type="submit" class="btn-primary">Criar Conta</button>
+                            </form>
+                            <p class="auth-switch">
+                                Já tem conta? <a id="showLoginBtn">Fazer login</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard -->
+                <div id="dashboardPage" class="page">
+                    <div class="dashboard-layout">
+                        <aside class="sidebar">
+                            <div class="sidebar-logo"><i class="fas fa-rocket"></i> WebCraft</div>
+                            <ul class="sidebar-menu">
+                                <li><a id="dashboardLink"><i class="fas fa-th-large"></i> Meus Sites</a></li>
+                                <li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li>
+                            </ul>
+                            <div class="sidebar-footer">
+                                <div class="user-info">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span id="userName"></span>
+                                </div>
+                                <button id="logoutBtn" class="btn-outline" style="width:100%; margin-top:16px;">Sair</button>
+                            </div>
+                        </aside>
+                        <main class="main-content">
+                            <div class="dashboard-header">
+                                <h1>Meus Sites</h1>
+                                <button id="createSiteBtn" class="btn-primary">+ Criar Site</button>
+                            </div>
+                            <div id="sitesGrid"></div>
+                        </main>
+                    </div>
+                </div>
+                
+                <!-- Editor -->
+                <div id="editorPage" class="page">
+                    <div class="editor-layout">
+                        <div class="editor-sidebar">
+                            <h3 id="editorTitle"></h3>
+                            <div id="editorFields"></div>
+                            <button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;">Salvar</button>
+                            <button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;">Voltar</button>
+                        </div>
+                        <div class="editor-preview">
+                            <h3>Pré-visualização</h3>
+                            <div id="livePreview"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Create Modal -->
+                <div id="createModal" class="modal">
+                    <div class="modal-content">
+                        <h2>Criar novo site</h2>
+                        <div class="input-group">
+                            <label>Nome do site</label>
+                            <input type="text" id="siteTitle" placeholder="Meu Site">
+                        </div>
+                        <div class="input-group">
+                            <label>Endereço (slug)</label>
+                            <input type="text" id="siteSlug" placeholder="meusite">
+                            <small>Seu site estará em: /<span id="slugPreview">meusite</span></small>
+                        </div>
+                        <div class="input-group">
+                            <label>Template</label>
+                            <input type="hidden" id="selectedTemplate" value="portfolio">
+                            <div class="template-card" data-template="portfolio">
+                                <h3>🎨 Portfólio Criativo</h3>
+                            </div>
+                            <div class="template-card" data-template="business">
+                                <h3>🏢 Empresa Moderna</h3>
+                            </div>
+                            <div class="template-card" data-template="linkhub">
+                                <h3>🔗 Link Hub</h3>
+                            </div>
+                        </div>
+                        <button id="confirmCreateBtn" class="btn-primary">Criar</button>
+                        <button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button>
+                    </div>
+                </div>
+                
+                <div id="toast" class="toast"></div>
+            `;
+            
+            attachEvents();
+        }
+        
+        function attachEvents() {
+            // Login
+            document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showToast('Login realizado!', 'success');
+                } catch (error) {
+                    showToast(error.message, 'error');
+                }
+            });
+            
+            // Register
+            document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    await updateProfile(userCredential.user, { displayName: name });
+                    showToast('Conta criada!', 'success');
+                } catch (error) {
+                    showToast(error.message, 'error');
+                }
+            });
+            
+            // Navigation
+            document.getElementById('showRegisterBtn')?.addEventListener('click', () => showPage('registerPage'));
+            document.getElementById('showLoginBtn')?.addEventListener('click', () => showPage('loginPage'));
+            document.getElementById('createSiteBtn')?.addEventListener('click', () => openCreateModal());
+            document.getElementById('createSiteLink')?.addEventListener('click', () => openCreateModal());
+            document.getElementById('confirmCreateBtn')?.addEventListener('click', () => createSite());
+            document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
+            document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveSite());
+            document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
+            document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+                await signOut(auth);
+                showToast('Logout realizado', 'success');
+            });
+            
+            // Template selection
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    document.getElementById('selectedTemplate').value = card.dataset.template;
+                });
+            });
+            
+            // Slug preview
+            document.getElementById('siteSlug')?.addEventListener('input', (e) => {
+                const preview = document.getElementById('slugPreview');
+                if (preview) preview.textContent = e.target.value || 'meusite';
+            });
+        }
+        
         function showPage(pageId) {
-            document.getElementById('loginPage').classList.remove('active');
-            document.getElementById('registerPage').classList.remove('active');
-            document.getElementById('dashboardPage').classList.remove('active');
-            document.getElementById('editorPage').classList.remove('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
         }
         
@@ -679,156 +703,27 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
         
-        // Render Public Site (for URL routes)
-        async function renderPublicSite(slug) {
-            const appDiv = document.getElementById('app');
-            if (!appDiv) return;
-            
-            try {
-                const sitesRef = collection(db, 'sites');
-                const q = query(sitesRef, where('slug', '==', slug), where('published', '==', true));
-                const snapshot = await getDocs(q);
-                
-                if (snapshot.empty) {
-                    document.body.innerHTML = `
-                        <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px;">
-                            <i class="fas fa-search" style="font-size: 64px; color: #cbd5e0;"></i>
-                            <h2>Site não encontrado</h2>
-                            <p>O site que você procura não existe ou foi removido.</p>
-                            <a href="/" style="color: #667eea;">Voltar para WebCraft →</a>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                const site = snapshot.docs[0].data();
-                document.body.innerHTML = renderSiteHTML(site);
-                document.body.innerHTML += `
-                    <footer style="text-align: center; padding: 20px; background: #f7fafc; color: #a0aec0; font-size: 13px;">
-                        Criado com <i class="fas fa-heart" style="color: #fc8181;"></i> WebCraft
-                    </footer>
-                `;
-            } catch (error) {
-                document.body.innerHTML = `<div style="padding: 40px; text-align: center;">Erro: ${error.message}</div>`;
-            }
-        }
-        
-        function renderSiteHTML(site) {
-            const content = site.content;
-            const template = site.template;
-            
-            if (template === 'portfolio') {
-                return `
-                    <div style="font-family: 'Inter', sans-serif;">
-                        <div style="height: 70vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${content.heroImage || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200'}'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white;">
-                            <div>
-                                <h1 style="font-size: 56px; margin-bottom: 20px;">${content.heroTitle || 'Meu Portfólio'}</h1>
-                                <p style="font-size: 20px;">${content.heroSubtitle || 'Criativo & Inovador'}</p>
-                            </div>
-                        </div>
-                        <div style="max-width: 1200px; margin: 0 auto; padding: 60px 20px;">
-                            <section style="margin-bottom: 60px;">
-                                <h2 style="font-size: 32px; margin-bottom: 20px;">${content.aboutTitle || 'Sobre Mim'}</h2>
-                                <p style="font-size: 18px; line-height: 1.6; color: #4a5568;">${content.aboutText || 'Sou um profissional apaixonado por criar experiências digitais únicas.'}</p>
-                            </section>
-                            <section>
-                                <h2 style="font-size: 32px; margin-bottom: 30px;">Projetos</h2>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                                    ${content.projects?.map(project => `
-                                        <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                            <img src="${project.image || 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600'}" style="width: 100%; height: 200px; object-fit: cover;">
-                                            <div style="padding: 20px;">
-                                                <h3 style="margin-bottom: 10px;">${project.name}</h3>
-                                                <p style="color: #718096;">${project.description || ''}</p>
-                                            </div>
-                                        </div>
-                                    `).join('') || '<p>Adicione seus projetos no editor</p>'}
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                `;
-            } else if (template === 'business') {
-                return `
-                    <div style="font-family: 'Inter', sans-serif;">
-                        <div style="height: 60vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${content.heroImage || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200'}'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white;">
-                            <div>
-                                <h1 style="font-size: 56px; margin-bottom: 20px;">${content.companyName || 'Empresa'}</h1>
-                                <p style="font-size: 20px;">${content.tagline || 'Inovação que Transforma'}</p>
-                            </div>
-                        </div>
-                        <div style="max-width: 1200px; margin: 0 auto; padding: 60px 20px;">
-                            <p style="font-size: 18px; line-height: 1.6; text-align: center; margin-bottom: 60px; color: #4a5568;">${content.description || 'Oferecemos soluções integradas para seu negócio.'}</p>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 60px;">
-                                ${content.services?.map(service => `
-                                    <div style="text-align: center; padding: 30px; background: #f7fafc; border-radius: 16px;">
-                                        <i class="fas ${service.icon || 'fa-star'}" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
-                                        <h3 style="margin-bottom: 10px;">${service.name}</h3>
-                                        <p style="color: #718096;">${service.description || ''}</p>
-                                    </div>
-                                `).join('') || ''}
-                            </div>
-                            
-                            <div style="text-align: center; display: flex; gap: 20px; justify-content: center;">
-                                ${content.whatsapp ? `<a href="https://wa.me/${content.whatsapp}" style="display: inline-block; padding: 12px 30px; background: #25D366; color: white; text-decoration: none; border-radius: 10px;"><i class="fab fa-whatsapp"></i> WhatsApp</a>` : ''}
-                                ${content.email ? `<a href="mailto:${content.email}" style="display: inline-block; padding: 12px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 10px;"><i class="far fa-envelope"></i> Email</a>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                return `
-                    <div style="min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                        <div style="background: white; border-radius: 30px; padding: 50px; text-align: center; max-width: 500px; width: 100%;">
-                            <img src="${content.avatar || 'https://ui-avatars.com/api/?background=667eea&color=fff&size=200'}" style="width: 120px; height: 120px; border-radius: 60px; margin-bottom: 20px; object-fit: cover;">
-                            <h1 style="margin-bottom: 10px;">${content.name || 'Usuário'}</h1>
-                            <p style="color: #718096; margin-bottom: 30px;">${content.bio || 'Conecte-se comigo'}</p>
-                            <div style="display: flex; flex-direction: column; gap: 15px;">
-                                ${content.links?.map(link => `
-                                    <a href="${link.url}" style="display: block; padding: 15px; background: #f7fafc; border-radius: 12px; text-decoration: none; color: #2d3748; font-weight: 500; transition: all 0.3s;" onmouseover="this.style.background='#edf2f7'" onmouseout="this.style.background='#f7fafc'">
-                                        <i class="fab ${link.icon || 'fa-link'}" style="margin-right: 10px;"></i> ${link.title}
-                                    </a>
-                                `).join('') || ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        // Dashboard Functions
         async function loadDashboard() {
             if (!currentUser) return;
             
             const sitesGrid = document.getElementById('sitesGrid');
-            if (!sitesGrid) return;
-            
-            sitesGrid.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>';
+            sitesGrid.innerHTML = '<div class="loading">Carregando...</div>';
             
             try {
-                const sitesRef = collection(db, 'sites');
-                const q = query(sitesRef, where('userId', '==', currentUser.uid));
+                const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
                 const snapshot = await getDocs(q);
                 
-                const userNameSpan = document.getElementById('userName');
-                if (userNameSpan) {
-                    userNameSpan.textContent = currentUser.displayName || currentUser.email;
-                }
+                document.getElementById('userName').textContent = currentUser.displayName || currentUser.email;
                 
                 if (snapshot.empty) {
                     sitesGrid.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-globe"></i>
-                            <h3>Você ainda não tem sites</h3>
-                            <p>Crie seu primeiro site profissional agora mesmo</p>
-                            <button class="btn-primary" id="emptyCreateBtn">
-                                <i class="fas fa-plus"></i> Criar meu primeiro site
-                            </button>
+                            <h3>Nenhum site ainda</h3>
+                            <button class="btn-primary" id="emptyCreateBtn">Criar primeiro site</button>
                         </div>
                     `;
-                    const emptyBtn = document.getElementById('emptyCreateBtn');
-                    if (emptyBtn) emptyBtn.onclick = () => openCreateModal();
+                    document.getElementById('emptyCreateBtn')?.addEventListener('click', () => openCreateModal());
                     return;
                 }
                 
@@ -845,44 +740,117 @@
                                 </div>
                             </div>
                             <div class="site-card-actions">
-                                <button class="btn-outline" data-siteid="${doc.id}" data-action="edit">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="btn-outline" data-siteid="${doc.id}" data-slug="${site.slug}" data-action="view">
-                                    <i class="fas fa-eye"></i> Ver
-                                </button>
-                                <button class="btn-danger" data-siteid="${doc.id}" data-action="delete">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <button class="btn-outline" onclick="window.editSiteById('${doc.id}')">Editar</button>
+                                <button class="btn-outline" onclick="window.open('/${site.slug}', '_blank')">Ver</button>
+                                <button class="btn-danger" onclick="window.deleteSiteById('${doc.id}')">Excluir</button>
                             </div>
                         </div>
                     `;
                 });
-                
-                // Attach event listeners
-                document.querySelectorAll('[data-action="edit"]').forEach(btn => {
-                    btn.onclick = () => editSite(btn.dataset.siteid);
-                });
-                document.querySelectorAll('[data-action="view"]').forEach(btn => {
-                    btn.onclick = () => window.open(`/${btn.dataset.slug}`, '_blank');
-                });
-                document.querySelectorAll('[data-action="delete"]').forEach(btn => {
-                    btn.onclick = () => deleteSite(btn.dataset.siteid);
-                });
             } catch (error) {
-                console.error('Error loading sites:', error);
                 sitesGrid.innerHTML = `<div class="empty-state">Erro: ${error.message}</div>`;
             }
         }
         
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
+        window.editSiteById = async (siteId) => {
+            const q = query(collection(db, 'sites'), where('userId', '==', currentUser.uid));
+            const snapshot = await getDocs(q);
+            snapshot.forEach(doc => {
+                if (doc.id === siteId) {
+                    currentEditingSite = { id: doc.id, ...doc.data() };
+                    showEditor();
+                }
             });
+        };
+        
+        window.deleteSiteById = async (siteId) => {
+            if (!confirm('Tem certeza?')) return;
+            await deleteDoc(doc(db, 'sites', siteId));
+            showToast('Site excluído', 'success');
+            loadDashboard();
+        };
+        
+        function showEditor() {
+            showPage('editorPage');
+            document.getElementById('editorTitle').textContent = `Editando: ${currentEditingSite.title}`;
+            
+            let html = '';
+            for (let [key, value] of Object.entries(currentEditingSite.content)) {
+                if (typeof value === 'string') {
+                    html += `
+                        <div class="editor-field">
+                            <label>${key}</label>
+                            <input type="text" id="field_${key}" value="${escapeHtml(value)}">
+                        </div>
+                    `;
+                }
+            }
+            
+            document.getElementById('editorFields').innerHTML = html;
+            
+            for (let [key, value] of Object.entries(currentEditingSite.content)) {
+                if (typeof value === 'string') {
+                    document.getElementById(`field_${key}`)?.addEventListener('change', async (e) => {
+                        currentEditingSite.content[key] = e.target.value;
+                        await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                        updatePreview();
+                    });
+                }
+            }
+            
+            updatePreview();
+        }
+        
+        function updatePreview() {
+            const preview = document.getElementById('livePreview');
+            if (preview && currentEditingSite) {
+                preview.innerHTML = renderSitePreview(currentEditingSite);
+            }
+        }
+        
+        function renderSitePreview(site) {
+            const content = site.content;
+            const template = site.template;
+            
+            if (template === 'portfolio') {
+                return `
+                    <div style="padding:20px;">
+                        <h1>${content.heroTitle || 'Título'}</h1>
+                        <p>${content.heroSubtitle || 'Subtítulo'}</p>
+                        <p>${content.aboutText || 'Sobre...'}</p>
+                    </div>
+                `;
+            } else if (template === 'business') {
+                return `
+                    <div style="padding:20px;">
+                        <h1>${content.companyName || 'Empresa'}</h1>
+                        <p>${content.tagline || 'Slogan'}</p>
+                        <p>${content.description || 'Descrição'}</p>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div style="padding:20px; text-align:center;">
+                        <h1>${content.name || 'Nome'}</h1>
+                        <p>${content.bio || 'Bio'}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function saveSite() {
+            if (currentEditingSite) {
+                await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
+                showToast('Site salvo!', 'success');
+                closeEditor();
+                loadDashboard();
+            }
+        }
+        
+        function closeEditor() {
+            currentEditingSite = null;
+            showPage('dashboardPage');
+            loadDashboard();
         }
         
         function openCreateModal() {
@@ -905,256 +873,113 @@
                 return;
             }
             
-            // Check if slug exists
             try {
-                const sitesRef = collection(db, 'sites');
-                const q = query(sitesRef, where('slug', '==', slug));
-                const existing = await getDocs(q);
-                
-                if (!existing.empty) {
-                    showToast('Este endereço já está em uso', 'error');
-                    return;
-                }
-                
                 const siteData = {
                     title: title,
                     slug: slug.toLowerCase().replace(/[^a-z0-9]/g, ''),
                     template: templateId,
-                    content: JSON.parse(JSON.stringify(templates[templateId].structure)),
+                    content: templates[templateId].structure,
                     userId: currentUser.uid,
                     createdAt: new Date().toISOString(),
                     published: true
                 };
                 
                 await addDoc(collection(db, 'sites'), siteData);
-                showToast('Site criado com sucesso!', 'success');
+                showToast('Site criado!', 'success');
                 closeCreateModal();
                 loadDashboard();
             } catch (error) {
-                console.error('Error creating site:', error);
                 showToast('Erro: ' + error.message, 'error');
             }
         }
         
-        async function editSite(siteId) {
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Public site viewer
+        async function viewPublicSite(slug) {
             try {
-                const docRef = doc(db, 'sites', siteId);
-                const docSnap = await getDoc(docRef);
+                const q = query(collection(db, 'sites'), where('slug', '==', slug), where('published', '==', true));
+                const snapshot = await getDocs(q);
                 
-                if (docSnap.exists()) {
-                    currentEditingSite = { id: siteId, ...docSnap.data() };
-                    showEditor();
-                }
-            } catch (error) {
-                showToast('Erro ao carregar site para edição', 'error');
-            }
-        }
-        
-        function showEditor() {
-            showPage('editorPage');
-            document.getElementById('editorTitle').textContent = `Editando: ${currentEditingSite.title}`;
-            
-            // Render editor fields
-            const fieldsContainer = document.getElementById('editorFields');
-            const content = currentEditingSite.content;
-            
-            let html = '';
-            for (let [key, value] of Object.entries(content)) {
-                if (typeof value === 'string') {
-                    html += `
-                        <div class="editor-field">
-                            <label>${key.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
-                            <input type="text" id="field_${key}" value="${escapeHtml(value)}" data-field="${key}">
+                if (snapshot.empty) {
+                    document.getElementById('app').innerHTML = `
+                        <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                            <h2>Site não encontrado</h2>
+                            <a href="/">Voltar para WebCraft</a>
                         </div>
                     `;
-                } else if (Array.isArray(value)) {
-                    html += `
-                        <div class="editor-field">
-                            <label>${key.toUpperCase()}</label>
-                            <div id="array_${key}">
-                                ${value.map((item, idx) => `
-                                    <div style="margin-bottom: 10px; border: 1px solid #e2e8f0; padding: 10px; border-radius: 8px;">
-                                        <input type="text" placeholder="Título" value="${escapeHtml(item.name || item.title || '')}" data-array="${key}" data-index="${idx}" data-prop="name" style="margin-bottom: 8px;">
-                                        <input type="text" placeholder="Descrição/URL" value="${escapeHtml(item.description || item.url || '')}" data-array="${key}" data-index="${idx}" data-prop="description">
-                                    </div>
-                                `).join('')}
+                    return;
+                }
+                
+                const site = snapshot.docs[0].data();
+                let html = '';
+                
+                if (site.template === 'portfolio') {
+                    html = `
+                        <div style="font-family:'Inter',sans-serif;">
+                            <div style="height:50vh; background:#667eea; display:flex; align-items:center; justify-content:center; color:white;">
+                                <h1>${site.content.heroTitle || site.title}</h1>
                             </div>
-                            <button class="btn-secondary" id="addArray_${key}">+ Adicionar</button>
+                            <div style="max-width:800px; margin:0 auto; padding:40px;">
+                                <p>${site.content.aboutText || ''}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (site.template === 'business') {
+                    html = `
+                        <div style="font-family:'Inter',sans-serif;">
+                            <div style="height:50vh; background:#764ba2; display:flex; align-items:center; justify-content:center; color:white;">
+                                <h1>${site.content.companyName || site.title}</h1>
+                            </div>
+                            <div style="max-width:800px; margin:0 auto; padding:40px;">
+                                <p>${site.content.description || ''}</p>
+                                ${site.content.whatsapp ? `<a href="https://wa.me/${site.content.whatsapp}">WhatsApp</a>` : ''}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <div style="min-height:100vh; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center;">
+                            <div style="background:white; border-radius:30px; padding:40px; text-align:center;">
+                                <h1>${site.content.name || site.title}</h1>
+                                <p>${site.content.bio || ''}</p>
+                            </div>
                         </div>
                     `;
                 }
-            }
-            
-            fieldsContainer.innerHTML = html;
-            
-            // Add event listeners for fields
-            document.querySelectorAll('#editorFields input[data-field]').forEach(input => {
-                input.addEventListener('change', async (e) => {
-                    currentEditingSite.content[e.target.dataset.field] = e.target.value;
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-                    updatePreview();
-                });
-            });
-            
-            document.querySelectorAll('#editorFields input[data-array]').forEach(input => {
-                input.addEventListener('change', async (e) => {
-                    const arrayName = e.target.dataset.array;
-                    const index = parseInt(e.target.dataset.index);
-                    const prop = e.target.dataset.prop;
-                    currentEditingSite.content[arrayName][index][prop] = e.target.value;
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-                    updatePreview();
-                });
-            });
-            
-            document.querySelectorAll('[id^="addArray_"]').forEach(btn => {
-                btn.onclick = async () => {
-                    const arrayName = btn.id.replace('addArray_', '');
-                    currentEditingSite.content[arrayName].push({ name: 'Novo item', description: '' });
-                    await updateDoc(doc(db, 'sites', currentEditingSite.id), { content: currentEditingSite.content });
-                    showEditor(); // Refresh editor
-                };
-            });
-            
-            updatePreview();
-        }
-        
-        function updatePreview() {
-            const preview = document.getElementById('livePreview');
-            if (preview && currentEditingSite) {
-                preview.innerHTML = renderSiteHTML(currentEditingSite, currentEditingSite.template);
-            }
-        }
-        
-        async function saveAndClose() {
-            if (currentEditingSite) {
-                await updateDoc(doc(db, 'sites', currentEditingSite.id), { 
-                    content: currentEditingSite.content,
-                    updatedAt: new Date().toISOString()
-                });
-                showToast('Site salvo e publicado!', 'success');
-                closeEditor();
-                loadDashboard();
-            }
-        }
-        
-        function closeEditor() {
-            currentEditingSite = null;
-            showPage('dashboardPage');
-            loadDashboard();
-        }
-        
-        async function deleteSite(siteId) {
-            if (!confirm('Tem certeza? Esta ação é irreversível.')) return;
-            try {
-                await deleteDoc(doc(db, 'sites', siteId));
-                showToast('Site excluído com sucesso', 'success');
-                loadDashboard();
+                
+                html += `<footer style="text-align:center; padding:20px; background:#f7fafc;">Criado com WebCraft</footer>`;
+                document.getElementById('app').innerHTML = html;
             } catch (error) {
-                showToast('Erro ao excluir site', 'error');
+                document.getElementById('app').innerHTML = `<div>Erro: ${error.message}</div>`;
             }
         }
         
-        // Check if we're viewing a public site
-        function checkPublicSite() {
-            const path = window.location.pathname;
-            const slug = path.substring(1);
-            
-            if (slug && slug !== '') {
-                renderPublicSite(slug);
-                return true;
-            }
-            return false;
-        }
+        // Initialize
+        renderApp();
         
-        // Event Listeners
-        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                showToast('Login realizado com sucesso!', 'success');
-            } catch (error) {
-                showToast('Erro: ' + error.message, 'error');
-            }
-        });
-        
-        document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await updateProfile(userCredential.user, { displayName: name });
-                showToast('Conta criada com sucesso!', 'success');
-            } catch (error) {
-                showToast('Erro: ' + error.message, 'error');
-            }
-        });
-        
-        document.getElementById('showRegisterBtn')?.addEventListener('click', () => {
-            showPage('registerPage');
-        });
-        
-        document.getElementById('showLoginBtn')?.addEventListener('click', () => {
-            showPage('loginPage');
-        });
-        
-        document.getElementById('createSiteBtn')?.addEventListener('click', () => openCreateModal());
-        document.getElementById('createSiteLink')?.addEventListener('click', () => openCreateModal());
-        document.getElementById('confirmCreateBtn')?.addEventListener('click', () => createSite());
-        document.getElementById('cancelCreateBtn')?.addEventListener('click', () => closeCreateModal());
-        document.getElementById('saveSiteBtn')?.addEventListener('click', () => saveAndClose());
-        document.getElementById('closeEditorBtn')?.addEventListener('click', () => closeEditor());
-        
-        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-            await signOut(auth);
-            showToast('Logout realizado', 'success');
-        });
-        
-        // Template selection
-        document.querySelectorAll('.template-card').forEach(card => {
-            card.addEventListener('click', () => {
-                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                document.getElementById('selectedTemplate').value = card.dataset.template;
+        // Check route
+        const slug = window.location.pathname.substring(1);
+        if (slug && slug !== '') {
+            viewPublicSite(slug);
+        } else {
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) {
+                    showPage('dashboardPage');
+                    loadDashboard();
+                } else {
+                    showPage('loginPage');
+                }
             });
-        });
-        
-        // Slug preview
-        document.getElementById('siteSlug')?.addEventListener('input', (e) => {
-            const slugPreview = document.getElementById('slugPreview');
-            if (slugPreview) slugPreview.textContent = e.target.value || 'exemplo';
-        });
-        
-        // Auth State
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            
-            // Check if it's a public site route
-            if (checkPublicSite()) return;
-            
-            if (user) {
-                showPage('dashboardPage');
-                loadDashboard();
-            } else {
-                showPage('loginPage');
-            }
-        });
-        
-        // Initial check
-        if (!checkPublicSite()) {
-            // If no public site, show auth based on existing user
-            if (auth.currentUser) {
-                showPage('dashboardPage');
-                loadDashboard();
-            } else {
-                showPage('loginPage');
-            }
         }
     </script>
 </body>
