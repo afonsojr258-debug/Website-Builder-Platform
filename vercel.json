@@ -1,5 +1,32 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/editor",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/:slug",
+      "destination": "/index.html"
+    }
   ]
 }
