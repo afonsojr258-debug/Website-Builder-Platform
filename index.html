@@ -43,7 +43,7 @@
         .btn-icon:hover { background: #e2e8f0; transform: translateY(-2px); }
         .btn-pro { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; }
         .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(245,158,11,0.3); }
-        .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        .btn-disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
         
         /* Hero Section */
         .hero-section { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: white; padding: 100px 48px; text-align: center; position: relative; overflow: hidden; }
@@ -562,7 +562,7 @@
                 <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..."></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon">${floatIconOptions.map(opt => `<option value="${opt.icon}">${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul><div id="plansButtonContainer"></div><p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="closePlansModal(); window.showTerms();" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a> | <a onclick="closePlansModal(); window.showPrivacyPolicy();" style="cursor:pointer; color:#6366f1;">Política de Privacidade</a></p></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -613,9 +613,6 @@
             document.getElementById('logoutSidebarBtn')?.addEventListener('click', async () => { await signOut(auth); showToast('Logout realizado', 'success'); showPage('landingPage'); });
             document.getElementById('plansLink')?.addEventListener('click', () => openPlansModal());
             document.getElementById('closePlansBtn')?.addEventListener('click', () => closePlansModal());
-            document.getElementById('payWhatsappBtn')?.addEventListener('click', () => {
-                window.open('https://wa.me/258842167459?text=Olá! Gostaria de adquirir o plano PRO do WebCraft Pro. Meu email é: ' + encodeURIComponent(currentUser?.email || ''), '_blank');
-            });
             
             document.querySelectorAll('.template-card').forEach(card => { card.addEventListener('click', () => { document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); document.getElementById('selectedTemplate').value = card.dataset.template; }); });
             document.getElementById('siteSlug')?.addEventListener('input', (e) => { const preview = document.getElementById('slugPreview'); if (preview) preview.textContent = e.target.value || 'meuportfolio'; });
@@ -664,7 +661,21 @@
         
         function openPlansModal() { 
             const modal = document.getElementById('plansModal');
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                // Atualizar o botão baseado no status do plano
+                const container = document.getElementById('plansButtonContainer');
+                if (container) {
+                    if (currentUserPlan.isPro) {
+                        container.innerHTML = `<button class="btn-primary btn-disabled" style="background:#10b981; width:100%;"><i class="fas fa-check-circle"></i> Você já é PRO! ✓</button>`;
+                    } else {
+                        container.innerHTML = `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E); width:100%;"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`;
+                        document.getElementById('payWhatsappBtn')?.addEventListener('click', () => {
+                            window.open('https://wa.me/258842167459?text=Olá! Gostaria de adquirir o plano PRO do WebCraft Pro. Meu email é: ' + encodeURIComponent(currentUser?.email || ''), '_blank');
+                        });
+                    }
+                }
+            }
         }
         function closePlansModal() { document.getElementById('plansModal').classList.remove('active'); }
         
@@ -1298,14 +1309,10 @@
             const primary = c.primaryColor || '#6366f1';
             const secondary = c.secondaryColor || '#8b5cf6';
             
-            // Filtrar botões por posição
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
-            
-            // Botões entre cards específicos
             const betweenCardsButtons = (c.buttons || []).filter(b => b.position === 'between-cards' && b.cardIndex !== undefined && b.cardIndex !== null);
             
-            // Imagens
             const heroImages = (c.customImages || []).filter(img => img.position === 'hero' || img.position === 'after-title' || img.position === 'before-title');
             const betweenCardsImages = (c.customImages || []).filter(img => img.position === 'between-cards' && img.cardIndex !== undefined && img.cardIndex !== null);
             
@@ -1326,22 +1333,17 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            // Renderizar imagens do hero
             const renderHeroImage = (img) => {
                 const shapeClass = img.shape === 'circle' ? 'img-circle' : (img.shape === 'rounded' ? 'img-rounded' : 'img-square');
                 const borderStyle = img.border ? `border: 3px solid ${img.borderColor || primary};` : '';
                 return `<div style="text-align:center; margin: 20px 0;"><img src="${img.url}" class="custom-image ${shapeClass}" style="width: ${img.size || 250}px; height: auto; max-width: 100%; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);"></div>`;
             };
             
-            // Construir conteúdo do Hero
             let heroContentHtml = '';
-            // Imagens antes do título
             heroImages.filter(img => img.position === 'before-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
             heroContentHtml += `<h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>`;
-            // Imagens depois do título
             heroImages.filter(img => img.position === 'after-title').forEach(img => { heroContentHtml += renderHeroImage(img); });
             heroContentHtml += `<p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>`;
-            // Imagens no hero (padrão)
             heroImages.filter(img => img.position === 'hero').forEach(img => { heroContentHtml += renderHeroImage(img); });
             heroContentHtml += `<div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
                 ${heroButtons.map(btn => `<a href="${btn.url}" style="padding:14px 32px; background:${btn.type === 'primary' ? 'white' : 'rgba(255,255,255,0.2)'}; border-radius:${getStyle(btn)}; text-decoration:none; color:${btn.type === 'primary' ? primary : 'white'}; font-weight:600; transition:transform 0.2s;">${btn.text}</a>`).join('')}
@@ -1349,7 +1351,6 @@
                 ${c.showEmail ? `<a href="mailto:${c.emailAddress}" style="padding:14px 32px; background:rgba(255,255,255,0.2); border-radius:50px; text-decoration:none; color:white; font-weight:600;">Email</a>` : ''}
             </div>`;
             
-            // Construir serviços com imagens e botões entre eles
             let servicesHtml = '';
             if (c.services && c.services.length > 0) {
                 servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
@@ -1360,7 +1361,6 @@
                         <p style="color:#64748b;">${service.description || ''}</p>
                     </div>`;
                     
-                    // Verificar se existe imagem para colocar depois deste card
                     const imageAfterThisCard = betweenCardsImages.find(img => img.cardIndex === idx);
                     if (imageAfterThisCard) {
                         const shapeClass = imageAfterThisCard.shape === 'circle' ? 'img-circle' : (imageAfterThisCard.shape === 'rounded' ? 'img-rounded' : 'img-square');
@@ -1370,7 +1370,6 @@
                         </div>`;
                     }
                     
-                    // Verificar se existe botão para colocar depois deste card
                     const buttonAfterThisCard = betweenCardsButtons.find(b => b.cardIndex === idx);
                     if (buttonAfterThisCard) {
                         servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
