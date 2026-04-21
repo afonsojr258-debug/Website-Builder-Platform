@@ -26,7 +26,10 @@
         .logo-img { height: 45px; width: auto; border-radius: 10px; }
         .logo-text { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .main-nav { display: none; }
+        /* Menu de navegação */
+        .main-nav { display: flex; gap: 32px; }
+        .main-nav a { text-decoration: none; color: #475569; font-weight: 500; transition: color 0.2s; cursor: pointer; }
+        .main-nav a:hover { color: #6366f1; }
         .mobile-menu-btn { display: none; background: none; border: none; font-size: 28px; cursor: pointer; color: #475569; padding: 8px; }
         .mobile-nav { display: none; position: fixed; top: 77px; left: 0; right: 0; background: white; padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid #e2e8f0; z-index: 999; }
         .mobile-nav.open { display: flex; }
@@ -81,6 +84,9 @@
         /* Footer */
         .main-footer { background: #0f172a; color: #94a3b8; padding: 48px; text-align: center; border-top: 1px solid #1e293b; }
         .footer-content p { margin: 8px 0; }
+        .footer-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; flex-wrap: wrap; }
+        .footer-links a { color: #94a3b8; text-decoration: none; transition: color 0.2s; cursor: pointer; }
+        .footer-links a:hover { color: #6366f1; }
         
         /* Auth Pages */
         .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 20px; }
@@ -130,7 +136,7 @@
         
         /* Editor */
         .editor-layout { display: flex; height: 100vh; background: #f8fafc; }
-        .editor-sidebar { width: 500px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
+        .editor-sidebar { width: 550px; background: white; border-right: 1px solid #e2e8f0; padding: 32px; overflow-y: auto; }
         .editor-sidebar h3 { font-size: 20px; font-weight: 700; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; color: #0f172a; display: flex; align-items: center; gap: 8px; }
         .editor-preview { flex: 1; overflow-y: auto; padding: 32px; background: #f1f5f9; }
         .editor-preview h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #0f172a; display: flex; align-items: center; gap: 8px; }
@@ -162,7 +168,7 @@
         /* Modal Popup */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 2000; }
         .modal-overlay.active { display: flex; }
-        .edit-modal { background: white; border-radius: 32px; width: 90%; max-width: 550px; max-height: 85vh; overflow-y: auto; animation: popIn 0.3s ease; }
+        .edit-modal { background: white; border-radius: 32px; width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; animation: popIn 0.3s ease; }
         .edit-modal-header { padding: 24px 28px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
         .edit-modal-header h3 { font-size: 20px; font-weight: 700; color: #0f172a; }
         .close-modal { background: none; border: none; font-size: 28px; cursor: pointer; color: #94a3b8; transition: all 0.2s; }
@@ -202,6 +208,12 @@
         .float-left { left: 30px; }
         .float-right { right: 30px; }
         
+        /* Foto Perfil */
+        .profile-photo { object-fit: cover; }
+        .photo-circle { border-radius: 50%; }
+        .photo-rounded { border-radius: 20px; }
+        .photo-square { border-radius: 0; }
+        
         .loading { text-align: center; padding: 60px; font-size: 18px; color: #64748b; }
         .loading i { font-size: 40px; margin-bottom: 16px; color: #6366f1; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -218,8 +230,19 @@
         .pricing-features li { padding: 8px 0; display: flex; align-items: center; gap: 8px; }
         .pricing-features i { color: #10b981; }
         
+        /* Política de Privacidade */
+        .legal-content { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .legal-content h1 { font-size: 36px; margin-bottom: 24px; color: #0f172a; }
+        .legal-content h2 { font-size: 24px; margin: 32px 0 16px; color: #1e293b; }
+        .legal-content p { margin-bottom: 16px; line-height: 1.7; color: #334155; }
+        .legal-content ul { margin-bottom: 20px; padding-left: 24px; }
+        .legal-content li { margin-bottom: 8px; color: #334155; }
+        .legal-notice { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 12px; margin: 24px 0; }
+        
         @media (max-width: 768px) {
             .main-header { padding: 16px 20px; }
+            .main-nav { display: none; }
+            .mobile-menu-btn { display: block; }
             .hero-section, .features-section, .templates-section { padding: 60px 20px; }
             .hero-content h1 { font-size: 36px; }
             .hero-content p { font-size: 16px; }
@@ -235,6 +258,7 @@
             .float-left, .float-right { bottom: 20px; padding: 10px 18px; font-size: 14px; }
             .float-left { left: 20px; }
             .float-right { right: 20px; }
+            .footer-links { flex-direction: column; gap: 12px; align-items: center; }
         }
     </style>
 </head>
@@ -306,7 +330,8 @@
                         { name: 'Design', description: 'Identidade visual única', icon: 'fa-paintbrush' },
                         { name: 'Desenvolvimento', description: 'Sites modernos', icon: 'fa-code' }
                     ],
-                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
+                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#6366f1', size: '150', position: 'hero' }
                 }
             },
             corporate: {
@@ -322,11 +347,12 @@
                         { name: 'Consultoria', description: 'Estratégia empresarial', icon: 'fa-chart-simple' },
                         { name: 'Tecnologia', description: 'Soluções digitais', icon: 'fa-microchip' }
                     ],
-                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
+                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#2563eb', size: '150', position: 'hero' }
                 }
             },
             personal: {
-                id: 'personal', name: 'Personal Brand', icon: 'fa-user-astronaut', description: 'Portfólio profissional',
+                id: 'personal', name: 'Personal Brand', icon: 'fa-user-astronaut', description: 'Portfólio pessoal',
                 structure: {
                     heroTitle: 'Ana Silva', heroSubtitle: 'Designer & Diretora',
                     primaryColor: '#ea580c', secondaryColor: '#dc2626', fontFamily: 'Playfair Display',
@@ -334,7 +360,8 @@
                     showWhatsapp: true, whatsappNumber: '5511999999999', whatsappMessage: 'Olá! Gostei do seu trabalho',
                     showEmail: true, emailAddress: 'ana@studio.com',
                     buttons: [], services: [],
-                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' }
+                    floatButton: { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' },
+                    profilePhoto: { url: '', shape: 'circle', border: false, borderColor: '#ea580c', size: '150', position: 'hero' }
                 }
             }
         };
@@ -350,11 +377,152 @@
                     await setDoc(userDocRef, { isPro: false, createdAt: new Date().toISOString(), email: currentUser.email, name: currentUser.displayName || '' });
                     currentUserPlan = { isPro: false };
                 }
-                console.log('Plano do usuário:', currentUserPlan);
             } catch (error) {
                 console.error('Erro ao carregar plano:', error);
                 currentUserPlan = { isPro: false };
             }
+        }
+        
+        function renderPrivacyPolicy() {
+            return `
+                <div class="main-header" style="position: relative;">
+                    <div class="header-container">
+                        <div class="logo-area" onclick="window.showLandingPage()">
+                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
+                            <span class="logo-text">WebCraft Pro</span>
+                        </div>
+                        <div class="main-nav">
+                            <a onclick="window.showLandingPage()">Início</a>
+                            <a onclick="window.showPrivacyPolicy()">Política</a>
+                            <a onclick="window.showTerms()">Termos</a>
+                        </div>
+                        <button class="mobile-menu-btn" id="mobileMenuBtnPolicy"><i class="fas fa-bars"></i></button>
+                        <div class="nav-buttons">
+                            ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
+                        </div>
+                    </div>
+                </div>
+                <div class="legal-content">
+                    <h1><i class="fas fa-shield-alt" style="color: #6366f1; margin-right: 12px;"></i>Política de Privacidade</h1>
+                    <p><strong>Última atualização:</strong> ${new Date().toLocaleDateString('pt-PT')}</p>
+                    
+                    <h2>1. Informações que Coletamos</h2>
+                    <p>A WebCraft Pro coleta informações de identificação pessoal, como nome, endereço de e-mail e dados de pagamento, quando você cria uma conta ou adquire o plano Pro. Também coletamos informações sobre os sites que você cria, incluindo conteúdo, configurações e preferências de design.</p>
+                    
+                    <h2>2. Como Usamos Suas Informações</h2>
+                    <p>Utilizamos suas informações para fornecer, manter e melhorar nossos serviços, processar pagamentos, comunicar novidades e suporte, e proteger contra atividades fraudulentas.</p>
+                    
+                    <h2>3. Compartilhamento de Dados</h2>
+                    <p>Não vendemos ou alugamos seus dados pessoais. Podemos compartilhar informações com prestadores de serviço (como processadores de pagamento) apenas para operar nossa plataforma.</p>
+                    
+                    <div class="legal-notice">
+                        <i class="fas fa-exclamation-triangle" style="color: #f59e0b; font-size: 24px; margin-bottom: 12px; display: block;"></i>
+                        <h3 style="color: #92400e; margin-bottom: 12px;">Política de Não Reembolso</h3>
+                        <p><strong>Importante:</strong> Após a confirmação do pagamento do plano Pro, <strong>não realizamos reembolsos</strong>. O plano Pro é uma aquisição digital com validade vitalícia, e ao efetuar o pagamento você concorda que o serviço é entregue imediatamente. Recomendamos que analise todas as funcionalidades antes de adquirir.</p>
+                    </div>
+                    
+                    <h2>4. Isenção de Responsabilidade</h2>
+                    <p>A WebCraft Pro é uma plataforma SaaS (Software as a Service). Embora mantenhamos altos padrões de disponibilidade e segurança, <strong>não garantimos que o serviço será ininterrupto ou livre de falhas</strong>. A plataforma pode eventualmente passar por manutenções, atualizações ou apresentar indisponibilidades temporárias. Não nos responsabilizamos por perdas de dados, interrupções de serviço ou danos indiretos decorrentes do uso da plataforma. O usuário é responsável por fazer backup de seu conteúdo.</p>
+                    
+                    <h2>5. Seus Direitos</h2>
+                    <p>Você pode solicitar acesso, correção ou exclusão de seus dados pessoais a qualquer momento através do nosso suporte.</p>
+                    
+                    <h2>6. Cookies</h2>
+                    <p>Utilizamos cookies para melhorar sua experiência, lembrar preferências e analisar tráfego.</p>
+                    
+                    <h2>7. Alterações nesta Política</h2>
+                    <p>Notificaremos os usuários sobre alterações significativas através do e-mail cadastrado ou aviso na plataforma.</p>
+                    
+                    <h2>8. Contato</h2>
+                    <p>Dúvidas sobre esta política: <strong>suporte@webcraftpro.com</strong></p>
+                </div>
+                <div class="main-footer">
+                    <div class="footer-links">
+                        <a onclick="window.showPrivacyPolicy()">Política de Privacidade</a>
+                        <a onclick="window.showTerms()">Termos de Uso</a>
+                        <a onclick="window.showLandingPage()">Início</a>
+                    </div>
+                    <div class="footer-content">
+                        <p>© ${new Date().getFullYear()} WebCraft Pro. Todos os direitos reservados.</p>
+                        <p>Crie seu site profissional hoje</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderTerms() {
+            return `
+                <div class="main-header" style="position: relative;">
+                    <div class="header-container">
+                        <div class="logo-area" onclick="window.showLandingPage()">
+                            <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
+                            <span class="logo-text">WebCraft Pro</span>
+                        </div>
+                        <div class="main-nav">
+                            <a onclick="window.showLandingPage()">Início</a>
+                            <a onclick="window.showPrivacyPolicy()">Política</a>
+                            <a onclick="window.showTerms()">Termos</a>
+                        </div>
+                        <button class="mobile-menu-btn" id="mobileMenuBtnTerms"><i class="fas fa-bars"></i></button>
+                        <div class="nav-buttons">
+                            ${currentUser ? `<button class="btn-nav btn-nav-primary" onclick="window.showDashboardPage()">Dashboard</button>` : `<button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>`}
+                        </div>
+                    </div>
+                </div>
+                <div class="legal-content">
+                    <h1><i class="fas fa-file-contract" style="color: #6366f1; margin-right: 12px;"></i>Termos de Uso</h1>
+                    <p><strong>Última atualização:</strong> ${new Date().toLocaleDateString('pt-PT')}</p>
+                    
+                    <h2>1. Aceitação dos Termos</h2>
+                    <p>Ao acessar ou usar a plataforma WebCraft Pro, você concorda com estes Termos de Uso. Se não concordar, não utilize nossos serviços.</p>
+                    
+                    <h2>2. Descrição do Serviço</h2>
+                    <p>A WebCraft Pro é uma plataforma de criação de websites que permite aos usuários construir, editar e publicar sites utilizando templates pré-definidos e ferramentas de personalização. O serviço é fornecido "como está" e "conforme disponível".</p>
+                    
+                    <div class="legal-notice">
+                        <i class="fas fa-cloud" style="color: #f59e0b; font-size: 24px; margin-bottom: 12px; display: block;"></i>
+                        <h3 style="color: #92400e; margin-bottom: 12px;">Sobre a Disponibilidade do Serviço</h3>
+                        <p>A WebCraft Pro é um sistema hospedado na nuvem. Embora nos esforcemos para manter a plataforma estável e disponível, <strong>não podemos garantir 100% de uptime</strong>. Eventuais indisponibilidades podem ocorrer devido a manutenções programadas, falhas de infraestrutura, ataques cibernéticos ou outros eventos fora de nosso controle. O usuário reconhece que o serviço pode, em casos raros, ficar temporariamente indisponível.</p>
+                    </div>
+                    
+                    <h2>3. Planos e Pagamentos</h2>
+                    <p>Oferecemos um plano gratuito com limite de 2 sites e um plano Pro com pagamento único vitalício. <strong>O pagamento do plano Pro não é reembolsável</strong>, conforme detalhado em nossa Política de Privacidade. Após o pagamento, o acesso ao plano Pro é ativado permanentemente na conta do usuário.</p>
+                    
+                    <h2>4. Responsabilidades do Usuário</h2>
+                    <p>Você é responsável por todo o conteúdo publicado em seus sites, incluindo textos, imagens e links. Você concorda em não utilizar a plataforma para atividades ilegais, difamatórias ou que infrinjam direitos de terceiros.</p>
+                    
+                    <h2>5. Propriedade Intelectual</h2>
+                    <p>Você mantém a propriedade de todo o conteúdo que criar em seus sites. A WebCraft Pro mantém os direitos sobre a plataforma, templates, código e ferramentas disponibilizadas.</p>
+                    
+                    <h2>6. Limitação de Responsabilidade</h2>
+                    <p>Em nenhum caso a WebCraft Pro será responsável por danos indiretos, incidentais, especiais ou consequenciais, incluindo perda de lucros, dados ou interrupção de negócios, mesmo que tenha sido avisada da possibilidade de tais danos. Nossa responsabilidade total é limitada ao valor pago por você pelos serviços nos últimos 12 meses.</p>
+                    
+                    <h2>7. Rescisão</h2>
+                    <p>Podemos suspender ou encerrar sua conta se você violar estes Termos. Você pode encerrar sua conta a qualquer momento. Conteúdos de usuários gratuitos podem ser removidos após período de inatividade prolongado.</p>
+                    
+                    <h2>8. Alterações nos Termos</h2>
+                    <p>Podemos modificar estes Termos a qualquer momento. Alterações significativas serão notificadas por e-mail ou na plataforma.</p>
+                    
+                    <h2>9. Lei Aplicável</h2>
+                    <p>Estes Termos são regidos pelas leis de Moçambique.</p>
+                    
+                    <h2>10. Contato</h2>
+                    <p>Para questões sobre estes Termos: <strong>legal@webcraftpro.com</strong></p>
+                </div>
+                <div class="main-footer">
+                    <div class="footer-links">
+                        <a onclick="window.showPrivacyPolicy()">Política de Privacidade</a>
+                        <a onclick="window.showTerms()">Termos de Uso</a>
+                        <a onclick="window.showLandingPage()">Início</a>
+                    </div>
+                    <div class="footer-content">
+                        <p>© ${new Date().getFullYear()} WebCraft Pro. Todos os direitos reservados.</p>
+                        <p>Crie seu site profissional hoje</p>
+                    </div>
+                </div>
+            `;
         }
         
         function renderLandingPage() {
@@ -366,7 +534,11 @@
                             <img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png" class="logo-img">
                             <span class="logo-text">WebCraft Pro</span>
                         </div>
-                        <div class="main-nav"></div>
+                        <div class="main-nav">
+                            <a onclick="window.showLandingPage()">Início</a>
+                            <a onclick="window.showPrivacyPolicy()">Política</a>
+                            <a onclick="window.showTerms()">Termos</a>
+                        </div>
                         <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
                         <div class="nav-buttons">
                             <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
@@ -374,26 +546,39 @@
                         </div>
                     </div>
                     <div class="mobile-nav" id="mobileNav">
-                        <div class="nav-buttons">
-                            <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
-                            <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
-                        </div>
+                        <a onclick="window.showLandingPage()" style="padding: 8px 0;">Início</a>
+                        <a onclick="window.showPrivacyPolicy()" style="padding: 8px 0;">Política</a>
+                        <a onclick="window.showTerms()" style="padding: 8px 0;">Termos</a>
+                        <hr>
+                        <button class="btn-nav btn-nav-outline" onclick="window.showLoginPage()">Entrar</button>
+                        <button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar</button>
                     </div>
                 </div>
-                <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;">Ver Templates</button></div></div></div>
+                <div class="hero-section"><div class="hero-content"><h1>Crie Websites Profissionais<br>Em Minutos</h1><p>Sem código. Templates lindos, editor intuitivo, publique instantaneamente.</p><div class="hero-buttons"><button class="btn-nav btn-nav-primary" onclick="window.showRegisterPage()">Começar Grátis</button><button class="btn-nav btn-nav-outline" style="background:rgba(255,255,255,0.1); color:white;" onclick="window.showPrivacyPolicy()">Política</button></div></div></div>
                 <div class="features-section"><h2 class="section-title">Tudo que você precisa</h2><div class="features-grid"><div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Templates Lindos</h3><p>Designs profissionais</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>100% Responsivo</h3><p>Perfeito em todos dispositivos</p></div><div class="feature-card"><div class="feature-icon"><i class="fab fa-whatsapp"></i></div><h3>Botão Flutuante PRO</h3><p>Exclusivo para assinantes Pro</p></div><div class="feature-card"><div class="feature-icon"><i class="fas fa-layer-group"></i></div><h3>Cards de Serviços</h3><p>Adicione quantos quiser</p></div></div></div>
                 <div class="templates-section"><h2 class="section-title">Templates Profissionais</h2><div class="templates-showcase"><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-star"></i></div><div class="template-info"><h3>Modern Studio</h3><p>Para criativos e agências</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-building"></i></div><div class="template-info"><h3>Corporate Elite</h3><p>Para empresas e negócios</p></div></div><div class="template-showcase-card"><div class="template-preview"><i class="fas fa-user-astronaut"></i></div><div class="template-info"><h3>Personal Brand</h3><p>Para portfólios pessoais</p></div></div></div></div>
-                <div class="main-footer"><div class="footer-content"><p>© ${currentYear} WebCraft Pro. Todos os direitos reservados.</p><p>Crie seu site profissional hoje</p></div></div>
+                <div class="main-footer">
+                    <div class="footer-links">
+                        <a onclick="window.showPrivacyPolicy()">Política de Privacidade</a>
+                        <a onclick="window.showTerms()">Termos de Uso</a>
+                        <a onclick="window.showLandingPage()">Início</a>
+                    </div>
+                    <div class="footer-content">
+                        <p>© ${currentYear} WebCraft Pro. Todos os direitos reservados.</p>
+                        <p>Crie seu site profissional hoje</p>
+                    </div>
+                </div>
             `;
         }
         
         function renderApp() {
-            const currentYear = new Date().getFullYear();
             const appDiv = document.getElementById('app');
             appDiv.innerHTML = `
                 <div id="landingPage" class="page">${renderLandingPage()}</div>
-                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p></div></div></div>
-                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p></div></div></div>
+                <div id="privacyPage" class="page"></div>
+                <div id="termsPage" class="page"></div>
+                <div id="loginPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Bem-vindo</h1><p>Entre na sua conta</p></div><form id="loginForm"><div class="input-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="seu@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="loginPassword" required placeholder="••••••••"></div><button type="submit" class="btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a id="showRegisterBtn">Criar conta</a></p><p class="auth-switch"><a onclick="window.showPrivacyPolicy()" style="cursor:pointer;">Política de Privacidade</a> | <a onclick="window.showTerms()" style="cursor:pointer;">Termos</a></p></div></div></div>
+                <div id="registerPage" class="page"><div class="auth-page"><div class="auth-container"><div class="auth-header"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><h1>Criar Conta</h1><p>Comece agora</p></div><form id="registerForm"><div class="input-group"><label>Nome</label><input type="text" id="registerName" required placeholder="João Silva"></div><div class="input-group"><label>Email</label><input type="email" id="registerEmail" required placeholder="joao@email.com"></div><div class="input-group"><label>Senha</label><input type="password" id="registerPassword" required placeholder="mínimo 6 caracteres"></div><button type="submit" class="btn-primary">Criar Conta</button></form><p class="auth-switch">Já tem conta? <a id="showLoginBtn">Entrar</a></p><p class="auth-switch">Ao criar conta, você concorda com nossa <a onclick="window.showPrivacyPolicy()" style="cursor:pointer;">Política de Privacidade</a> e <a onclick="window.showTerms()" style="cursor:pointer;">Termos</a></p></div></div></div>
                 <div id="dashboardPage" class="page"><div class="dashboard-layout"><aside class="sidebar" id="sidebar"><div class="sidebar-logo" onclick="window.showLandingPage()"><img src="https://i.postimg.cc/xdPxvPJD/20260421-093634.png"><span>WebCraft Pro</span></div><ul class="sidebar-menu"><li><a id="dashboardLink" class="active"><i class="fas fa-th-large"></i> Meus Sites</a></li><li><a id="createSiteLink"><i class="fas fa-plus-circle"></i> Criar Site</a></li><li><a id="plansLink"><i class="fas fa-crown"></i> Planos <span style="background:#f59e0b; color:white; padding:2px 8px; border-radius:20px; font-size:10px; margin-left:8px;">PRO</span></a></li><li><a id="logoutSidebarBtn" style="margin-top:20px; color:#dc2626;"><i class="fas fa-sign-out-alt"></i> Sair da Conta</a></li></ul><div class="sidebar-footer"><div class="user-info"><i class="fas fa-user-circle"></i><div><div class="user-name" id="userName"></div><div class="user-plan" id="userPlanDisplay"></div></div></div></div></aside><button class="mobile-sidebar-toggle" id="mobileSidebarToggle"><i class="fas fa-bars"></i></button><main class="main-content"><div class="dashboard-header"><h1>Meus Sites</h1><button id="createSiteBtn" class="btn-primary">+ Criar Site</button></div><div id="sitesGrid"></div></main></div></div>
                 <div id="editorPage" class="page"><div class="editor-layout"><div class="editor-sidebar"><h3><i class="fas fa-edit"></i> Editor do Site</h3><div id="editorFields"></div><button id="saveSiteBtn" class="btn-primary" style="margin-top:20px;"><i class="fas fa-save"></i> Salvar Alterações</button><button id="closeEditorBtn" class="btn-outline" style="margin-top:10px; width:100%;"><i class="fas fa-arrow-left"></i> Voltar</button></div><div class="editor-preview"><h3><i class="fas fa-eye"></i> Pré-visualização ao vivo</h3><div id="livePreview" class="live-preview-container"></div></div></div></div>
                 <div id="createModal" class="modal"><div class="modal-content"><h2>Criar Novo Site</h2><div class="input-group"><label>Nome do Site</label><input type="text" id="siteTitle" placeholder="Meu Portfólio"></div><div class="input-group"><label>Slug (URL)</label><input type="text" id="siteSlug" placeholder="meuportfolio"><small style="color:#64748b;">Seu site estará em: <strong id="slugPreview" style="color:#6366f1;">meuportfolio</strong></small></div><div class="input-group"><label>Escolha um Template</label><input type="hidden" id="selectedTemplate" value="modern">${Object.entries(templates).map(([id, t]) => `<div class="template-card" data-template="${id}"><i class="fas ${t.icon}"></i><strong>${t.name}</strong><p>${t.description}</p></div>`).join('')}</div><button id="confirmCreateBtn" class="btn-primary"><i class="fas fa-rocket"></i> Criar Site</button><button id="cancelCreateBtn" class="btn-outline" style="margin-top:10px;">Cancelar</button></div></div>
@@ -405,10 +590,13 @@
                 <div id="editServiceModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-server"></i> Editar Serviço</h3><button class="close-modal" onclick="closeServiceModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>Nome do Serviço</label><input type="text" id="editServiceName" placeholder="Ex: Consultoria"></div><div class="input-group"><label>Descrição</label><textarea id="editServiceDesc" rows="3" placeholder="Descrição do serviço..."></textarea></div><div class="input-group"><label>Ícone</label><div class="icon-selector-grid" id="serviceIconSelector"></div></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeServiceModal()">Cancelar</button><button class="btn-primary" id="saveServiceChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para editar Botão Flutuante (Apenas PRO) -->
-                <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..." value=""></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco" value="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon" style="width:100%; padding:12px; border-radius:12px; border:2px solid #e2e8f0;">${floatIconOptions.map(opt => `<option value="${opt.icon}"><i class="fas ${opt.icon}"></i> ${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366" placeholder="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
+                <div id="editFloatModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-comment-dots"></i> Editar Botão Flutuante</h3><button class="close-modal" onclick="closeFloatModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="floatEnabled"> Ativar Botão Flutuante</label></div><div class="input-group"><label>Link/URL</label><input type="text" id="floatLink" placeholder="https://wa.me/5511999999999 ou https://..."></div><div class="input-group"><label>Texto do Botão</label><input type="text" id="floatText" placeholder="Fale Conosco"></div><div class="input-group"><label>Ícone</label><select id="floatIcon">${floatIconOptions.map(opt => `<option value="${opt.icon}">${opt.name}</option>`).join('')}</select></div><div class="input-group"><label>Cor do Botão</label><div class="color-input-group"><input type="color" id="floatColor" value="#25D366"><input type="text" id="floatColorText" value="#25D366"></div></div><div class="input-group"><label>Posição</label><select id="floatPosition"><option value="right">Direita</option><option value="left">Esquerda</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closeFloatModal()">Cancelar</button><button class="btn-primary" id="saveFloatChangesBtn">Salvar Alterações</button></div></div></div>
+                
+                <!-- Modal para editar Foto de Perfil -->
+                <div id="editPhotoModal" class="modal-overlay"><div class="edit-modal"><div class="edit-modal-header"><h3><i class="fas fa-image"></i> Editar Foto de Perfil</h3><button class="close-modal" onclick="closePhotoModal()">&times;</button></div><div class="edit-modal-body"><div class="input-group"><label>URL da Imagem (link direto)</label><input type="text" id="photoUrl" placeholder="https://exemplo.com/minha-foto.jpg"><small style="color:#64748b;">Use um link direto de uma imagem (hospedada no Imgur, Postimg, etc.)</small></div><div class="input-group"><label>Formato da Imagem</label><select id="photoShape"><option value="circle">Redondo (Círculo)</option><option value="rounded">Arredondado (Bordas suaves)</option><option value="square">Quadrado (Sem bordas)</option></select></div><div class="input-group"><label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="checkbox" id="photoBorder"> Adicionar Borda</label></div><div class="input-group"><label>Cor da Borda</label><div class="color-input-group"><input type="color" id="photoBorderColor" value="#6366f1"><input type="text" id="photoBorderColorText" value="#6366f1"></div></div><div class="input-group"><label>Tamanho (px)</label><select id="photoSize"><option value="100">Pequeno (100px)</option><option value="150" selected>Médio (150px)</option><option value="200">Grande (200px)</option><option value="250">Extra Grande (250px)</option></select></div><div class="input-group"><label>Posição no Hero</label><select id="photoPosition"><option value="hero">No Hero (Junto com título)</option></select></div></div><div class="edit-modal-footer"><button class="btn-outline" onclick="closePhotoModal()">Cancelar</button><button class="btn-primary" id="savePhotoChangesBtn">Salvar Alterações</button></div></div></div>
                 
                 <!-- Modal para Planos -->
-                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro</p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button></div></div>
+                <div id="plansModal" class="modal"><div class="modal-content"><h2><i class="fas fa-crown" style="color:#f59e0b;"></i> Planos WebCraft Pro</h2><div class="pricing-card"><h3 style="font-size:24px; margin-bottom:16px;">Plano Pro</h3><div class="pricing-price">250 MT</div><p style="color:#92400e; margin-bottom:20px;">Pagamento único - Válido para sempre!</p><ul class="pricing-features"><li><i class="fas fa-check-circle"></i> Sites Ilimitados</li><li><i class="fas fa-check-circle"></i> Todos os templates disponíveis</li><li><i class="fas fa-check-circle"></i> Botão Flutuante Personalizável</li><li><i class="fas fa-check-circle"></i> Suporte prioritário</li><li><i class="fas fa-check-circle"></i> Sem anúncios</li><li><i class="fas fa-check-circle"></i> Domínio personalizado</li></ul>${currentUserPlan.isPro ? `<button class="btn-primary btn-disabled" style="background:#10b981;"><i class="fas fa-check-circle"></i> Você já é PRO!</button>` : `<button id="payWhatsappBtn" class="btn-primary btn-pro" style="background:linear-gradient(135deg, #25D366, #128C7E);"><i class="fab fa-whatsapp"></i> Pagar via WhatsApp</button>`}<p style="font-size:12px; color:#92400e; margin-top:16px;">Após o pagamento, envie o comprovante e seu email para ativarmos seu plano Pro.<br><strong>Não reembolsável conforme Termos de Uso.</strong></p></div><button id="closePlansBtn" class="btn-outline" style="margin-top:10px;">Fechar</button><p style="text-align:center; margin-top:16px; font-size:12px;"><a onclick="window.showTerms()" style="cursor:pointer; color:#6366f1;">Leia nossos Termos de Uso</a></p></div></div>
                 
                 <div id="toast" class="toast"></div>
             `;
@@ -461,7 +649,37 @@
             
             const mobileMenuBtn = document.getElementById('mobileMenuBtn'); const mobileNav = document.getElementById('mobileNav'); if (mobileMenuBtn && mobileNav) { mobileMenuBtn.addEventListener('click', () => mobileNav.classList.toggle('open')); }
             const mobileSidebarToggle = document.getElementById('mobileSidebarToggle'); const sidebar = document.getElementById('sidebar'); if (mobileSidebarToggle && sidebar) { mobileSidebarToggle.addEventListener('click', () => sidebar.classList.toggle('open')); }
+            
+            const mobileMenuBtnPolicy = document.getElementById('mobileMenuBtnPolicy'); 
+            if (mobileMenuBtnPolicy) {
+                const mobileNavPolicy = document.createElement('div');
+                mobileNavPolicy.className = 'mobile-nav';
+                mobileNavPolicy.id = 'mobileNavPolicy';
+                document.querySelector('#privacyPage .main-header')?.appendChild(mobileNavPolicy);
+                mobileMenuBtnPolicy.addEventListener('click', () => mobileNavPolicy.classList.toggle('open'));
+            }
         }
+        
+        window.showPrivacyPolicy = () => {
+            const privacyPage = document.getElementById('privacyPage');
+            privacyPage.innerHTML = renderPrivacyPolicy();
+            showPage('privacyPage');
+        };
+        
+        window.showTerms = () => {
+            const termsPage = document.getElementById('termsPage');
+            termsPage.innerHTML = renderTerms();
+            showPage('termsPage');
+        };
+        
+        window.showDashboardPage = () => {
+            if (currentUser) {
+                showPage('dashboardPage');
+                loadDashboard();
+            } else {
+                showPage('loginPage');
+            }
+        };
         
         function openPlansModal() { 
             const modal = document.getElementById('plansModal');
@@ -473,10 +691,9 @@
         }
         function closePlansModal() { document.getElementById('plansModal').classList.remove('active'); }
         
-        // Funções para o botão flutuante
         window.openFloatModal = () => {
             if (!currentUserPlan.isPro) {
-                showToast('⚠️ Botão Flutuante é exclusivo para planos PRO! Adquira o Plano Pro para usar esta função.', 'error');
+                showToast('⚠️ Botão Flutuante é exclusivo para planos PRO!', 'error');
                 openPlansModal();
                 return;
             }
@@ -495,13 +712,27 @@
             document.getElementById('editFloatModal').classList.remove('active');
         };
         
-        // Funções para os modais de botão normal
+        window.openPhotoModal = () => {
+            const photo = currentEditingSite.content.profilePhoto || { url: '', shape: 'circle', border: false, borderColor: '#6366f1', size: '150', position: 'hero' };
+            document.getElementById('photoUrl').value = photo.url || '';
+            document.getElementById('photoShape').value = photo.shape || 'circle';
+            document.getElementById('photoBorder').checked = photo.border || false;
+            document.getElementById('photoBorderColor').value = photo.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
+            document.getElementById('photoBorderColorText').value = photo.borderColor || currentEditingSite.content.primaryColor || '#6366f1';
+            document.getElementById('photoSize').value = photo.size || '150';
+            document.getElementById('photoPosition').value = photo.position || 'hero';
+            document.getElementById('editPhotoModal').classList.add('active');
+        };
+        
+        window.closePhotoModal = () => {
+            document.getElementById('editPhotoModal').classList.remove('active');
+        };
+        
         window.openButtonModal = (index) => {
             currentEditingButtonIndex = index;
             const btn = currentEditingSite.content.buttons[index];
             const services = currentEditingSite.content.services || [];
             
-            // Atualizar o select de posição entre cards
             const servicePositionSelect = document.getElementById('editBtnServicePosition');
             if (servicePositionSelect) {
                 let options = '<option value="none">Não posicionar entre cards</option>';
@@ -627,6 +858,9 @@
                     if (!currentEditingSite.content.floatButton) {
                         currentEditingSite.content.floatButton = { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                     }
+                    if (!currentEditingSite.content.profilePhoto) {
+                        currentEditingSite.content.profilePhoto = { url: '', shape: 'circle', border: false, borderColor: currentEditingSite.content.primaryColor || '#6366f1', size: '150', position: 'hero' };
+                    }
                     showEditor(); 
                 } else { 
                     showToast('Site não encontrado', 'error'); 
@@ -654,6 +888,21 @@
                 <div class="editor-section"><h4><i class="fas fa-info-circle"></i> Seção Hero</h4>
                     <div class="editor-field"><label>Título Principal</label><input type="text" id="heroTitle" value="${escapeHtml(content.heroTitle || '')}" placeholder="Título do seu site"></div>
                     <div class="editor-field"><label>Subtítulo</label><input type="text" id="heroSubtitle" value="${escapeHtml(content.heroSubtitle || '')}" placeholder="Subtítulo"></div>
+                </div>
+                <div class="editor-section"><h4><i class="fas fa-image"></i> Foto de Perfil</h4>
+                    <div id="photoInfo" class="item-preview" style="cursor:pointer;" onclick="window.openPhotoModal()">
+                        <div class="item-info">
+                            <div class="item-icon"><i class="fas fa-user-circle"></i></div>
+                            <div class="item-details">
+                                <div class="item-name">${content.profilePhoto?.url ? 'Foto configurada' : 'Nenhuma foto'}</div>
+                                <div class="item-desc">Formato: ${content.profilePhoto?.shape === 'circle' ? 'Redondo' : content.profilePhoto?.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${content.profilePhoto?.size || '150'}px</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-icon" onclick="event.stopPropagation(); window.openPhotoModal()"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    </div>
+                    <p style="font-size:12px; color:#64748b; margin-top:8px;">Adicione uma foto de perfil usando link direto da imagem</p>
                 </div>
                 <div class="editor-section"><h4><i class="fas fa-palette"></i> Cores</h4>
                     <div class="editor-field"><label>Cor Primária</label><div class="color-input-group"><input type="color" id="primaryColor" value="${content.primaryColor || '#6366f1'}"><input type="text" id="primaryColorText" value="${content.primaryColor || '#6366f1'}" placeholder="#6366f1"></div></div>
@@ -687,7 +936,7 @@
             if (isPro) {
                 const floatBtn = content.floatButton || { enabled: false, link: '', icon: 'fa-whatsapp', text: 'Fale Conosco', color: '#25D366', position: 'right' };
                 html += `
-                    <div class="editor-section"><h4><i class="fas fa fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
+                    <div class="editor-section"><h4><i class="fas fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
                         <div id="floatButtonInfo" class="item-preview" style="cursor:pointer;" onclick="window.openFloatModal()">
                             <div class="item-info">
                                 <div class="item-icon"><i class="fas ${floatBtn.icon || 'fa-whatsapp'}"></i></div>
@@ -705,7 +954,7 @@
                 `;
             } else {
                 html += `
-                    <div class="editor-section"><h4><i class="fas fa fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
+                    <div class="editor-section"><h4><i class="fas fa-comment-dots"></i> Botão Flutuante <span class="pro-badge">PRO</span></h4>
                         <div class="pro-locked">
                             <i class="fas fa-lock"></i>
                             <p><strong>Recurso exclusivo para assinantes PRO</strong></p>
@@ -835,6 +1084,36 @@
                 }
             });
             
+            document.getElementById('savePhotoChangesBtn')?.addEventListener('click', () => {
+                const photo = {
+                    url: document.getElementById('photoUrl').value,
+                    shape: document.getElementById('photoShape').value,
+                    border: document.getElementById('photoBorder').checked,
+                    borderColor: document.getElementById('photoBorderColor').value,
+                    size: document.getElementById('photoSize').value,
+                    position: document.getElementById('photoPosition').value
+                };
+                currentEditingSite.content.profilePhoto = photo;
+                updateSiteContent();
+                closePhotoModal();
+                const photoInfoDiv = document.getElementById('photoInfo');
+                if (photoInfoDiv) {
+                    photoInfoDiv.innerHTML = `
+                        <div class="item-info">
+                            <div class="item-icon"><i class="fas fa-user-circle"></i></div>
+                            <div class="item-details">
+                                <div class="item-name">${photo.url ? 'Foto configurada' : 'Nenhuma foto'}</div>
+                                <div class="item-desc">Formato: ${photo.shape === 'circle' ? 'Redondo' : photo.shape === 'rounded' ? 'Arredondado' : 'Quadrado'} | Tamanho: ${photo.size}px</div>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-icon" onclick="event.stopPropagation(); window.openPhotoModal()"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    `;
+                }
+                showToast('Foto atualizada!', 'success');
+            });
+            
             document.getElementById('saveFloatChangesBtn')?.addEventListener('click', () => {
                 if (!currentUserPlan.isPro) {
                     showToast('⚠️ Botão Flutuante é exclusivo para PRO!', 'error');
@@ -878,7 +1157,7 @@
             const showEmail = document.getElementById('showEmail');
             if (showEmail) showEmail.addEventListener('change', () => updateSiteContent());
             
-            const colorTexts = ['primaryColorText', 'secondaryColorText'];
+            const colorTexts = ['primaryColorText', 'secondaryColorText', 'photoBorderColorText'];
             colorTexts.forEach(ct => { const el = document.getElementById(ct); if (el) { el.addEventListener('change', (e) => { const colorField = ct.replace('Text', ''); const colorEl = document.getElementById(colorField); if (colorEl) colorEl.value = e.target.value; updateSiteContent(); }); } });
             
             const floatColor = document.getElementById('floatColor');
@@ -886,6 +1165,18 @@
             if (floatColor && floatColorText) {
                 floatColor.addEventListener('change', (e) => { floatColorText.value = e.target.value; });
                 floatColorText.addEventListener('change', (e) => { floatColor.value = e.target.value; });
+            }
+            
+            const photoBorder = document.getElementById('photoBorder');
+            const photoBorderColor = document.getElementById('photoBorderColor');
+            const photoBorderColorText = document.getElementById('photoBorderColorText');
+            if (photoBorder && photoBorderColor) {
+                photoBorder.addEventListener('change', () => {
+                    photoBorderColor.disabled = !photoBorder.checked;
+                    photoBorderColorText.disabled = !photoBorder.checked;
+                });
+                photoBorderColor.disabled = !(document.getElementById('photoBorder').checked);
+                photoBorderColorText.disabled = !(document.getElementById('photoBorder').checked);
             }
             
             updateSiteContent = async () => {
@@ -937,8 +1228,6 @@
             const secondary = c.secondaryColor || '#8b5cf6';
             const heroButtons = (c.buttons || []).filter(b => b.position === 'hero');
             const afterAboutButtons = (c.buttons || []).filter(b => b.position === 'after-about');
-            
-            // Organizar botões que ficam entre cards
             const serviceButtons = (c.buttons || []).filter(b => b.servicePosition && b.servicePosition !== 'none');
             
             const getStyle = (btn) => { 
@@ -958,7 +1247,17 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
-            // Construir o HTML dos serviços com botões entre eles
+            // Foto de perfil
+            const photo = c.profilePhoto || {};
+            let photoHtml = '';
+            if (photo.url && photo.url.trim() !== '') {
+                const shapeClass = photo.shape === 'circle' ? 'photo-circle' : (photo.shape === 'rounded' ? 'photo-rounded' : 'photo-square');
+                const borderStyle = photo.border ? `border: 3px solid ${photo.borderColor || primary};` : '';
+                photoHtml = `<div style="text-align:center; margin-bottom: 24px;">
+                    <img src="${photo.url}" class="profile-photo ${shapeClass}" style="width: ${photo.size || 150}px; height: ${photo.size || 150}px; object-fit: cover; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                </div>`;
+            }
+            
             let servicesHtml = '';
             if (c.services && c.services.length > 0) {
                 servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
@@ -969,7 +1268,6 @@
                         <p style="color:#64748b;">${service.description || ''}</p>
                     </div>`;
                     
-                    // Verificar se existe botão para colocar depois deste card
                     const buttonAfterThisCard = serviceButtons.find(b => b.servicePosition === `service_${idx}`);
                     if (buttonAfterThisCard) {
                         servicesHtml += `<div style="display:flex; justify-content:${getAlign(buttonAfterThisCard.align || 'center')}; margin:20px 0;">
@@ -986,6 +1284,7 @@
                 ${floatButtonHtml}
                 <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
                     <div>
+                        ${photoHtml}
                         <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
                         <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
                         <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
@@ -1119,6 +1418,16 @@
                 floatButtonHtml = `<a href="${c.floatButton.link}" target="_blank" class="float-button ${floatPos}" style="background-color: ${c.floatButton.color || '#25D366'}; color: white;"><i class="fab ${c.floatButton.icon || 'fa-whatsapp'}"></i> ${c.floatButton.text || 'Fale Conosco'}</a>`;
             }
             
+            const photo = c.profilePhoto || {};
+            let photoHtml = '';
+            if (photo.url && photo.url.trim() !== '') {
+                const shapeClass = photo.shape === 'circle' ? 'photo-circle' : (photo.shape === 'rounded' ? 'photo-rounded' : 'photo-square');
+                const borderStyle = photo.border ? `border: 3px solid ${photo.borderColor || primary};` : '';
+                photoHtml = `<div style="text-align:center; margin-bottom: 24px;">
+                    <img src="${photo.url}" class="profile-photo ${shapeClass}" style="width: ${photo.size || 150}px; height: ${photo.size || 150}px; object-fit: cover; ${borderStyle} box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                </div>`;
+            }
+            
             let servicesHtml = '';
             if (c.services && c.services.length > 0) {
                 servicesHtml = '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; margin-bottom:0px;">';
@@ -1145,6 +1454,7 @@
                 ${floatButtonHtml}
                 <div style="min-height:60vh; background:linear-gradient(135deg, ${primary}, ${secondary}); display:flex; align-items:center; justify-content:center; text-align:center; color:white; padding:60px 20px;">
                     <div>
+                        ${photoHtml}
                         <h1 style="font-size:56px; margin-bottom:20px; font-weight:800;">${c.heroTitle || 'Meu Site'}</h1>
                         <p style="font-size:24px; opacity:0.95; margin-bottom:32px;">${c.heroSubtitle || 'Bem-vindo'}</p>
                         <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
